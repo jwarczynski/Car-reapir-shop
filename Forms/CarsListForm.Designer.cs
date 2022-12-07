@@ -1,4 +1,4 @@
-﻿namespace WarsztatSamochodowy
+﻿namespace WarsztatSamochodowy.Forms
 {
     partial class CarsListForm
     {

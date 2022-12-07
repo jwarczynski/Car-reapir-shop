@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WarsztatSamochodowy
+namespace WarsztatSamochodowy.Forms
 {
     public partial class EditCarForm : Form
     {
@@ -20,6 +20,11 @@ namespace WarsztatSamochodowy
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Jeśli podano nieistniejącego producenta i/lub model, zapytaj, czy utworzyć takie wpisy w bazie danych
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

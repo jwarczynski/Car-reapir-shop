@@ -8,19 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WarsztatSamochodowy
+namespace WarsztatSamochodowy.Forms
 {
-    public partial class CarsListForm : Form
+    public partial class ManageShoppingListForm : Form
     {
-        public CarsListForm()
+        public ManageShoppingListForm()
         {
             InitializeComponent();
-        }
-
-        private void btnEditCar_Click(object sender, EventArgs e)
-        {
-            var editCarForm = new EditCarForm();
-            editCarForm.ShowDialog();
         }
     }
 }

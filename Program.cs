@@ -1,3 +1,5 @@
+using WarsztatSamochodowy.Forms;
+
 namespace WarsztatSamochodowy
 {
     internal static class Program

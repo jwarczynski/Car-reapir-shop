@@ -1,4 +1,4 @@
-﻿namespace WarsztatSamochodowy
+﻿namespace WarsztatSamochodowy.Forms
 {
     partial class EditCarForm
     {
@@ -106,12 +106,16 @@
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Anuluj";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // EditCarForm
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(405, 161);
+            this.ControlBox = false;
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.cbModel);

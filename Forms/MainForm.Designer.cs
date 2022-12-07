@@ -1,4 +1,4 @@
-﻿namespace WarsztatSamochodowy
+﻿namespace WarsztatSamochodowy.Forms
 {
     partial class MainForm
     {
@@ -29,9 +29,11 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnAllCars = new System.Windows.Forms.Button();
-            this.btnCarModels = new System.Windows.Forms.Button();
             this.btnCarManufacturers = new System.Windows.Forms.Button();
+            this.btnCarModels = new System.Windows.Forms.Button();
+            this.btnAllCars = new System.Windows.Forms.Button();
+            this.btnCustomersList = new System.Windows.Forms.Button();
+            this.btnShoppingLists = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,15 +49,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Samochody";
             // 
-            // btnAllCars
+            // btnCarManufacturers
             // 
-            this.btnAllCars.Location = new System.Drawing.Point(6, 26);
-            this.btnAllCars.Name = "btnAllCars";
-            this.btnAllCars.Size = new System.Drawing.Size(184, 29);
-            this.btnAllCars.TabIndex = 1;
-            this.btnAllCars.Text = "Wyświetl wszystkie";
-            this.btnAllCars.UseVisualStyleBackColor = true;
-            this.btnAllCars.Click += new System.EventHandler(this.btnAllCars_Click);
+            this.btnCarManufacturers.Location = new System.Drawing.Point(6, 96);
+            this.btnCarManufacturers.Name = "btnCarManufacturers";
+            this.btnCarManufacturers.Size = new System.Drawing.Size(184, 29);
+            this.btnCarManufacturers.TabIndex = 3;
+            this.btnCarManufacturers.Text = "Zarządzaj producentami";
+            this.btnCarManufacturers.UseVisualStyleBackColor = true;
             // 
             // btnCarModels
             // 
@@ -66,20 +67,43 @@
             this.btnCarModels.Text = "Zarządzaj modelami";
             this.btnCarModels.UseVisualStyleBackColor = true;
             // 
-            // btnCarManufacturers
+            // btnAllCars
             // 
-            this.btnCarManufacturers.Location = new System.Drawing.Point(6, 96);
-            this.btnCarManufacturers.Name = "btnCarManufacturers";
-            this.btnCarManufacturers.Size = new System.Drawing.Size(184, 29);
-            this.btnCarManufacturers.TabIndex = 3;
-            this.btnCarManufacturers.Text = "Zarządzaj producentami";
-            this.btnCarManufacturers.UseVisualStyleBackColor = true;
+            this.btnAllCars.Location = new System.Drawing.Point(6, 26);
+            this.btnAllCars.Name = "btnAllCars";
+            this.btnAllCars.Size = new System.Drawing.Size(184, 29);
+            this.btnAllCars.TabIndex = 1;
+            this.btnAllCars.Text = "Wyświetl wszystkie";
+            this.btnAllCars.UseVisualStyleBackColor = true;
+            this.btnAllCars.Click += new System.EventHandler(this.btnAllCars_Click);
+            // 
+            // btnCustomersList
+            // 
+            this.btnCustomersList.Location = new System.Drawing.Point(249, 38);
+            this.btnCustomersList.Name = "btnCustomersList";
+            this.btnCustomersList.Size = new System.Drawing.Size(146, 29);
+            this.btnCustomersList.TabIndex = 1;
+            this.btnCustomersList.Text = "Lista klientów";
+            this.btnCustomersList.UseVisualStyleBackColor = true;
+            this.btnCustomersList.Click += new System.EventHandler(this.btnCustomersList_Click);
+            // 
+            // btnShoppingLists
+            // 
+            this.btnShoppingLists.Location = new System.Drawing.Point(249, 73);
+            this.btnShoppingLists.Name = "btnShoppingLists";
+            this.btnShoppingLists.Size = new System.Drawing.Size(146, 29);
+            this.btnShoppingLists.TabIndex = 2;
+            this.btnShoppingLists.Text = "Listy zakupów";
+            this.btnShoppingLists.UseVisualStyleBackColor = true;
+            this.btnShoppingLists.Click += new System.EventHandler(this.btnShoppingLists_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnShoppingLists);
+            this.Controls.Add(this.btnCustomersList);
             this.Controls.Add(this.groupBox1);
             this.Name = "MainForm";
             this.Text = "Warsztat samochodowy";
@@ -94,5 +118,7 @@
         private Button btnAllCars;
         private Button btnCarManufacturers;
         private Button btnCarModels;
+        private Button btnCustomersList;
+        private Button btnShoppingLists;
     }
 }
