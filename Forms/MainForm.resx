@@ -126,7 +126,7 @@
         FGAOpIQ5kJKACegN2EQoQ9rTWggysWIVFBUW9i8lArvRncbKIQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="button3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnEmployee.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAC+JJREFUeF7t
         WmlMW9kVTqvuVdcflbr8bCtVlfqr/dNRq/6q+qdq1VZqpUptpaqjmWCzJAPJJGlCwrQJE2wTkgDG9nvP

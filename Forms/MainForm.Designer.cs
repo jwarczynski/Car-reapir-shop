@@ -40,7 +40,7 @@
             this.button6 = new System.Windows.Forms.Button();
             this.btnShoppingLists = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnEmployee = new System.Windows.Forms.Button();
             this.btnCustomersList = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -75,7 +75,7 @@
             this.groupBox1.Controls.Add(this.button6);
             this.groupBox1.Controls.Add(this.btnShoppingLists);
             this.groupBox1.Controls.Add(this.button4);
-            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Controls.Add(this.btnEmployee);
             this.groupBox1.Controls.Add(this.btnCustomersList);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -85,7 +85,6 @@
             this.groupBox1.Size = new System.Drawing.Size(800, 173);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            
             // 
             // groupBox2
             // 
@@ -94,7 +93,7 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.btnAllCars);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.groupBox2.Location = new System.Drawing.Point(617, 12);
+            this.groupBox2.Location = new System.Drawing.Point(609, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(177, 155);
             this.groupBox2.TabIndex = 12;
@@ -111,7 +110,7 @@
             this.button9.TabIndex = 11;
             this.button9.Text = "zarządzaj producentami";
             this.button9.UseVisualStyleBackColor = true;
-            
+            // 
             // button8
             // 
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -133,7 +132,6 @@
             this.label1.Size = new System.Drawing.Size(124, 30);
             this.label1.TabIndex = 9;
             this.label1.Text = "Samochody";
-            
             // 
             // btnAllCars
             // 
@@ -165,7 +163,6 @@
             this.button6.Text = "Zamówienia";
             this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button6.UseVisualStyleBackColor = true;
-            
             // 
             // btnShoppingLists
             // 
@@ -205,23 +202,24 @@
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnEmployee
             // 
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button3.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.button3.Location = new System.Drawing.Point(9, 8);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(180, 76);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Pracownicy";
-            this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnEmployee.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnEmployee.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnEmployee.FlatAppearance.BorderSize = 0;
+            this.btnEmployee.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEmployee.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnEmployee.ForeColor = System.Drawing.Color.White;
+            this.btnEmployee.Image = ((System.Drawing.Image)(resources.GetObject("btnEmployee.Image")));
+            this.btnEmployee.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnEmployee.Location = new System.Drawing.Point(9, 8);
+            this.btnEmployee.Name = "btnEmployee";
+            this.btnEmployee.Size = new System.Drawing.Size(180, 76);
+            this.btnEmployee.TabIndex = 2;
+            this.btnEmployee.Text = "Pracownicy";
+            this.btnEmployee.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnEmployee.UseVisualStyleBackColor = true;
+            this.btnEmployee.Click += new System.EventHandler(this.btnEmployee_Click);
             // 
             // btnCustomersList
             // 
@@ -253,12 +251,11 @@
             this.button1.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.button1.Location = new System.Drawing.Point(9, 97);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(155, 70);
+            this.button1.Size = new System.Drawing.Size(180, 70);
             this.button1.TabIndex = 0;
             this.button1.Text = "Usługi";
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button1.UseVisualStyleBackColor = true;
-            
             // 
             // pictureBox2
             // 
@@ -269,7 +266,6 @@
             this.pictureBox2.Size = new System.Drawing.Size(804, 464);
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
-            
             // 
             // MainForm
             // 
@@ -283,7 +279,6 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Warsztat";
- 
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -304,7 +299,7 @@
         private Button button6;
         private Button btnShoppingLists;
         private Button button4;
-        private Button button3;
+        private Button btnEmployee;
         private Button btnCustomersList;
         private Label label1;
         private Button btnAllCars;
