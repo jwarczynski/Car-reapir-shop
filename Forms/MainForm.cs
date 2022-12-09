@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WarsztatSamochodowy.Forms;
 
 namespace WarsztatSamochodowy
 {
@@ -17,44 +18,22 @@ namespace WarsztatSamochodowy
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnAllCars_Click(object sender, EventArgs e)
         {
-
+            var carsListForm = new CarsListForm();
+            carsListForm.Show();
         }
 
-        private void Form3_Load(object sender, EventArgs e)
+        private void btnCustomersList_Click(object sender, EventArgs e)
         {
-
+            var customersListForm = new CustomersForm();
+            customersListForm.Show();
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
+        private void btnShoppingLists_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-
+            var shoppingListsForm = new ShoppingListsForm();
+            shoppingListsForm.Show();
         }
     }
 }

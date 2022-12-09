@@ -36,12 +36,12 @@
             this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
+            this.btnAllCars = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnShoppingLists = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnCustomersList = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -73,10 +73,10 @@
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.button6);
-            this.groupBox1.Controls.Add(this.button5);
+            this.groupBox1.Controls.Add(this.btnShoppingLists);
             this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.btnCustomersList);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
@@ -85,14 +85,14 @@
             this.groupBox1.Size = new System.Drawing.Size(800, 173);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.button9);
             this.groupBox2.Controls.Add(this.button8);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.button7);
+            this.groupBox2.Controls.Add(this.btnAllCars);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox2.Location = new System.Drawing.Point(617, 12);
             this.groupBox2.Name = "groupBox2";
@@ -111,8 +111,7 @@
             this.button9.TabIndex = 11;
             this.button9.Text = "zarządzaj producentami";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
+            
             // button8
             // 
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -134,19 +133,20 @@
             this.label1.Size = new System.Drawing.Size(124, 30);
             this.label1.TabIndex = 9;
             this.label1.Text = "Samochody";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            
             // 
-            // button7
+            // btnAllCars
             // 
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button7.ForeColor = System.Drawing.SystemColors.Control;
-            this.button7.Location = new System.Drawing.Point(14, 40);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(157, 32);
-            this.button7.TabIndex = 6;
-            this.button7.Text = "zobacz wszystkie";
-            this.button7.UseVisualStyleBackColor = true;
+            this.btnAllCars.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAllCars.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnAllCars.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnAllCars.Location = new System.Drawing.Point(14, 40);
+            this.btnAllCars.Name = "btnAllCars";
+            this.btnAllCars.Size = new System.Drawing.Size(157, 32);
+            this.btnAllCars.TabIndex = 6;
+            this.btnAllCars.Text = "zobacz wszystkie";
+            this.btnAllCars.UseVisualStyleBackColor = true;
+            this.btnAllCars.Click += new System.EventHandler(this.btnAllCars_Click);
             // 
             // button6
             // 
@@ -165,26 +165,27 @@
             this.button6.Text = "Zamówienia";
             this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            
             // 
-            // button5
+            // btnShoppingLists
             // 
-            this.button5.AutoEllipsis = true;
-            this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button5.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.button5.FlatAppearance.BorderSize = 0;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
-            this.button5.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.button5.Location = new System.Drawing.Point(402, 12);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(188, 72);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "Lista zakupów";
-            this.button5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnShoppingLists.AutoEllipsis = true;
+            this.btnShoppingLists.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnShoppingLists.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnShoppingLists.FlatAppearance.BorderSize = 0;
+            this.btnShoppingLists.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShoppingLists.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnShoppingLists.ForeColor = System.Drawing.Color.White;
+            this.btnShoppingLists.Image = ((System.Drawing.Image)(resources.GetObject("btnShoppingLists.Image")));
+            this.btnShoppingLists.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnShoppingLists.Location = new System.Drawing.Point(402, 12);
+            this.btnShoppingLists.Name = "btnShoppingLists";
+            this.btnShoppingLists.Size = new System.Drawing.Size(188, 72);
+            this.btnShoppingLists.TabIndex = 4;
+            this.btnShoppingLists.Text = "Lista zakupów";
+            this.btnShoppingLists.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnShoppingLists.UseVisualStyleBackColor = true;
+            this.btnShoppingLists.Click += new System.EventHandler(this.btnShoppingLists_Click);
             // 
             // button4
             // 
@@ -222,22 +223,23 @@
             this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnCustomersList
             // 
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.button2.Location = new System.Drawing.Point(208, 8);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(188, 76);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Klienci";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnCustomersList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnCustomersList.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnCustomersList.FlatAppearance.BorderSize = 0;
+            this.btnCustomersList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCustomersList.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnCustomersList.ForeColor = System.Drawing.Color.White;
+            this.btnCustomersList.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersList.Image")));
+            this.btnCustomersList.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnCustomersList.Location = new System.Drawing.Point(208, 8);
+            this.btnCustomersList.Name = "btnCustomersList";
+            this.btnCustomersList.Size = new System.Drawing.Size(188, 76);
+            this.btnCustomersList.TabIndex = 1;
+            this.btnCustomersList.Text = "Klienci";
+            this.btnCustomersList.UseVisualStyleBackColor = true;
+            this.btnCustomersList.Click += new System.EventHandler(this.btnCustomersList_Click);
             // 
             // button1
             // 
@@ -256,7 +258,7 @@
             this.button1.Text = "Usługi";
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            
             // 
             // pictureBox2
             // 
@@ -267,7 +269,7 @@
             this.pictureBox2.Size = new System.Drawing.Size(804, 464);
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            
             // 
             // MainForm
             // 
@@ -281,7 +283,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Warsztat";
-            this.Load += new System.EventHandler(this.Form3_Load);
+ 
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -300,12 +302,12 @@
         private Panel panel2;
         private PictureBox pictureBox2;
         private Button button6;
-        private Button button5;
+        private Button btnShoppingLists;
         private Button button4;
         private Button button3;
-        private Button button2;
+        private Button btnCustomersList;
         private Label label1;
-        private Button button7;
+        private Button btnAllCars;
         private GroupBox groupBox2;
         private Button button9;
         private Button button8;
