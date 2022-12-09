@@ -34,6 +34,7 @@
             this.btnAllCars = new System.Windows.Forms.Button();
             this.btnCustomersList = new System.Windows.Forms.Button();
             this.btnShoppingLists = new System.Windows.Forms.Button();
+            this.btnWarehouse = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,11 +98,22 @@
             this.btnShoppingLists.UseVisualStyleBackColor = true;
             this.btnShoppingLists.Click += new System.EventHandler(this.btnShoppingLists_Click);
             // 
+            // btnWarehouse
+            // 
+            this.btnWarehouse.Location = new System.Drawing.Point(249, 108);
+            this.btnWarehouse.Name = "btnWarehouse";
+            this.btnWarehouse.Size = new System.Drawing.Size(146, 29);
+            this.btnWarehouse.TabIndex = 3;
+            this.btnWarehouse.Text = "Magazyn";
+            this.btnWarehouse.UseVisualStyleBackColor = true;
+            this.btnWarehouse.Click += new System.EventHandler(this.btnWarehouse_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnWarehouse);
             this.Controls.Add(this.btnShoppingLists);
             this.Controls.Add(this.btnCustomersList);
             this.Controls.Add(this.groupBox1);
@@ -120,5 +132,6 @@
         private Button btnCarModels;
         private Button btnCustomersList;
         private Button btnShoppingLists;
+        private Button btnWarehouse;
     }
 }

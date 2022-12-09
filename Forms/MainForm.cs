@@ -24,5 +24,11 @@ namespace WarsztatSamochodowy.Forms
             var shoppingListsForm = new ShoppingListsForm();
             shoppingListsForm.Show();
         }
+
+        private void btnWarehouse_Click(object sender, EventArgs e)
+        {
+            var warehouseForm = new WarehouseForm();
+            warehouseForm.Show();
+        }
     }
 }
