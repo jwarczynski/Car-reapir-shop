@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.employeesDataGridView = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnAddCustomer = new System.Windows.Forms.Button();
-            this.btnRemoveCustomer = new System.Windows.Forms.Button();
             this.btnEditCustomer = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.btnRemoveCustomer = new System.Windows.Forms.Button();
+            this.btnAddCustomer = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.employeesDataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // employeesDataGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(11, 14);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(537, 428);
-            this.dataGridView1.TabIndex = 0;
+            this.employeesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.employeesDataGridView.Location = new System.Drawing.Point(11, 14);
+            this.employeesDataGridView.Name = "employeesDataGridView";
+            this.employeesDataGridView.RowTemplate.Height = 25;
+            this.employeesDataGridView.Size = new System.Drawing.Size(537, 428);
+            this.employeesDataGridView.TabIndex = 0;
             // 
             // groupBox1
             // 
@@ -57,15 +57,15 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
-            // btnAddCustomer
+            // btnEditCustomer
             // 
-            this.btnAddCustomer.Location = new System.Drawing.Point(3, 21);
-            this.btnAddCustomer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnAddCustomer.Name = "btnAddCustomer";
-            this.btnAddCustomer.Size = new System.Drawing.Size(102, 22);
-            this.btnAddCustomer.TabIndex = 2;
-            this.btnAddCustomer.Text = "Dodaj...";
-            this.btnAddCustomer.UseVisualStyleBackColor = true;
+            this.btnEditCustomer.Location = new System.Drawing.Point(3, 73);
+            this.btnEditCustomer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnEditCustomer.Name = "btnEditCustomer";
+            this.btnEditCustomer.Size = new System.Drawing.Size(102, 22);
+            this.btnEditCustomer.TabIndex = 5;
+            this.btnEditCustomer.Text = "Edytuj...";
+            this.btnEditCustomer.UseVisualStyleBackColor = true;
             // 
             // btnRemoveCustomer
             // 
@@ -77,15 +77,15 @@
             this.btnRemoveCustomer.Text = "Usuń";
             this.btnRemoveCustomer.UseVisualStyleBackColor = true;
             // 
-            // btnEditCustomer
+            // btnAddCustomer
             // 
-            this.btnEditCustomer.Location = new System.Drawing.Point(3, 73);
-            this.btnEditCustomer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnEditCustomer.Name = "btnEditCustomer";
-            this.btnEditCustomer.Size = new System.Drawing.Size(102, 22);
-            this.btnEditCustomer.TabIndex = 5;
-            this.btnEditCustomer.Text = "Edytuj...";
-            this.btnEditCustomer.UseVisualStyleBackColor = true;
+            this.btnAddCustomer.Location = new System.Drawing.Point(3, 21);
+            this.btnAddCustomer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAddCustomer.Name = "btnAddCustomer";
+            this.btnAddCustomer.Size = new System.Drawing.Size(102, 22);
+            this.btnAddCustomer.TabIndex = 2;
+            this.btnAddCustomer.Text = "Dodaj...";
+            this.btnAddCustomer.UseVisualStyleBackColor = true;
             // 
             // EmployeeForm
             // 
@@ -93,10 +93,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(677, 450);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.employeesDataGridView);
             this.Name = "EmployeeForm";
             this.Text = "Pracownicy";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.employeesDataGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -104,7 +104,7 @@
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView employeesDataGridView;
         private GroupBox groupBox1;
         private Button btnAddCustomer;
         private Button btnRemoveCustomer;
