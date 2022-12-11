@@ -47,19 +47,24 @@
             // 
             // employeesDataGridView
             // 
+            this.employeesDataGridView.AllowUserToDeleteRows = false;
+            this.employeesDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.employeesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.employeesDataGridView.Location = new System.Drawing.Point(11, 14);
             this.employeesDataGridView.Name = "employeesDataGridView";
             this.employeesDataGridView.RowTemplate.Height = 25;
-            this.employeesDataGridView.Size = new System.Drawing.Size(344, 428);
+            this.employeesDataGridView.RowTemplate.ReadOnly = true;
+            this.employeesDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.employeesDataGridView.Size = new System.Drawing.Size(431, 428);
             this.employeesDataGridView.TabIndex = 0;
+            this.employeesDataGridView.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.employeesDataGridView_CellMouseClick);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnEditCustomer);
             this.groupBox1.Controls.Add(this.btnRemoveCustomer);
             this.groupBox1.Controls.Add(this.btnAddCustomer);
-            this.groupBox1.Location = new System.Drawing.Point(535, 332);
+            this.groupBox1.Location = new System.Drawing.Point(630, 334);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(111, 106);
             this.groupBox1.TabIndex = 1;
@@ -74,6 +79,7 @@
             this.btnEditCustomer.TabIndex = 5;
             this.btnEditCustomer.Text = "Edytuj...";
             this.btnEditCustomer.UseVisualStyleBackColor = true;
+            this.btnEditCustomer.Click += new System.EventHandler(this.btnEditCustomer_Click);
             // 
             // btnRemoveCustomer
             // 
@@ -84,6 +90,7 @@
             this.btnRemoveCustomer.TabIndex = 4;
             this.btnRemoveCustomer.Text = "Usuń";
             this.btnRemoveCustomer.UseVisualStyleBackColor = true;
+            this.btnRemoveCustomer.Click += new System.EventHandler(this.btnRemoveCustomer_Click);
             // 
             // btnAddCustomer
             // 
@@ -103,7 +110,7 @@
             this.roleListBox.Items.AddRange(new object[] {
             "junior worker",
             "senior worker"});
-            this.roleListBox.Location = new System.Drawing.Point(366, 216);
+            this.roleListBox.Location = new System.Drawing.Point(461, 218);
             this.roleListBox.Name = "roleListBox";
             this.roleListBox.Size = new System.Drawing.Size(120, 34);
             this.roleListBox.TabIndex = 3;
@@ -112,7 +119,7 @@
             // firstNameTextBox
             // 
             this.firstNameTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.firstNameTextBox.Location = new System.Drawing.Point(366, 32);
+            this.firstNameTextBox.Location = new System.Drawing.Point(461, 34);
             this.firstNameTextBox.Name = "firstNameTextBox";
             this.firstNameTextBox.Size = new System.Drawing.Size(280, 27);
             this.firstNameTextBox.TabIndex = 4;
@@ -121,7 +128,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(366, 14);
+            this.label1.Location = new System.Drawing.Point(461, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(30, 15);
             this.label1.TabIndex = 5;
@@ -130,7 +137,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(366, 74);
+            this.label2.Location = new System.Drawing.Point(461, 76);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(57, 15);
             this.label2.TabIndex = 7;
@@ -139,7 +146,7 @@
             // lastNameTextBox
             // 
             this.lastNameTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lastNameTextBox.Location = new System.Drawing.Point(366, 92);
+            this.lastNameTextBox.Location = new System.Drawing.Point(461, 94);
             this.lastNameTextBox.Name = "lastNameTextBox";
             this.lastNameTextBox.Size = new System.Drawing.Size(280, 27);
             this.lastNameTextBox.TabIndex = 6;
@@ -148,7 +155,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(366, 137);
+            this.label3.Location = new System.Drawing.Point(461, 139);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(35, 15);
             this.label3.TabIndex = 9;
@@ -157,7 +164,7 @@
             // wageTextBox
             // 
             this.wageTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.wageTextBox.Location = new System.Drawing.Point(366, 155);
+            this.wageTextBox.Location = new System.Drawing.Point(461, 157);
             this.wageTextBox.Name = "wageTextBox";
             this.wageTextBox.Size = new System.Drawing.Size(280, 27);
             this.wageTextBox.TabIndex = 10;
@@ -166,7 +173,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(366, 198);
+            this.label4.Location = new System.Drawing.Point(461, 200);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(27, 15);
             this.label4.TabIndex = 11;
@@ -176,7 +183,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(658, 450);
+            this.ClientSize = new System.Drawing.Size(753, 450);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.wageTextBox);
             this.Controls.Add(this.label3);
