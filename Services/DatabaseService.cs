@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,15 @@ namespace WarsztatSamochodowy.Services
             sqlCommand.Parameters.Clear();
         }
         
+        public DataTable selectAllToTable(string tableName)
+        {
+            DataTable dataTable = new DataTable();
+            mySqlConnection.Open();
+            MySqlDataAdapter sqlDataAdapter = new MySqlDataAdapter("SELECT * FROM " + tableName, mySqlConnection);
+            mySqlConnection.Close();
+            sqlDataAdapter.Fill(dataTable);
+            return dataTable;
+        }
         public void insert(string tableName, SortedDictionary<string, string> data)
         {
             sqlCommandString = prepareInsertCommandString(tableName, data);
