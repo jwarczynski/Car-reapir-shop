@@ -56,10 +56,10 @@ namespace WarsztatSamochodowy.Forms
                 employeesDataGridView.Columns[2].HeaderText = "Etat";
                 mySqlConnection.Close();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                MessageBox.Show(e.Message, "Wystąpił błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
             }
 
         }
