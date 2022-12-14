@@ -1,4 +1,15 @@
-namespace WarsztatSamochodowy.Forms
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using WarsztatSamochodowy.Forms;
+
+namespace WarsztatSamochodowy
 {
     public partial class MainForm : Form
     {
@@ -25,10 +36,10 @@ namespace WarsztatSamochodowy.Forms
             shoppingListsForm.Show();
         }
 
-        private void btnWarehouse_Click(object sender, EventArgs e)
+        private void btnEmployee_Click(object sender, EventArgs e)
         {
-            var warehouseForm = new WarehouseForm();
-            warehouseForm.Show();
+            var employeeForm = new EmployeeForm();
+            employeeForm.Show();
         }
     }
 }
