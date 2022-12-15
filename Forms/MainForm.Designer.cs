@@ -54,8 +54,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox1.Size = new System.Drawing.Size(114, 67);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
@@ -64,8 +65,9 @@
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(798, 176);
+            this.panel1.Size = new System.Drawing.Size(912, 235);
             this.panel1.TabIndex = 1;
             // 
             // groupBox1
@@ -81,8 +83,10 @@
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(800, 173);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox1.Size = new System.Drawing.Size(914, 231);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -93,9 +97,11 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.btnAllCars);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.groupBox2.Location = new System.Drawing.Point(609, 12);
+            this.groupBox2.Location = new System.Drawing.Point(696, 16);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(177, 155);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox2.Size = new System.Drawing.Size(202, 207);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             // 
@@ -104,9 +110,10 @@
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button9.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.button9.ForeColor = System.Drawing.SystemColors.Control;
-            this.button9.Location = new System.Drawing.Point(14, 116);
+            this.button9.Location = new System.Drawing.Point(16, 155);
+            this.button9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(157, 32);
+            this.button9.Size = new System.Drawing.Size(179, 43);
             this.button9.TabIndex = 11;
             this.button9.Text = "zarządzaj producentami";
             this.button9.UseVisualStyleBackColor = true;
@@ -116,9 +123,10 @@
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button8.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.button8.ForeColor = System.Drawing.SystemColors.Control;
-            this.button8.Location = new System.Drawing.Point(14, 78);
+            this.button8.Location = new System.Drawing.Point(16, 104);
+            this.button8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(157, 32);
+            this.button8.Size = new System.Drawing.Size(179, 43);
             this.button8.TabIndex = 10;
             this.button8.Text = "zarządaj modelami";
             this.button8.UseVisualStyleBackColor = true;
@@ -127,9 +135,9 @@
             // 
             this.label1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(30, 0);
+            this.label1.Location = new System.Drawing.Point(34, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(124, 30);
+            this.label1.Size = new System.Drawing.Size(142, 40);
             this.label1.TabIndex = 9;
             this.label1.Text = "Samochody";
             // 
@@ -138,9 +146,10 @@
             this.btnAllCars.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAllCars.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnAllCars.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnAllCars.Location = new System.Drawing.Point(14, 40);
+            this.btnAllCars.Location = new System.Drawing.Point(16, 53);
+            this.btnAllCars.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnAllCars.Name = "btnAllCars";
-            this.btnAllCars.Size = new System.Drawing.Size(157, 32);
+            this.btnAllCars.Size = new System.Drawing.Size(179, 43);
             this.btnAllCars.TabIndex = 6;
             this.btnAllCars.Text = "zobacz wszystkie";
             this.btnAllCars.UseVisualStyleBackColor = true;
@@ -156,9 +165,10 @@
             this.button6.ForeColor = System.Drawing.Color.White;
             this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
             this.button6.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.button6.Location = new System.Drawing.Point(402, 90);
+            this.button6.Location = new System.Drawing.Point(459, 120);
+            this.button6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(188, 77);
+            this.button6.Size = new System.Drawing.Size(215, 103);
             this.button6.TabIndex = 5;
             this.button6.Text = "Zamówienia";
             this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -175,9 +185,10 @@
             this.btnShoppingLists.ForeColor = System.Drawing.Color.White;
             this.btnShoppingLists.Image = ((System.Drawing.Image)(resources.GetObject("btnShoppingLists.Image")));
             this.btnShoppingLists.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnShoppingLists.Location = new System.Drawing.Point(402, 12);
+            this.btnShoppingLists.Location = new System.Drawing.Point(459, 16);
+            this.btnShoppingLists.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnShoppingLists.Name = "btnShoppingLists";
-            this.btnShoppingLists.Size = new System.Drawing.Size(188, 72);
+            this.btnShoppingLists.Size = new System.Drawing.Size(215, 96);
             this.btnShoppingLists.TabIndex = 4;
             this.btnShoppingLists.Text = "Lista zakupów";
             this.btnShoppingLists.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -194,13 +205,15 @@
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
             this.button4.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.button4.Location = new System.Drawing.Point(208, 90);
+            this.button4.Location = new System.Drawing.Point(238, 120);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(188, 77);
+            this.button4.Size = new System.Drawing.Size(215, 103);
             this.button4.TabIndex = 3;
             this.button4.Text = "Magazyn";
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // btnEmployee
             // 
@@ -212,9 +225,10 @@
             this.btnEmployee.ForeColor = System.Drawing.Color.White;
             this.btnEmployee.Image = ((System.Drawing.Image)(resources.GetObject("btnEmployee.Image")));
             this.btnEmployee.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnEmployee.Location = new System.Drawing.Point(9, 8);
+            this.btnEmployee.Location = new System.Drawing.Point(10, 11);
+            this.btnEmployee.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnEmployee.Name = "btnEmployee";
-            this.btnEmployee.Size = new System.Drawing.Size(180, 76);
+            this.btnEmployee.Size = new System.Drawing.Size(206, 101);
             this.btnEmployee.TabIndex = 2;
             this.btnEmployee.Text = "Pracownicy";
             this.btnEmployee.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -231,9 +245,10 @@
             this.btnCustomersList.ForeColor = System.Drawing.Color.White;
             this.btnCustomersList.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersList.Image")));
             this.btnCustomersList.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnCustomersList.Location = new System.Drawing.Point(208, 8);
+            this.btnCustomersList.Location = new System.Drawing.Point(238, 11);
+            this.btnCustomersList.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCustomersList.Name = "btnCustomersList";
-            this.btnCustomersList.Size = new System.Drawing.Size(188, 76);
+            this.btnCustomersList.Size = new System.Drawing.Size(215, 101);
             this.btnCustomersList.TabIndex = 1;
             this.btnCustomersList.Text = "Klienci";
             this.btnCustomersList.UseVisualStyleBackColor = true;
@@ -249,9 +264,10 @@
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.button1.Location = new System.Drawing.Point(9, 97);
+            this.button1.Location = new System.Drawing.Point(10, 129);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(180, 70);
+            this.button1.Size = new System.Drawing.Size(206, 93);
             this.button1.TabIndex = 0;
             this.button1.Text = "Usługi";
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -261,21 +277,23 @@
             // 
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(0, 173);
+            this.pictureBox2.Location = new System.Drawing.Point(0, 231);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(804, 464);
+            this.pictureBox2.Size = new System.Drawing.Size(919, 619);
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(798, 614);
+            this.ClientSize = new System.Drawing.Size(912, 819);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Warsztat";
