@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -9,45 +10,64 @@ using WarsztatSamochodowy.Utils;
 
 namespace WarsztatSamochodowy.Services
 {
-    internal class DatabaseService
+    internal class DatabaseService : IDisposable
     {
-        private MySqlConnection mySqlConnection;
-        private static readonly string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
-        private string sqlCommandString;
-        private MySqlCommand sqlCommand;
+        private readonly MySqlConnection mySqlConnection;
+        private const string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
+        private static DatabaseService? service = null;
+
         public DatabaseService()
         {
+            // Create and open the connection
             mySqlConnection = new MySqlConnection(connectionString);
-            sqlCommand = new MySqlCommand();
-            sqlCommand.Connection = mySqlConnection;
-            sqlCommandString = "";
-        }
-        private void executeNonQuery()
-        {
-            sqlCommand.CommandText = sqlCommandString;
             mySqlConnection.Open();
-            sqlCommand.ExecuteNonQuery();
+        }
+
+        public void Dispose()
+        {
+            // Close the connection when the application is shutting down
             mySqlConnection.Close();
-            sqlCommand.Parameters.Clear();
+        }
+
+        /// <summary>
+        /// Returns the DatabaseService object that holds the database connection.
+        /// </summary>
+        public static DatabaseService Get()
+        {
+            service ??= new DatabaseService();
+            return service;
+        }
+
+        public DataTable Select(string tableName)
+        {
+            var sqlDataAdapter = new MySqlDataAdapter($"SELECT * FROM `{tableName}`", mySqlConnection);
+
+            var dt = new DataTable();
+            sqlDataAdapter.Fill(dt);
+
+            return dt;
         }
         
         public void insert(string tableName, SortedDictionary<string, string> data)
         {
-            sqlCommandString = prepareInsertCommandString(tableName, data);
-            fillCommandWithData(data, "");
-            executeNonQuery();
+            string sqlCommandString = prepareInsertCommandString(tableName, data);
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
+            fillCommandWithData(sqlCommand, data);
+            sqlCommand.ExecuteNonQuery();
         }
         public void update(string tableName, SortedDictionary<string, string> conditions, SortedDictionary<string, string> valuesToSet)
         {
-            sqlCommandString = prepareUpdateCommandString(tableName, conditions.Keys.ToList(), valuesToSet.Keys.ToList());
-            prepareSqlUpdateCommand(conditions, valuesToSet);
-            executeNonQuery();
+            string sqlCommandString = prepareUpdateCommandString(tableName, conditions.Keys.ToList(), valuesToSet.Keys.ToList());
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
+            prepareSqlUpdateCommand(sqlCommand, conditions, valuesToSet);
+            sqlCommand.ExecuteNonQuery();
         }
         public void delete(string tableName, SortedDictionary<string, string> conditions)
         {
-            sqlCommandString = prepareDeleteCommandString(tableName, conditions.Keys.ToList());
-            fillCommandWithData(conditions, "");
-            executeNonQuery();
+            string sqlCommandString = prepareDeleteCommandString(tableName, conditions.Keys.ToList());
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
+            fillCommandWithData(sqlCommand, conditions);
+            sqlCommand.ExecuteNonQuery();
         }
         
         private string prepareInsertCommandString(string tableName, SortedDictionary<string, string> data)
@@ -87,18 +107,19 @@ namespace WarsztatSamochodowy.Services
             return deleteStringBuilder.ToString();
         }
 
-        private void fillCommandWithData(SortedDictionary<string, string> data, string identyfingPrefix)
+        private void fillCommandWithData(MySqlCommand sqlCommand, SortedDictionary<string, string> data, string identyfingPrefix = "")
         {
+            sqlCommand ??= new MySqlCommand() { Connection = mySqlConnection };
+
             foreach (var dataEntry in data)
             {
                 sqlCommand.Parameters.AddWithValue("@" + identyfingPrefix + dataEntry.Key, dataEntry.Value);
             }
         }
-        private void prepareSqlUpdateCommand(SortedDictionary<string, string> conditions, SortedDictionary<string, string> valuesToSet)
+        private void prepareSqlUpdateCommand(MySqlCommand sqlCommand, SortedDictionary<string, string> conditions, SortedDictionary<string, string> valuesToSet)
         {
-            fillCommandWithData(conditions, "s");
-            fillCommandWithData(valuesToSet, "u");
+            fillCommandWithData(sqlCommand, conditions, "s");
+            fillCommandWithData(sqlCommand, valuesToSet, "u");
         }
-        
     }
 }

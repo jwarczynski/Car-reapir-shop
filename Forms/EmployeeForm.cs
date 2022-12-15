@@ -22,9 +22,6 @@ namespace WarsztatSamochodowy.Forms
         private string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
         private MySqlConnection mySqlConnection;
         private MySqlCommand mySqlCommand;
-        private MySqlDataAdapter sqlDataAdapter;
-        private DataTable dataTable;
-        private DatabaseService service;
 
         private SortedDictionary<string, string> selectedEmployee;
         private SortedDictionary<string, string> updatedEmployee;
@@ -35,7 +32,6 @@ namespace WarsztatSamochodowy.Forms
             showAll();
             selectedEmployee = new SortedDictionary<string, string>();
             updatedEmployee = new SortedDictionary<string, string>();
-            service = new DatabaseService();
         }
 
         private void setupConnection()
@@ -46,15 +42,11 @@ namespace WarsztatSamochodowy.Forms
         {
             try
             {
-                dataTable = new DataTable();
-                mySqlConnection.Open();
-                sqlDataAdapter = new MySqlDataAdapter("SELECT * FROM EMPLOYEES", mySqlConnection);
-                sqlDataAdapter.Fill(dataTable);
-                employeesDataGridView.DataSource = dataTable;
+                var employees = DatabaseService.Get().Select(EMPLOYEE_TABLE);
+                employeesDataGridView.DataSource = employees;
                 employeesDataGridView.Columns[0].HeaderText = "Imie i Nazwisko";
                 employeesDataGridView.Columns[1].HeaderText = "Płaca";
                 employeesDataGridView.Columns[2].HeaderText = "Etat";
-                mySqlConnection.Close();
             }
             catch (Exception e)
             {
@@ -92,15 +84,15 @@ namespace WarsztatSamochodowy.Forms
             employeeMap.Add("wage", employee.wage.ToString());
             employeeMap.Add("roleName",  employee.role);
 
-            service.insert("Employees", employeeMap);
+            DatabaseService.Get().insert("Employees", employeeMap);
         }
         private void deleteEmployee()
         {
-            service.delete(EMPLOYEE_TABLE, selectedEmployee);
+            DatabaseService.Get().delete(EMPLOYEE_TABLE, selectedEmployee);
         }
         private void updateEmployee()
         {
-            service.update(EMPLOYEE_TABLE, selectedEmployee, updatedEmployee);
+            DatabaseService.Get().update(EMPLOYEE_TABLE, selectedEmployee, updatedEmployee);
         }
 
         private void clear()
