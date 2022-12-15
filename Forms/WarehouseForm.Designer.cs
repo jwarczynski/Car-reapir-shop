@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lvPartsList = new System.Windows.Forms.ListView();
+            this.lvPartsList = new System.Windows.Forms.DataGridView();
             this.chPartName = new System.Windows.Forms.ColumnHeader();
             this.chPartCode = new System.Windows.Forms.ColumnHeader();
             this.chInStock = new System.Windows.Forms.ColumnHeader();
@@ -38,47 +38,20 @@
             this.btnEditPart = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnShoppingLists = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.lvPartsList)).BeginInit();
             this.SuspendLayout();
             // 
             // lvPartsList
             // 
-            this.lvPartsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chPartName,
-            this.chPartCode,
-            this.chInStock,
-            this.chMaxStock,
-            this.chUnitPrice});
+            this.lvPartsList.AllowUserToAddRows = false;
+            this.lvPartsList.AllowUserToDeleteRows = false;
+            this.lvPartsList.ColumnHeadersHeight = 29;
             this.lvPartsList.Location = new System.Drawing.Point(12, 12);
             this.lvPartsList.Name = "lvPartsList";
+            this.lvPartsList.RowHeadersWidth = 51;
+            this.lvPartsList.ShowEditingIcon = false;
             this.lvPartsList.Size = new System.Drawing.Size(695, 426);
             this.lvPartsList.TabIndex = 0;
-            this.lvPartsList.UseCompatibleStateImageBehavior = false;
-            this.lvPartsList.View = System.Windows.Forms.View.Details;
-            // 
-            // chPartName
-            // 
-            this.chPartName.Text = "Nazwa części";
-            this.chPartName.Width = 180;
-            // 
-            // chPartCode
-            // 
-            this.chPartCode.Text = "Kod części";
-            this.chPartCode.Width = 120;
-            // 
-            // chInStock
-            // 
-            this.chInStock.Text = "W magazynie";
-            this.chInStock.Width = 120;
-            // 
-            // chMaxStock
-            // 
-            this.chMaxStock.Text = "Poj. magazynu";
-            this.chMaxStock.Width = 120;
-            // 
-            // chUnitPrice
-            // 
-            this.chUnitPrice.Text = "Cena jedn.";
-            this.chUnitPrice.Width = 120;
             // 
             // btnAddPart
             // 
@@ -133,13 +106,15 @@
             this.MinimizeBox = false;
             this.Name = "WarehouseForm";
             this.Text = "Magazyn";
+            this.Load += new System.EventHandler(this.WarehouseForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.lvPartsList)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private ListView lvPartsList;
+        private DataGridView lvPartsList;
         private ColumnHeader chPartName;
         private ColumnHeader chPartCode;
         private ColumnHeader chInStock;

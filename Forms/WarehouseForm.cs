@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using WarsztatSamochodowy.Models;
+using WarsztatSamochodowy.Services;
+
 namespace WarsztatSamochodowy.Forms
 {
     public partial class WarehouseForm : Form
@@ -27,6 +30,21 @@ namespace WarsztatSamochodowy.Forms
         {
             var editPartForm = new EditPartForm();
             editPartForm.ShowDialog();
+        }
+
+        private void WarehouseForm_Load(object sender, EventArgs e)
+        {
+            var parts = DatabaseService.Get().Select("parts");
+
+            lvPartsList.DataSource = parts;
+            lvPartsList.Columns[0].HeaderText = "Kod części";
+            lvPartsList.Columns[1].HeaderText = "Nazwa";
+            lvPartsList.Columns[2].HeaderText = "Cena jedn.";
+            lvPartsList.Columns[3].HeaderText = "W magazynie";
+            lvPartsList.Columns[4].HeaderText = "Pojemność magazynu";
+            
+            foreach(DataGridViewColumn column in lvPartsList.Columns)
+                column.ReadOnly = true;
         }
     }
 }
