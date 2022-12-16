@@ -28,23 +28,36 @@ namespace WarsztatSamochodowy.Forms
 
         private void btnAddPart_Click(object sender, EventArgs e)
         {
-            var editPartForm = new EditPartForm();
+            var editPartForm = new EditPartForm(null);
+            editPartForm.ShowDialog();
+        }
+
+        private void btnEditPart_Click(object sender, EventArgs e)
+        {
+            // TODO: Retrieve selected part code
+            var editPartForm = new EditPartForm("000");
             editPartForm.ShowDialog();
         }
 
         private void WarehouseForm_Load(object sender, EventArgs e)
         {
-            var parts = DatabaseService.Get().Select("parts");
+            var parts = DatabaseService.Get().Select(DatabaseService.TABLE_PARTS);
+            if (parts == null) return;
+            foreach(var part in parts)
+            {
+                var lvItem = new ListViewItem(part.ToArray());
+                lvPartsList.Items.Add(lvItem);
+            }
 
-            lvPartsList.DataSource = parts;
-            lvPartsList.Columns[0].HeaderText = "Kod części";
-            lvPartsList.Columns[1].HeaderText = "Nazwa";
-            lvPartsList.Columns[2].HeaderText = "Cena jedn.";
-            lvPartsList.Columns[3].HeaderText = "W magazynie";
-            lvPartsList.Columns[4].HeaderText = "Pojemność magazynu";
+            //lvPartsList.DataSource = parts;
+            //lvPartsList.Columns[0].HeaderText = "Kod części";
+            //lvPartsList.Columns[1].HeaderText = "Nazwa";
+            //lvPartsList.Columns[2].HeaderText = "Cena jedn.";
+            //lvPartsList.Columns[3].HeaderText = "W magazynie";
+            //lvPartsList.Columns[4].HeaderText = "Pojemność magazynu";
             
-            foreach(DataGridViewColumn column in lvPartsList.Columns)
-                column.ReadOnly = true;
+            //foreach(DataGridViewColumn column in lvPartsList.Columns)
+            //    column.ReadOnly = true;
         }
     }
 }

@@ -12,6 +12,8 @@ namespace WarsztatSamochodowy.Services
 {
     internal class DatabaseService : IDisposable
     {
+        public const string TABLE_PARTS = "parts";
+
         private readonly MySqlConnection mySqlConnection;
         private const string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
         private static DatabaseService? service = null;
@@ -38,14 +40,33 @@ namespace WarsztatSamochodowy.Services
             return service;
         }
 
-        public DataTable Select(string tableName)
+        public List<List<string?>> Select(string tableName, SortedDictionary<string, string>? conditions = null)
         {
-            var sqlDataAdapter = new MySqlDataAdapter($"SELECT * FROM `{tableName}`", mySqlConnection);
+            string sqlCommandString = prepareSelectCommandString(tableName, conditions?.Keys.ToList());
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
 
-            var dt = new DataTable();
-            sqlDataAdapter.Fill(dt);
+            if (conditions != null)
+                fillCommandWithData(sqlCommand, conditions);
+            sqlCommand.Prepare();
 
-            return dt;
+            using var reader = sqlCommand.ExecuteReader();
+            List<List<string?>> rows = new();
+
+            while (reader.Read()) { 
+                var row = new List<string?>();
+                for(int i = 0; i < reader.FieldCount; i++)
+                {
+                    row.Add(reader.GetValue(i).ToString());
+                }
+                rows.Add(row);
+            }
+
+            // var sqlDataAdapter = new MySqlDataAdapter(sqlCommand.CommandText, mySqlConnection);
+
+            //var dt = new DataTable();
+            //sqlDataAdapter.Fill(dt);
+
+            return rows;
         }
         
         public void insert(string tableName, SortedDictionary<string, string> data)
@@ -70,6 +91,20 @@ namespace WarsztatSamochodowy.Services
             sqlCommand.ExecuteNonQuery();
         }
         
+        private string prepareSelectCommandString(string tableName, List<string>? conditions)
+        {
+            StringBuilder selectStringBuilder = new StringBuilder();
+            selectStringBuilder.Append($"SELECT * FROM `{tableName}`");
+
+            if(conditions != null && conditions.Count > 0)
+            {
+                selectStringBuilder.Append(" WHERE ");
+                string whereClause = CommandStringBuildingHelper.buildUpdatePattern("AND", conditions, true, "");
+                selectStringBuilder.Append(whereClause);
+            }
+
+            return selectStringBuilder.ToString();
+        }
         private string prepareInsertCommandString(string tableName, SortedDictionary<string, string> data)
         {
             StringBuilder commandBuilder = new StringBuilder();
@@ -88,11 +123,11 @@ namespace WarsztatSamochodowy.Services
             updateStringBuilder.Append("UPDATE " + tableName);
             
             updateStringBuilder.Append(" SET ");
-            string setClause = CommandStringBuildingHelper.buildUpdatePattern(", ", attributesToUpdate, true, 'u') ;
+            string setClause = CommandStringBuildingHelper.buildUpdatePattern(", ", attributesToUpdate, true, "u") ;
             updateStringBuilder.Append(setClause);
 
             updateStringBuilder.Append(" WHERE ");
-            string whereClause = CommandStringBuildingHelper.buildUpdatePattern("AND", conditions, true, 's');
+            string whereClause = CommandStringBuildingHelper.buildUpdatePattern("AND", conditions, true, "s");
             updateStringBuilder.Append(whereClause);
 
             return updateStringBuilder.ToString();

@@ -221,6 +221,7 @@
             this.Name = "EditPartForm";
             this.ShowInTaskbar = false;
             this.Text = "Część";
+            this.Load += new System.EventHandler(this.EditPartForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
