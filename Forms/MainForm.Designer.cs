@@ -42,7 +42,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.btnEmployee = new System.Windows.Forms.Button();
             this.btnCustomersList = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_service = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -77,7 +77,7 @@
             this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.btnEmployee);
             this.groupBox1.Controls.Add(this.btnCustomersList);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btn_service);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(57)))), ((int)(((byte)(57)))));
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
@@ -239,23 +239,24 @@
             this.btnCustomersList.UseVisualStyleBackColor = true;
             this.btnCustomersList.Click += new System.EventHandler(this.btnCustomersList_Click);
             // 
-            // button1
+            // btn_service
             // 
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.button1.Location = new System.Drawing.Point(9, 97);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(180, 70);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Usługi";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_service.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_service.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btn_service.FlatAppearance.BorderSize = 0;
+            this.btn_service.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_service.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_service.ForeColor = System.Drawing.Color.White;
+            this.btn_service.Image = ((System.Drawing.Image)(resources.GetObject("btn_service.Image")));
+            this.btn_service.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btn_service.Location = new System.Drawing.Point(9, 97);
+            this.btn_service.Name = "btn_service";
+            this.btn_service.Size = new System.Drawing.Size(180, 70);
+            this.btn_service.TabIndex = 0;
+            this.btn_service.Text = "Usługi";
+            this.btn_service.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btn_service.UseVisualStyleBackColor = true;
+            this.btn_service.Click += new System.EventHandler(this.btn_service_Click);
             // 
             // pictureBox2
             // 
@@ -293,7 +294,7 @@
         private PictureBox pictureBox1;
         private Panel panel1;
         private GroupBox groupBox1;
-        private Button button1;
+        private Button btn_service;
         private Panel panel2;
         private PictureBox pictureBox2;
         private Button button6;

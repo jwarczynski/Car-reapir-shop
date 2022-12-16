@@ -41,5 +41,11 @@ namespace WarsztatSamochodowy
             var employeeForm = new EmployeeForm();
             employeeForm.Show();
         }
+
+        private void btn_service_Click(object sender, EventArgs e)
+        {
+            var ServiceForm = new ServiceForm();
+            ServiceForm.Show();
+        }
     }
 }
