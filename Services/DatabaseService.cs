@@ -10,56 +10,122 @@ using WarsztatSamochodowy.Utils;
 
 namespace WarsztatSamochodowy.Services
 {
-    internal class DatabaseService
+    internal class DatabaseService : IDisposable
     {
-        private MySqlConnection mySqlConnection;
-        private static readonly string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
-        private string sqlCommandString;
-        private MySqlCommand sqlCommand;
+        public const string TABLE_PARTS = "parts";
+
+        private readonly MySqlConnection mySqlConnection;
+        private const string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
+        private static DatabaseService? service = null;
+
         public DatabaseService()
         {
+            // Create and open the connection
             mySqlConnection = new MySqlConnection(connectionString);
-            sqlCommand = new MySqlCommand();
-            sqlCommand.Connection = mySqlConnection;
-            sqlCommandString = "";
-        }
-        private void executeNonQuery()
-        {
-            sqlCommand.CommandText = sqlCommandString;
             mySqlConnection.Open();
-            sqlCommand.ExecuteNonQuery();
+        }
+
+        public void Dispose()
+        {
+            // Close the connection when the application is shutting down
             mySqlConnection.Close();
-            sqlCommand.Parameters.Clear();
+        }
+
+        /// <summary>
+        /// Returns the DatabaseService object that holds the database connection.
+        /// </summary>
+        public static DatabaseService Get()
+        {
+            service ??= new DatabaseService();
+            return service;
+        }
+
+        public List<List<string?>> Select(string tableName, SortedDictionary<string, string>? conditions = null)
+        {
+            string sqlCommandString = prepareSelectCommandString(tableName, conditions?.Keys.ToList());
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
+
+            if (conditions != null)
+                fillCommandWithData(sqlCommand, conditions);
+            sqlCommand.Prepare();
+
+            using var reader = sqlCommand.ExecuteReader();
+            List<List<string?>> rows = new();
+
+            while (reader.Read()) { 
+                var row = new List<string?>();
+                for(int i = 0; i < reader.FieldCount; i++)
+                {
+                    row.Add(reader.GetValue(i).ToString());
+                }
+                rows.Add(row);
+            }
+
+            return rows;
         }
         
-        public DataTable selectAllToTable(string tableName)
+        public DataTable selectAllToTable(string tableName, List<string> attributesNames)
         {
             DataTable dataTable = new DataTable();
-            mySqlConnection.Open();
-            MySqlDataAdapter sqlDataAdapter = new MySqlDataAdapter("SELECT * FROM " + tableName, mySqlConnection);
-            mySqlConnection.Close();
-            sqlDataAdapter.Fill(dataTable);
+            foreach(var attributeName in attributesNames)
+            {
+                dataTable.Columns.Add(attributeName, typeof(string));
+            }
+
+            string[]? row = new string[attributesNames.Count];
+            List<List<string?>> rows = Get().Select(tableName);
+
+            foreach(var dataRow in rows)
+            {
+                for(int i = 0;i< dataRow.Count; ++i)
+                {
+                    row[i] = dataRow.ElementAt(i);
+                }
+                dataTable.Rows.Add(row);
+            }
+
             return dataTable;
         }
+
         public void insert(string tableName, SortedDictionary<string, string> data)
         {
-            sqlCommandString = prepareInsertCommandString(tableName, data);
-            fillCommandWithData(data, "");
-            executeNonQuery();
+            string sqlCommandString = prepareInsertCommandString(tableName, data);
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
+            fillCommandWithData(sqlCommand, data);
+            sqlCommand.ExecuteNonQuery();
         }
+
         public void update(string tableName, SortedDictionary<string, string> conditions, SortedDictionary<string, string> valuesToSet)
         {
-            sqlCommandString = prepareUpdateCommandString(tableName, conditions.Keys.ToList(), valuesToSet.Keys.ToList());
-            prepareSqlUpdateCommand(conditions, valuesToSet);
-            executeNonQuery();
+            string sqlCommandString = prepareUpdateCommandString(tableName, conditions.Keys.ToList(), valuesToSet.Keys.ToList());
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
+            prepareSqlUpdateCommand(sqlCommand, conditions, valuesToSet);
+            sqlCommand.ExecuteNonQuery();
         }
+
         public void delete(string tableName, SortedDictionary<string, string> conditions)
         {
-            sqlCommandString = prepareDeleteCommandString(tableName, conditions.Keys.ToList());
-            fillCommandWithData(conditions, "");
-            executeNonQuery();
+            string sqlCommandString = prepareDeleteCommandString(tableName, conditions.Keys.ToList());
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
+            fillCommandWithData(sqlCommand, conditions);
+            sqlCommand.ExecuteNonQuery();
         }
         
+        private string prepareSelectCommandString(string tableName, List<string>? conditions)
+        {
+            StringBuilder selectStringBuilder = new StringBuilder();
+            selectStringBuilder.Append($"SELECT * FROM `{tableName}`");
+
+            if(conditions != null && conditions.Count > 0)
+            {
+                selectStringBuilder.Append(" WHERE ");
+                string whereClause = CommandStringBuildingHelper.buildUpdatePattern("AND", conditions, true, "");
+                selectStringBuilder.Append(whereClause);
+            }
+
+            return selectStringBuilder.ToString();
+        }
+
         private string prepareInsertCommandString(string tableName, SortedDictionary<string, string> data)
         {
             StringBuilder commandBuilder = new StringBuilder();
@@ -72,21 +138,23 @@ namespace WarsztatSamochodowy.Services
 
             return commandBuilder.ToString();
         }
+
         private string prepareUpdateCommandString(string tableName, List<string> conditions, List<string> attributesToUpdate)
         {
             StringBuilder updateStringBuilder = new StringBuilder();
             updateStringBuilder.Append("UPDATE " + tableName);
             
             updateStringBuilder.Append(" SET ");
-            string setClause = CommandStringBuildingHelper.buildUpdatePattern(", ", attributesToUpdate, true, 'u') ;
+            string setClause = CommandStringBuildingHelper.buildUpdatePattern(", ", attributesToUpdate, true, "u") ;
             updateStringBuilder.Append(setClause);
 
             updateStringBuilder.Append(" WHERE ");
-            string whereClause = CommandStringBuildingHelper.buildUpdatePattern("AND", conditions, true, 's');
+            string whereClause = CommandStringBuildingHelper.buildUpdatePattern("AND", conditions, true, "s");
             updateStringBuilder.Append(whereClause);
 
             return updateStringBuilder.ToString();
         }
+
         private string prepareDeleteCommandString(string tableName, List<string> conditions)
         {
             StringBuilder deleteStringBuilder = new StringBuilder();
@@ -97,18 +165,20 @@ namespace WarsztatSamochodowy.Services
             return deleteStringBuilder.ToString();
         }
 
-        private void fillCommandWithData(SortedDictionary<string, string> data, string identyfingPrefix)
+        private void fillCommandWithData(MySqlCommand sqlCommand, SortedDictionary<string, string> data, string identyfingPrefix = "")
         {
+            sqlCommand ??= new MySqlCommand() { Connection = mySqlConnection };
+
             foreach (var dataEntry in data)
             {
                 sqlCommand.Parameters.AddWithValue("@" + identyfingPrefix + dataEntry.Key, dataEntry.Value);
             }
         }
-        private void prepareSqlUpdateCommand(SortedDictionary<string, string> conditions, SortedDictionary<string, string> valuesToSet)
+
+        private void prepareSqlUpdateCommand(MySqlCommand sqlCommand, SortedDictionary<string, string> conditions, SortedDictionary<string, string> valuesToSet)
         {
-            fillCommandWithData(conditions, "s");
-            fillCommandWithData(valuesToSet, "u");
+            fillCommandWithData(sqlCommand, conditions, "s");
+            fillCommandWithData(sqlCommand, valuesToSet, "u");
         }
-        
     }
 }

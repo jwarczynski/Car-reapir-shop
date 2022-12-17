@@ -32,18 +32,19 @@ namespace WarsztatSamochodowy.Forms
         }
         private void showAll()
         {
-            serviceDataGridView.DataSource = service.selectAllToTable(SERVICE_TABLE);
-            serviceDataGridView.Columns[0].HeaderText = "Nazwa";
-            serviceDataGridView.Columns[1].HeaderText = "Cena";
+            List<string> attributesNames = new List<string> { "Nazwa", "Cena" };
+            serviceDataGridView.DataSource = DatabaseService.Get().selectAllToTable(SERVICE_TABLE, attributesNames);
+            //serviceDataGridView.Columns[0].HeaderText = "Nazwa";
+            //serviceDataGridView.Columns[1].HeaderText = "Cena";
             serviceDataGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             serviceDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
         }
         private void addservice(SortedDictionary<string, string> Newservice)
         {
             SortedDictionary<string, string> serviceMap = new SortedDictionary<string, string>();
-            serviceMap.Add("fullName", service["fullName"]);
-            serviceMap.Add("wage", service["age"].ToString());
-            serviceMap.Add("roleName", service["role"]);
+            serviceMap.Add("fullName", Newservice["fullName"]);
+            serviceMap.Add("wage", Newservice["age"].ToString());
+            serviceMap.Add("roleName", Newservice["role"]);
 
             service.insert("service", serviceMap);
         }

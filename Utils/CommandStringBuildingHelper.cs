@@ -25,7 +25,7 @@ namespace WarsztatSamochodowy.Utils
             }
             return patternBuilder.ToString();
         }
-        public static string buildUpdatePattern(string prefix, List<string> args, bool skipPrefixForFirstItem, char identyfingCharacter) {
+        public static string buildUpdatePattern(string prefix, List<string> args, bool skipPrefixForFirstItem, string identyfingCharacter) {
             StringBuilder patternBuilder = new StringBuilder();
             bool firstItem = true;
             foreach (var arg in args)
