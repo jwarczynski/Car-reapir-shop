@@ -40,9 +40,9 @@ namespace WarsztatSamochodowy.Services
             return service;
         }
 
-        public List<List<string?>> Select(string tableName, SortedDictionary<string, string>? conditions = null)
+        public List<List<string?>> Select(string tableName, SortedDictionary<string, string>? conditions = null, List<string>? fields = null)
         {
-            string sqlCommandString = prepareSelectCommandString(tableName, conditions?.Keys.ToList());
+            string sqlCommandString = prepareSelectCommandString(tableName, conditions?.Keys.ToList(), fields);
             var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
 
             if (conditions != null)
@@ -111,10 +111,15 @@ namespace WarsztatSamochodowy.Services
             sqlCommand.ExecuteNonQuery();
         }
         
-        private string prepareSelectCommandString(string tableName, List<string>? conditions)
+        private string prepareSelectCommandString(string tableName, List<string>? conditions, List<string>? fields)
         {
             StringBuilder selectStringBuilder = new StringBuilder();
-            selectStringBuilder.Append($"SELECT * FROM `{tableName}`");
+            string fieldsString = "*";
+            if(fields != null)
+            {
+                fieldsString = "`" + string.Join("`, `", fields) + "`";
+            }
+            selectStringBuilder.Append($"SELECT {fieldsString} FROM `{tableName}`");
 
             if(conditions != null && conditions.Count > 0)
             {
