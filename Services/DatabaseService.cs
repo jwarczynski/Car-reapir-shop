@@ -13,8 +13,9 @@ namespace WarsztatSamochodowy.Services
     internal class DatabaseService : IDisposable
     {
         public const string TABLE_PARTS = "parts";
-        public const string TABLE_CAR_MODELS = "carmodels";
-        public const string TABLE_CAR_MANUFACTURERS = "carmanufacturers";
+        public const string TABLE_CAR_MODELS = "carModels";
+        public const string TABLE_CAR_MANUFACTURERS = "carManufacturers";
+        public const string TABLE_PARTS_CAR_MODELS = "partsToCarModels";
 
         private readonly MySqlConnection mySqlConnection;
         private const string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
