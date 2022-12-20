@@ -50,11 +50,14 @@
             this.chUnitPrice});
             this.lvPartsList.FullRowSelect = true;
             this.lvPartsList.Location = new System.Drawing.Point(12, 12);
+            this.lvPartsList.MultiSelect = false;
             this.lvPartsList.Name = "lvPartsList";
             this.lvPartsList.Size = new System.Drawing.Size(695, 426);
             this.lvPartsList.TabIndex = 0;
             this.lvPartsList.UseCompatibleStateImageBehavior = false;
             this.lvPartsList.View = System.Windows.Forms.View.Details;
+            this.lvPartsList.ItemActivate += new System.EventHandler(this.lvPartsList_ItemActivate);
+            this.lvPartsList.SelectedIndexChanged += new System.EventHandler(this.lvPartsList_SelectedIndexChanged);
             // 
             // chPartName
             // 
@@ -93,6 +96,7 @@
             // 
             // btnEditPart
             // 
+            this.btnEditPart.Enabled = false;
             this.btnEditPart.Location = new System.Drawing.Point(713, 91);
             this.btnEditPart.Name = "btnEditPart";
             this.btnEditPart.Size = new System.Drawing.Size(94, 29);
