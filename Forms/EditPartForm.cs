@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using E = MySqlConnector.MySqlErrorCode;
 
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,12 @@ namespace WarsztatSamochodowy.Forms
                 MessageBox.Show(ex.Message, "Błąd wartości", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } catch(MySqlException ex)
             {
-                MessageBox.Show(ex.Message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string message = ex.ErrorCode switch
+                {
+                    E.DuplicateKeyEntry => "Część o podanym kodzie już istnieje.",
+                    _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
+                };
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -163,6 +169,14 @@ namespace WarsztatSamochodowy.Forms
         {
             var db = DatabaseService.Get();
 
+            if (tbPartCode.Text == "")
+            {
+                throw new ArgumentException("Pole 'Kod części' musi być wypełnione.");
+            }
+            if (tbPartName.Text == "")
+            {
+                throw new ArgumentException("Pole 'Nazwa części' musi być wypełnione.");
+            }
             if (!int.TryParse(tbMaxInStock.Text, out int maxInStock))
             {
                 throw new ArgumentException("Podaj poprawną liczbę całkowitą w polu 'Pojemność magazynu'.");
