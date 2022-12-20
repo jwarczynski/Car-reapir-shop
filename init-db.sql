@@ -10,16 +10,15 @@ CREATE TABLE `customers` (
     `phoneNumber` varchar(16) NOT NULL,
     `email` varchar(100) DEFAULT NULL,
     `taxId` varchar(16) DEFAULT NULL,
-    PRIMARY KEY (`customerId`)    
+    PRIMARY KEY (`customerId`)
 );
 
 DROP TABLE IF EXISTS `employeeRoles`;
 
 CREATE TABLE `employeeRoles` (
-    `roleName` varchar(20) NOT NULL,
+    `roleName` varchar(20) NOT NULL PRIMARY KEY,
     `minWage` decimal(5,2) NOT NULL,
-    `maxWage` decimal(5,2) NOT NULL,
-    PRIMARY KEY (`roleName`)    
+    `maxWage` decimal(5,2) NOT NULL
 );
 
 DROP TABLE IF EXISTS `employees`;
@@ -43,7 +42,7 @@ CREATE TABLE `carModels` (
     `modelName` varchar(50) NOT NULL,
     `manufacturerName` varchar(50) NOT NULL,
     PRIMARY KEY (`modelName`, `manufacturerName`),
-    CONSTRAINT `carModels_carManufaturers_fk` FOREIGN KEY (`manufacturerName`) REFERENCES `carManufacturers`(`manufacturerName`) 
+    CONSTRAINT `carModels_carManufaturers_fk` FOREIGN KEY (`manufacturerName`) REFERENCES `carManufacturers`(`manufacturerName`)
 );
 
 
@@ -53,7 +52,7 @@ CREATE TABLE `cars` (
     `licensePlate` varchar(20) NOT NULL PRIMARY KEY,
     `manufacturerName` varchar(50) NOT NULL,
     `modelName` varchar(50) NOT NULL,
-    CONSTRAINT `cars_carModel_fk` FOREIGN KEY (`modelName`, `manufacturerName`) REFERENCES `carModels`(`modelName`, `manufacturerName`) 
+    CONSTRAINT `cars_carModel_fk` FOREIGN KEY (`modelName`, `manufacturerName`) REFERENCES `carModels`(`modelName`, `manufacturerName`)
 );
 
 DROP TABLE IF EXISTS `orders`;
@@ -104,8 +103,8 @@ CREATE TABLE `partsToCarModels` (
     `modelName` varchar(50) NOT NULL,
     `manufacturerName` varchar(50) NOT NULL,
     `partCode` varchar(25) NOT NULL,
-    CONSTRAINT `partsToCarModels_carModel_fk` FOREIGN KEY (`modelName`, `manufacturerName`) REFERENCES `carModels` (`modelName`, `manufacturerName`),
-    CONSTRAINT `partsToCarModels_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`)
+    CONSTRAINT `partsToCarModels_carModel_fk` FOREIGN KEY (`modelName`, `manufacturerName`) REFERENCES `carModels` (`modelName`, `manufacturerName`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `partsToCarModels_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 DROP TABLE IF EXISTS `services`;
