@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -152,7 +153,7 @@ namespace WarsztatSamochodowy.Forms
                     ["partCode"] = tbPartCode.Text,
                     ["name"] = tbPartName.Text,
                     ["maxInStock"] = maxInStock.ToString(),
-                    ["cost"] = cost.ToString()
+                    ["cost"] = cost.ToString(CultureInfo.InvariantCulture)
                 });
             
             // TODO: Implement models saving
