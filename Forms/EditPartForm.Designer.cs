@@ -41,8 +41,10 @@
             this.btnPickPart = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.lvSelectedModels = new System.Windows.Forms.ListView();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.label5 = new System.Windows.Forms.Label();
             this.lvAllModels = new System.Windows.Forms.ListView();
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -160,14 +162,24 @@
             // 
             // lvSelectedModels
             // 
+            this.lvSelectedModels.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2});
+            this.lvSelectedModels.FullRowSelect = true;
+            this.lvSelectedModels.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvSelectedModels.Location = new System.Drawing.Point(310, 46);
             this.lvSelectedModels.Name = "lvSelectedModels";
             this.lvSelectedModels.Size = new System.Drawing.Size(200, 218);
             this.lvSelectedModels.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvSelectedModels.TabIndex = 2;
             this.lvSelectedModels.UseCompatibleStateImageBehavior = false;
-            this.lvSelectedModels.View = System.Windows.Forms.View.List;
+            this.lvSelectedModels.View = System.Windows.Forms.View.Details;
+            this.lvSelectedModels.ItemActivate += new System.EventHandler(this.lvSelectedModels_ItemActivate);
             this.lvSelectedModels.SelectedIndexChanged += new System.EventHandler(this.lvSelectedModels_SelectedIndexChanged);
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Model";
+            this.columnHeader2.Width = 170;
             // 
             // label5
             // 
@@ -180,14 +192,24 @@
             // 
             // lvAllModels
             // 
+            this.lvAllModels.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.lvAllModels.FullRowSelect = true;
+            this.lvAllModels.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvAllModels.Location = new System.Drawing.Point(4, 46);
             this.lvAllModels.Name = "lvAllModels";
             this.lvAllModels.Size = new System.Drawing.Size(200, 218);
             this.lvAllModels.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvAllModels.TabIndex = 0;
             this.lvAllModels.UseCompatibleStateImageBehavior = false;
-            this.lvAllModels.View = System.Windows.Forms.View.List;
+            this.lvAllModels.View = System.Windows.Forms.View.Details;
+            this.lvAllModels.ItemActivate += new System.EventHandler(this.lvAllModels_ItemActivate);
             this.lvAllModels.SelectedIndexChanged += new System.EventHandler(this.lvAllModels_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Model";
+            this.columnHeader1.Width = 170;
             // 
             // btnCancel
             // 
@@ -261,5 +283,7 @@
         private ListView lvAllModels;
         private Button btnCancel;
         private Button btnSave;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
     }
 }
