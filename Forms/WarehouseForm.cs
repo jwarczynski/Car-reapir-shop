@@ -30,6 +30,7 @@ namespace WarsztatSamochodowy.Forms
         {
             var editPartForm = new EditPartForm(null);
             editPartForm.ShowDialog();
+            ReloadParts();
         }
 
         private void btnEditPart_Click(object sender, EventArgs e)
@@ -44,16 +45,7 @@ namespace WarsztatSamochodowy.Forms
 
         private void WarehouseForm_Load(object sender, EventArgs e)
         {
-            var parts = DatabaseService.Get().Select(DatabaseService.TABLE_PARTS, null,
-                new() { "name", "partCode", "currentlyInStock", "maxInStock", "cost" });
-
-            if (parts == null) return;
-
-            foreach(var part in parts)
-            {
-                var lvItem = new ListViewItem(part.ToArray());
-                lvPartsList.Items.Add(lvItem);
-            }
+            ReloadParts();
         }
 
         private void lvPartsList_SelectedIndexChanged(object sender, EventArgs e)
@@ -76,6 +68,22 @@ namespace WarsztatSamochodowy.Forms
 
             var editPartForm = new EditPartForm(partCode);
             editPartForm.ShowDialog();
+            ReloadParts();
+        }
+
+        private void ReloadParts()
+        {
+            var parts = DatabaseService.Get().Select(DatabaseService.TABLE_PARTS, null,
+                new() { "name", "partCode", "currentlyInStock", "maxInStock", "cost" });
+
+            if (parts == null) return;
+
+            lvPartsList.Items.Clear();
+            foreach (var part in parts)
+            {
+                var lvItem = new ListViewItem(part.ToArray());
+                lvPartsList.Items.Add(lvItem);
+            }
         }
     }
 }
