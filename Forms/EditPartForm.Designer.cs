@@ -129,21 +129,25 @@
             // 
             // btnUnpickPart
             // 
+            this.btnUnpickPart.Enabled = false;
             this.btnUnpickPart.Location = new System.Drawing.Point(210, 81);
             this.btnUnpickPart.Name = "btnUnpickPart";
             this.btnUnpickPart.Size = new System.Drawing.Size(94, 29);
             this.btnUnpickPart.TabIndex = 10;
             this.btnUnpickPart.Text = "<< Usuń";
             this.btnUnpickPart.UseVisualStyleBackColor = true;
+            this.btnUnpickPart.Click += new System.EventHandler(this.btnUnpickPart_Click);
             // 
             // btnPickPart
             // 
+            this.btnPickPart.Enabled = false;
             this.btnPickPart.Location = new System.Drawing.Point(210, 46);
             this.btnPickPart.Name = "btnPickPart";
             this.btnPickPart.Size = new System.Drawing.Size(94, 29);
             this.btnPickPart.TabIndex = 9;
             this.btnPickPart.Text = "Dodaj >>";
             this.btnPickPart.UseVisualStyleBackColor = true;
+            this.btnPickPart.Click += new System.EventHandler(this.btnPickPart_Click);
             // 
             // label6
             // 
@@ -159,8 +163,11 @@
             this.lvSelectedModels.Location = new System.Drawing.Point(310, 46);
             this.lvSelectedModels.Name = "lvSelectedModels";
             this.lvSelectedModels.Size = new System.Drawing.Size(200, 218);
+            this.lvSelectedModels.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvSelectedModels.TabIndex = 2;
             this.lvSelectedModels.UseCompatibleStateImageBehavior = false;
+            this.lvSelectedModels.View = System.Windows.Forms.View.List;
+            this.lvSelectedModels.SelectedIndexChanged += new System.EventHandler(this.lvSelectedModels_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -176,8 +183,11 @@
             this.lvAllModels.Location = new System.Drawing.Point(4, 46);
             this.lvAllModels.Name = "lvAllModels";
             this.lvAllModels.Size = new System.Drawing.Size(200, 218);
+            this.lvAllModels.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvAllModels.TabIndex = 0;
             this.lvAllModels.UseCompatibleStateImageBehavior = false;
+            this.lvAllModels.View = System.Windows.Forms.View.List;
+            this.lvAllModels.SelectedIndexChanged += new System.EventHandler(this.lvAllModels_SelectedIndexChanged);
             // 
             // btnCancel
             // 
@@ -197,6 +207,7 @@
             this.btnSave.TabIndex = 10;
             this.btnSave.Text = "Zapisz";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // EditPartForm
             // 
@@ -205,7 +216,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(539, 458);
-            this.ControlBox = false;
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.groupBox1);
@@ -218,7 +228,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "EditPartForm";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Część";
             this.Load += new System.EventHandler(this.EditPartForm_Load);
