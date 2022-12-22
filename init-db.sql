@@ -70,13 +70,13 @@ CREATE TABLE `parts` (
     CONSTRAINT chk_lessThanMax CHECK (currentlyInStock <= maxInStock)
 );
 
-CREATE TABLE `shopingListsParts` (
+CREATE TABLE `shoppingListsParts` (
     `quantity` int NOT NULL,
     `partCode` varchar(25) NOT NULL,
     `listName` char(50) NOT NULL,
     PRIMARY KEY (`partCode`, `listName`),
-    CONSTRAINT `shopingListsParts_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`),
-    CONSTRAINT `shopingListsParts_shoppingList_fk` FOREIGN KEY (`listName`) REFERENCES `shoppingLists` (`name`)
+    CONSTRAINT `shoppingListsParts_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `shoppingListsParts_shoppingList_fk` FOREIGN KEY (`listName`) REFERENCES `shoppingLists` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE `partsToCarModels` (
@@ -115,3 +115,10 @@ CREATE TABLE `orderEntries` (
     CONSTRAINT `orderEntry_employee_fk` FOREIGN KEY (`employeeName`) REFERENCES `employees` (`fullName`),
     CONSTRAINT `orderEntry_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`)
 );
+
+
+CREATE VIEW `shoppingListsWithPartCount` AS
+    SELECT sl.`name` AS `name`, sl.`isFulfilled` AS `isFulfilled`, COUNT(*) AS `partsCount`
+        FROM `shoppingLists` sl
+        JOIN `shoppingListsParts` slp ON sl.`name` = slp.`listName`
+        GROUP BY sl.`name`;

@@ -16,6 +16,8 @@ namespace WarsztatSamochodowy.Services
         public const string TABLE_CAR_MODELS = "carModels";
         public const string TABLE_CAR_MANUFACTURERS = "carManufacturers";
         public const string TABLE_PARTS_CAR_MODELS = "partsToCarModels";
+        public const string TABLE_SHOPPING_LISTS = "shoppingLists";
+        public const string TABLE_SHOPPING_LISTS_WITH_PART_COUNT = "shoppingListsWithPartCount";
 
         private readonly MySqlConnection mySqlConnection;
         private const string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
