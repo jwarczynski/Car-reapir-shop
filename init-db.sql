@@ -64,9 +64,10 @@ CREATE TABLE `shoppingLists` (
 CREATE TABLE `parts` (
     `partCode` varchar(25) NOT NULL PRIMARY KEY,
     `name` varchar(50) NOT NULL,
-    `cost` decimal(5,2) NOT NULL,
-    `currentlyInStock` int NOT NULL DEFAULT 0,
-    `maxInStock` int
+    `cost` decimal(5,2) NOT NULL CHECK (cost >= 0),
+    `currentlyInStock` int NOT NULL DEFAULT 0 CHECK (currentlyInStock >= 0),
+    `maxInStock` int,
+    CONSTRAINT chk_lessThanMax CHECK (currentlyInStock <= maxInStock)
 );
 
 CREATE TABLE `shopingListsParts` (
