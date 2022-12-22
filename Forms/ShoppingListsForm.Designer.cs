@@ -47,6 +47,7 @@
             this.chListName,
             this.chPartsCount,
             this.chListStatus});
+            this.lvShoppingLists.FullRowSelect = true;
             this.lvShoppingLists.Location = new System.Drawing.Point(12, 12);
             this.lvShoppingLists.Name = "lvShoppingLists";
             this.lvShoppingLists.Size = new System.Drawing.Size(476, 426);
@@ -139,6 +140,7 @@
             this.MinimizeBox = false;
             this.Name = "ShoppingListsForm";
             this.Text = "Listy zakupów";
+            this.Load += new System.EventHandler(this.ShoppingListsForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
