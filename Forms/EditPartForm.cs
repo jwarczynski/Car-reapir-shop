@@ -23,6 +23,8 @@ namespace WarsztatSamochodowy.Forms
         protected List<(string, string)> originalCarModels = new();
         protected int currentlyInStock = 0;
 
+        protected const double MAX_COST = 1000.0;
+
         public EditPartForm(string? partCode)
         {
             InitializeComponent();
@@ -49,6 +51,7 @@ namespace WarsztatSamochodowy.Forms
                 string message = ex.ErrorCode switch
                 {
                     E.DuplicateKeyEntry => "Część o podanym kodzie już istnieje.",
+                    E.WarningDataOutOfRange => "Podano wartość spoza zakresu.",
                     // Constraint failed. Error code = 4025
                     (E)4025 => "Podano niespójne lub niepoprawne dane.",
                     _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
@@ -185,6 +188,8 @@ namespace WarsztatSamochodowy.Forms
 
             if (cost < 0)
                 throw new ArgumentException("Cena jednostkowa musi być nieujemna.");
+            if (cost >= MAX_COST)
+                throw new ArgumentException($"Cena jednostkowa musi być mniejsza niż {MAX_COST}");
             if (maxInStock < currentlyInStock)
                 throw new ArgumentException("Pojemność magazynu nie może być mniejsza niż liczba części danego rodzaju.");
 
