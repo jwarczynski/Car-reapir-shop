@@ -21,6 +21,7 @@ namespace WarsztatSamochodowy.Forms
     {
         protected string? partCode;
         protected List<(string, string)> originalCarModels = new();
+        protected int currentlyInStock = 0;
 
         public EditPartForm(string? partCode)
         {
@@ -48,6 +49,8 @@ namespace WarsztatSamochodowy.Forms
                 string message = ex.ErrorCode switch
                 {
                     E.DuplicateKeyEntry => "Część o podanym kodzie już istnieje.",
+                    // Constraint failed. Error code = 4025
+                    (E)4025 => "Podano niespójne lub niepoprawne dane.",
                     _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
                 };
                 MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -79,11 +82,13 @@ namespace WarsztatSamochodowy.Forms
                 }
                 var fields = parts[0];
 
-                tbPartName.Text = fields[0]?.ToString() ?? "";
-                tbPartCode.Text = fields[1]?.ToString() ?? "";
-                tbMaxInStock.Text = fields[3]?.ToString() ?? "";
-                tbUnitPrice.Text = fields[4]?.ToString() ?? "";
+                tbPartName.Text = fields[0] ?? "";
+                tbPartCode.Text = fields[1] ?? "";
+                tbMaxInStock.Text = fields[3] ?? "";
+                tbUnitPrice.Text = fields[4] ?? "";
 
+                currentlyInStock = int.Parse(fields[2] ?? "0");
+                tbInStock.Text = currentlyInStock.ToString();
 
                 var selectedModels = DatabaseService.Get().Select(DatabaseService.TABLE_PARTS_CAR_MODELS,
                     new() { ["partCode"] = partCode },
@@ -170,23 +175,20 @@ namespace WarsztatSamochodowy.Forms
             var db = DatabaseService.Get();
 
             if (tbPartCode.Text == "")
-            {
                 throw new ArgumentException("Pole 'Kod części' musi być wypełnione.");
-            }
             if (tbPartName.Text == "")
-            {
                 throw new ArgumentException("Pole 'Nazwa części' musi być wypełnione.");
-            }
             if (!int.TryParse(tbMaxInStock.Text, out int maxInStock))
-            {
                 throw new ArgumentException("Podaj poprawną liczbę całkowitą w polu 'Pojemność magazynu'.");
-            }
             if (!double.TryParse(tbUnitPrice.Text, out double cost))
-            {
                 throw new ArgumentException("Podaj poprawną liczbę w polu 'Cena jednostkowa'.");
-            }
 
-            if(partCode != null)
+            if (cost < 0)
+                throw new ArgumentException("Cena jednostkowa musi być nieujemna.");
+            if (maxInStock < currentlyInStock)
+                throw new ArgumentException("Pojemność magazynu nie może być mniejsza niż liczba części danego rodzaju.");
+
+            if (partCode != null)
             {
                 db.update(DatabaseService.TABLE_PARTS,
                     new () { ["partCode"] = partCode },

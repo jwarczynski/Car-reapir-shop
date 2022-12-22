@@ -47,6 +47,8 @@
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.tbInStock = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +73,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 81);
+            this.label3.Location = new System.Drawing.Point(12, 114);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(155, 20);
             this.label3.TabIndex = 2;
@@ -80,7 +82,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 114);
+            this.label4.Location = new System.Drawing.Point(12, 147);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(133, 20);
             this.label4.TabIndex = 3;
@@ -102,14 +104,14 @@
             // 
             // tbMaxInStock
             // 
-            this.tbMaxInStock.Location = new System.Drawing.Point(182, 78);
+            this.tbMaxInStock.Location = new System.Drawing.Point(182, 111);
             this.tbMaxInStock.Name = "tbMaxInStock";
             this.tbMaxInStock.Size = new System.Drawing.Size(180, 27);
             this.tbMaxInStock.TabIndex = 6;
             // 
             // tbUnitPrice
             // 
-            this.tbUnitPrice.Location = new System.Drawing.Point(182, 111);
+            this.tbUnitPrice.Location = new System.Drawing.Point(182, 144);
             this.tbUnitPrice.Name = "tbUnitPrice";
             this.tbUnitPrice.Size = new System.Drawing.Size(180, 27);
             this.tbUnitPrice.TabIndex = 7;
@@ -122,7 +124,7 @@
             this.groupBox1.Controls.Add(this.lvSelectedModels);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.lvAllModels);
-            this.groupBox1.Location = new System.Drawing.Point(12, 144);
+            this.groupBox1.Location = new System.Drawing.Point(12, 177);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(517, 270);
             this.groupBox1.TabIndex = 8;
@@ -213,7 +215,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(435, 420);
+            this.btnCancel.Location = new System.Drawing.Point(435, 453);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(94, 29);
             this.btnCancel.TabIndex = 9;
@@ -223,7 +225,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(335, 420);
+            this.btnSave.Location = new System.Drawing.Point(335, 453);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(94, 29);
             this.btnSave.TabIndex = 10;
@@ -231,13 +233,33 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // tbInStock
+            // 
+            this.tbInStock.Location = new System.Drawing.Point(182, 78);
+            this.tbInStock.Name = "tbInStock";
+            this.tbInStock.ReadOnly = true;
+            this.tbInStock.Size = new System.Drawing.Size(180, 27);
+            this.tbInStock.TabIndex = 11;
+            this.tbInStock.Text = "0";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 81);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(113, 20);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Stan magazynu:";
+            // 
             // EditPartForm
             // 
             this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(539, 458);
+            this.ClientSize = new System.Drawing.Size(539, 490);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.tbInStock);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.groupBox1);
@@ -285,5 +307,7 @@
         private Button btnSave;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
+        private TextBox tbInStock;
+        private Label label7;
     }
 }
