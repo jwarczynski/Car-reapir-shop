@@ -20,13 +20,52 @@ namespace WarsztatSamochodowy.Forms
             InitializeComponent();
         }
 
-        private void btnManageList_Click(object sender, EventArgs e)
+        private void ShoppingListsForm_Load(object sender, EventArgs e)
         {
-            var manageShoppingListForm = new ManageShoppingListForm();
-            manageShoppingListForm.Show();
+            ReloadLists();
         }
 
-        private void ShoppingListsForm_Load(object sender, EventArgs e)
+        private void lvShoppingLists_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshEditButtonState();
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            var manageShoppingListForm = new ManageShoppingListForm(null);
+            manageShoppingListForm.ShowDialog();
+        }
+
+        private void btnManageList_Click(object sender, EventArgs e)
+        {
+            EditSelectedList();
+        }
+
+        private void lvShoppingLists_ItemActivate(object sender, EventArgs e)
+        {
+            EditSelectedList();
+            RefreshEditButtonState();
+        }
+
+        private void EditSelectedList()
+        {
+            var selectedItems = lvShoppingLists.SelectedItems;
+            if (selectedItems.Count != 1)
+            {
+                MessageBox.Show("Wybierz listę, którą chcesz edytować.", "Nic nie wybrano", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            var selectedItem = selectedItems[0];
+            var listNameSubItem = selectedItem.SubItems[1];
+            var listName = listNameSubItem.Text;
+
+            var manageShoppingListForm = new ManageShoppingListForm(listName);
+            manageShoppingListForm.ShowDialog();
+            ReloadLists();
+        }
+
+        private void ReloadLists()
         {
             var rows = DatabaseService.Get().Select(DatabaseService.TABLE_SHOPPING_LISTS_WITH_PART_COUNT,
                 fields: new() { "name", "partsCount", "isFulfilled" });
@@ -45,6 +84,12 @@ namespace WarsztatSamochodowy.Forms
                 var lvItem = new ListViewItem(fields);
                 lvShoppingLists.Items.Add(lvItem);
             }
+            RefreshEditButtonState();
+        }
+
+        private void RefreshEditButtonState()
+        {
+            btnManageList.Enabled = (lvShoppingLists.SelectedItems.Count == 1);
         }
     }
 }

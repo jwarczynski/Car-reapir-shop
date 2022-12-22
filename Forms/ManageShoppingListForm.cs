@@ -12,7 +12,7 @@ namespace WarsztatSamochodowy.Forms
 {
     public partial class ManageShoppingListForm : Form
     {
-        public ManageShoppingListForm()
+        public ManageShoppingListForm(string? listName)
         {
             InitializeComponent();
         }

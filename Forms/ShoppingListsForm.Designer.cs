@@ -49,11 +49,14 @@
             this.chListStatus});
             this.lvShoppingLists.FullRowSelect = true;
             this.lvShoppingLists.Location = new System.Drawing.Point(12, 12);
+            this.lvShoppingLists.MultiSelect = false;
             this.lvShoppingLists.Name = "lvShoppingLists";
             this.lvShoppingLists.Size = new System.Drawing.Size(476, 426);
             this.lvShoppingLists.TabIndex = 0;
             this.lvShoppingLists.UseCompatibleStateImageBehavior = false;
             this.lvShoppingLists.View = System.Windows.Forms.View.Details;
+            this.lvShoppingLists.ItemActivate += new System.EventHandler(this.lvShoppingLists_ItemActivate);
+            this.lvShoppingLists.SelectedIndexChanged += new System.EventHandler(this.lvShoppingLists_SelectedIndexChanged);
             // 
             // chListName
             // 
@@ -78,9 +81,11 @@
             this.btnCreate.TabIndex = 1;
             this.btnCreate.Text = "Nowa lista...";
             this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // btnManageList
             // 
+            this.btnManageList.Enabled = false;
             this.btnManageList.Location = new System.Drawing.Point(494, 47);
             this.btnManageList.Name = "btnManageList";
             this.btnManageList.Size = new System.Drawing.Size(236, 29);
