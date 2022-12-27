@@ -66,5 +66,34 @@ namespace WarsztatSamochodowy.Utils
         {
             return buildNonEqualsPattern(args, ",", "@", true);
         }
+
+        public static string GetUntilOrEmpty(string text, string stopAt)
+        {
+            if (!String.IsNullOrWhiteSpace(text))
+            {
+                int charLocation = text.IndexOf(stopAt, StringComparison.Ordinal);
+
+                if (charLocation > 0)
+                {
+                    return text.Substring(0, charLocation);
+                }
+            }
+
+            return String.Empty;
+        }
+
+        public static string GetAfterCharUntilChar(string text, string startAfter, string stopAt)
+        {
+            if (!String.IsNullOrWhiteSpace(text))
+            {
+                int endLocation = text.IndexOf(stopAt, StringComparison.Ordinal);
+                int startLocation = text.IndexOf(startAfter, StringComparison.Ordinal) + 1;
+                int substringSize = endLocation - startLocation;
+
+                return text.Substring(startLocation, substringSize);
+            }
+            return String.Empty;
+        }
+
     }
 }
