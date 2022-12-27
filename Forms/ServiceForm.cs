@@ -39,6 +39,12 @@ namespace WarsztatSamochodowy.Forms
             serviceDataGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             serviceDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
         }
+
+        private void RefreshTable()
+        {
+            serviceDataGridView.DataSource = null;
+            showAll();
+        }
         private void addservice(SortedDictionary<string, string> Newservice)
         {
             SortedDictionary<string, string> serviceMap = new SortedDictionary<string, string>();
@@ -61,8 +67,8 @@ namespace WarsztatSamochodowy.Forms
 
         private void clear()
         {
-            firstNameTextBox.Text = "";
-            lastNameTextBox.Text = "";
+            //firstNameTextBox.Text = "";
+            //lastNameTextBox.Text = "";
         }
 
         //TODO delete or make sth worthy
@@ -103,6 +109,38 @@ namespace WarsztatSamochodowy.Forms
             }
 
             throw new ArgumentException("Imię oraz nazwisko powinny zaczynać się wileką literą i posiadać maksymalnie 20 znaków");
+        }
+
+        private void btnAddService_Click(object sender, EventArgs e)
+        {
+            EditServiceForm editServiceForm = new EditServiceForm();
+            editServiceForm.Show();
+        }
+
+        private void btnEditSerivce_Click(object sender, EventArgs e)
+        {
+            string? serviceNameToEdit = serviceDataGridView.SelectedRows[0].Cells[0].Value.ToString();
+            string? serviceCostToEdit = serviceDataGridView.SelectedRows[0].Cells[1].Value.ToString();
+            if(serviceNameToEdit != null)
+            {
+                SortedDictionary<string, string> selectedService = new SortedDictionary<string, string>();
+                selectedService.Add("name", serviceNameToEdit);
+                EditServiceForm editServiceForm = new EditServiceForm(serviceNameToEdit, serviceCostToEdit);
+                editServiceForm.ShowDialog();
+                RefreshTable();
+            } 
+        }
+
+        private void btnRemoveService_Click(object sender, EventArgs e)
+        {
+            string? serviceNameToDelete = serviceDataGridView.SelectedRows[0].Cells[0].Value.ToString();
+            if(serviceNameToDelete != null)
+            {
+                SortedDictionary<string, string> selectedService = new SortedDictionary<string, string>();
+                selectedService.Add("name", serviceNameToDelete);
+                DatabaseService.Get().delete(SERVICE_TABLE, selectedService);
+                RefreshTable();
+            }
         }
     }
 }
