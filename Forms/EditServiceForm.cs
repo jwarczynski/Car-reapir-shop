@@ -49,6 +49,7 @@ namespace WarsztatSamochodowy.Forms
             {
                 int index = clbAllParts.Items.IndexOf($"{part.ElementAt(1)} (#{part.ElementAt(2)})");
                 clbAllParts.SetItemChecked(index, true);
+                lbPartCounter.Items[lbPartCounter.Items.Count - 1] = part.ElementAt(3)!;
             }
         }
 
@@ -135,8 +136,8 @@ namespace WarsztatSamochodowy.Forms
             SortedDictionary<string, string> updatedServiceConditions = new SortedDictionary<string, string>();
             updatedServiceConditions.Add("name", serviceNameToUpdate!);
             DatabaseService.Get().update(SERVICES_TABLE, updatedServiceConditions, updatedServiceMap);
+
             SortedDictionary<string, string> servicePartsToDeleteClause = new SortedDictionary<string, string>();
-            //servicePartsToDeleteClause.Add("serviceName", serviceNameToUpdate!);
             servicePartsToDeleteClause.Add("serviceName", serviceName);
 
             DatabaseService.Get().delete(SERVICE_PARTS_TABLE, servicePartsToDeleteClause);
@@ -144,7 +145,6 @@ namespace WarsztatSamochodowy.Forms
             {
                 DatabaseService.Get().insert(SERVICE_PARTS_TABLE, tuple);
             }
-
         }
 
         private List<SortedDictionary<string, string>> GetServicePartsTuples(string serviceName)
