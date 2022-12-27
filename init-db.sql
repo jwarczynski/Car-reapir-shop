@@ -142,3 +142,22 @@ CREATE TABLE `orderEntries` (
     CONSTRAINT `orderEntry_employee_fk` FOREIGN KEY (`employeeName`) REFERENCES `employees` (`fullName`),
     CONSTRAINT `orderEntry_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`)
 );
+
+ALTER TABLE serviceParts
+DROP CONSTRAINT serviceParts_service_fk;
+
+ALTER TABLE serviceParts
+ADD CONSTRAINT serviceParts_service_fk
+FOREIGN KEY (serviceName)
+REFERENCES services(name)
+ON UPDATE CASCADE
+ON DELETE CASCADE;
+
+ALTER TABLE serviceParts
+RENAME COLUMN partCode TO partPartCode;
+
+CREATE OR REPLACE VIEW servicesPartsView AS
+SELECT serviceName, p.name AS partName, partPartCode AS partCode, quantity
+FROM services s JOIN serviceParts ON s.name = serviceName
+JOIN parts p ON partPartCode = p.partCode;
+
