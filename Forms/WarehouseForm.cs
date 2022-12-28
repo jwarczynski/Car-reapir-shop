@@ -30,34 +30,60 @@ namespace WarsztatSamochodowy.Forms
         {
             var editPartForm = new EditPartForm(null);
             editPartForm.ShowDialog();
+            ReloadParts();
         }
 
         private void btnEditPart_Click(object sender, EventArgs e)
         {
-            // TODO: Retrieve selected part code
-            var editPartForm = new EditPartForm("000");
-            editPartForm.ShowDialog();
+            EditSelectedPart();
+        }
+
+        private void lvPartsList_ItemActivate(object sender, EventArgs e)
+        {
+            EditSelectedPart();
         }
 
         private void WarehouseForm_Load(object sender, EventArgs e)
         {
-            var parts = DatabaseService.Get().Select(DatabaseService.TABLE_PARTS);
+            ReloadParts();
+        }
+
+        private void lvPartsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnEditPart.Enabled = (lvPartsList.SelectedItems.Count == 1);
+        }
+
+        private void EditSelectedPart()
+        {
+            var selectedItems = lvPartsList.SelectedItems;
+            if (selectedItems.Count != 1)
+            {
+                MessageBox.Show("Wybierz część, którą chcesz edytować.", "Nic nie wybrano", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            var selectedItem = selectedItems[0];
+            var partCodeSubItem = selectedItem.SubItems[1];
+            var partCode = partCodeSubItem.Text;
+
+            var editPartForm = new EditPartForm(partCode);
+            editPartForm.ShowDialog();
+            ReloadParts();
+        }
+
+        private void ReloadParts()
+        {
+            var parts = DatabaseService.Get().Select(DatabaseService.TABLE_PARTS, null,
+                new() { "name", "partCode", "currentlyInStock", "maxInStock", "cost" });
+
             if (parts == null) return;
-            foreach(var part in parts)
+
+            lvPartsList.Items.Clear();
+            foreach (var part in parts)
             {
                 var lvItem = new ListViewItem(part.ToArray());
                 lvPartsList.Items.Add(lvItem);
             }
-
-            //lvPartsList.DataSource = parts;
-            //lvPartsList.Columns[0].HeaderText = "Kod części";
-            //lvPartsList.Columns[1].HeaderText = "Nazwa";
-            //lvPartsList.Columns[2].HeaderText = "Cena jedn.";
-            //lvPartsList.Columns[3].HeaderText = "W magazynie";
-            //lvPartsList.Columns[4].HeaderText = "Pojemność magazynu";
-            
-            //foreach(DataGridViewColumn column in lvPartsList.Columns)
-            //    column.ReadOnly = true;
         }
     }
 }

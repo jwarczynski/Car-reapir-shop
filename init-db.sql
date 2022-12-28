@@ -1,8 +1,7 @@
-CREATE DATABASE `warsztat`; 
+DROP DATABASE IF EXISTS `warsztat`;
+CREATE DATABASE `warsztat`;
 
 USE `warsztat`;
-
-DROP TABLE IF EXISTS `customers`;
 
 CREATE TABLE `customers` (
     `customerId` int NOT NULL,
@@ -10,19 +9,14 @@ CREATE TABLE `customers` (
     `phoneNumber` varchar(16) NOT NULL,
     `email` varchar(100) DEFAULT NULL,
     `taxId` varchar(16) DEFAULT NULL,
-    PRIMARY KEY (`customerId`)    
+    PRIMARY KEY (`customerId`)
 );
-
-DROP TABLE IF EXISTS `employeeRoles`;
 
 CREATE TABLE `employeeRoles` (
-    `roleName` varchar(20) NOT NULL,
+    `roleName` varchar(20) NOT NULL PRIMARY KEY,
     `minWage` decimal(5,2) NOT NULL,
-    `maxWage` decimal(5,2) NOT NULL,
-    PRIMARY KEY (`roleName`)    
+    `maxWage` decimal(5,2) NOT NULL
 );
-
-DROP TABLE IF EXISTS `employees`;
 
 CREATE TABLE `employees` (
     `fullName` varchar(40) NOT NULL PRIMARY KEY,
@@ -31,32 +25,24 @@ CREATE TABLE `employees` (
     CONSTRAINT `employees_empRoles` FOREIGN KEY (`roleName`) REFERENCES `employeeRoles` (`roleName`)
 );
 
-DROP TABLE IF EXISTS `carManufacturers`;
-
 CREATE TABLE `carManufacturers` (
     `manufacturerName` varchar(50) NOT NULL PRIMARY KEY
 );
-
-DROP TABLE IF EXISTS `carModels`;
 
 CREATE TABLE `carModels` (
     `modelName` varchar(50) NOT NULL,
     `manufacturerName` varchar(50) NOT NULL,
     PRIMARY KEY (`modelName`, `manufacturerName`),
-    CONSTRAINT `carModels_carManufaturers_fk` FOREIGN KEY (`manufacturerName`) REFERENCES `carManufacturers`(`manufacturerName`) 
+    CONSTRAINT `carModels_carManufaturers_fk` FOREIGN KEY (`manufacturerName`) REFERENCES `carManufacturers`(`manufacturerName`)
 );
 
-
-DROP TABLE IF EXISTS `cars`;
 
 CREATE TABLE `cars` (
     `licensePlate` varchar(20) NOT NULL PRIMARY KEY,
     `manufacturerName` varchar(50) NOT NULL,
     `modelName` varchar(50) NOT NULL,
-    CONSTRAINT `cars_carModel_fk` FOREIGN KEY (`modelName`, `manufacturerName`) REFERENCES `carModels`(`modelName`, `manufacturerName`) 
+    CONSTRAINT `cars_carModel_fk` FOREIGN KEY (`modelName`, `manufacturerName`) REFERENCES `carModels`(`modelName`, `manufacturerName`)
 );
-
-DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
     `id` int NOT NULL PRIMARY KEY,
@@ -69,25 +55,20 @@ CREATE TABLE `orders` (
     CONSTRAINT `order_car_fk` FOREIGN KEY (`carLicensePlate`) REFERENCES `cars` (`licensePlate`)
 );
 
-DROP TABLE IF EXISTS `shoppingLists`;
-
 CREATE TABLE `shoppingLists` (
     `name` varchar(50) NOT NULL PRIMARY KEY,
     `isFulfilled` char(1) NOT NULL,
     `priority` int(1)
 );
 
-DROP TABLE IF EXISTS `parts`;
-
 CREATE TABLE `parts` (
     `partCode` varchar(25) NOT NULL PRIMARY KEY,
     `name` varchar(50) NOT NULL,
-    `cost` decimal(5,2) NOT NULL,
-    `currentlyInStock` int NOT NULL,
-    `maxInStock` int
+    `cost` decimal(5,2) NOT NULL CHECK (cost >= 0),
+    `currentlyInStock` int NOT NULL DEFAULT 0 CHECK (currentlyInStock >= 0),
+    `maxInStock` int,
+    CONSTRAINT chk_lessThanMax CHECK (currentlyInStock <= maxInStock)
 );
-
-DROP TABLE IF EXISTS `shoppingListparts`;
 
 CREATE TABLE `shopingListsParts` (
     `quantity` int NOT NULL,
@@ -98,24 +79,18 @@ CREATE TABLE `shopingListsParts` (
     CONSTRAINT `shopingListsParts_shoppingList_fk` FOREIGN KEY (`listName`) REFERENCES `shoppingLists` (`name`)
 );
 
-DROP TABLE IF EXISTS `partsToCarModels`;
-
 CREATE TABLE `partsToCarModels` (
     `modelName` varchar(50) NOT NULL,
     `manufacturerName` varchar(50) NOT NULL,
     `partCode` varchar(25) NOT NULL,
-    CONSTRAINT `partsToCarModels_carModel_fk` FOREIGN KEY (`modelName`, `manufacturerName`) REFERENCES `carModels` (`modelName`, `manufacturerName`),
-    CONSTRAINT `partsToCarModels_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`)
+    CONSTRAINT `partsToCarModels_carModel_fk` FOREIGN KEY (`modelName`, `manufacturerName`) REFERENCES `carModels` (`modelName`, `manufacturerName`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `partsToCarModels_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-DROP TABLE IF EXISTS `services`;
 
 CREATE TABLE `services` (
     `name` varchar(100) NOT NULL PRIMARY KEY,
     `standardCost` decimal(5,2) NOT NULL
 );
-
-DROP TABLE IF EXISTS `serviceParts`;
 
 CREATE TABLE `serviceParts` (
     `quantity` int NOT NULL,
@@ -125,8 +100,6 @@ CREATE TABLE `serviceParts` (
     CONSTRAINT `serviceParts_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`),
     CONSTRAINT `serviceParts_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`)
 );
-
-DROP TABLE IF EXISTS `orderEntries`;
 
 CREATE TABLE `orderEntries` (
     `position` int NOT NULL,
