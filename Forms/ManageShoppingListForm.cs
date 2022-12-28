@@ -31,8 +31,9 @@ namespace WarsztatSamochodowy.Forms
         protected void FillView()
         {
             tbListName.Text = listName ?? "";
-            tbListName.ReadOnly = (listName != null);
-            btnAddEntry.Enabled = (listName != null);
+            tbListName.ReadOnly =
+                btnAddEntry.Enabled =
+                btnMarkFulfilled.Enabled = (listName != null);
 
             if (listName == null) return;
 
@@ -104,6 +105,7 @@ namespace WarsztatSamochodowy.Forms
                 SaveListName(tbListName.Text);
                 tbListName.ReadOnly = true;
                 btnAddEntry.Enabled = true;
+                btnMarkFulfilled.Enabled = true;
             }
             catch (ArgumentException ex)
             {
