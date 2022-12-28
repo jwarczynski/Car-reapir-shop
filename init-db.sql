@@ -122,3 +122,8 @@ CREATE VIEW `shoppingListsWithPartCount` AS
         FROM `shoppingLists` sl
         JOIN `shoppingListsParts` slp ON sl.`name` = slp.`listName`
         GROUP BY sl.`name`;
+
+CREATE VIEW `shoppingListsPartsWithNames` AS
+    SELECT slp.`partCode` AS `partCode`, slp.`quantity` AS `quantity`, slp.`listName` AS `listName`, p.`name` AS `partName`
+        FROM `shoppingListsParts` slp
+        JOIN `parts` p ON slp.`partCode` = p.`partCode`;

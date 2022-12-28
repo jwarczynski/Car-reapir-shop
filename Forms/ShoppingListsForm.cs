@@ -57,7 +57,7 @@ namespace WarsztatSamochodowy.Forms
             }
 
             var selectedItem = selectedItems[0];
-            var listNameSubItem = selectedItem.SubItems[1];
+            var listNameSubItem = selectedItem.SubItems[0];
             var listName = listNameSubItem.Text;
 
             var manageShoppingListForm = new ManageShoppingListForm(listName);

@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbListName = new System.Windows.Forms.TextBox();
             this.btnRename = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lvListParts = new System.Windows.Forms.ListView();
             this.chPartName = new System.Windows.Forms.ColumnHeader();
             this.chQuantity = new System.Windows.Forms.ColumnHeader();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -64,6 +64,7 @@
             this.tbListName.ReadOnly = true;
             this.tbListName.Size = new System.Drawing.Size(330, 27);
             this.tbListName.TabIndex = 1;
+            this.tbListName.ReadOnlyChanged += new System.EventHandler(this.tbListName_ReadOnlyChanged);
             // 
             // btnRename
             // 
@@ -73,18 +74,20 @@
             this.btnRename.TabIndex = 2;
             this.btnRename.Text = "Zmień";
             this.btnRename.UseVisualStyleBackColor = true;
+            this.btnRename.Click += new System.EventHandler(this.btnRename_Click);
             // 
-            // listView1
+            // lvListParts
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvListParts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chPartName,
             this.chQuantity});
-            this.listView1.Location = new System.Drawing.Point(6, 26);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(322, 200);
-            this.listView1.TabIndex = 3;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.lvListParts.FullRowSelect = true;
+            this.lvListParts.Location = new System.Drawing.Point(6, 26);
+            this.lvListParts.Name = "lvListParts";
+            this.lvListParts.Size = new System.Drawing.Size(322, 200);
+            this.lvListParts.TabIndex = 3;
+            this.lvListParts.UseCompatibleStateImageBehavior = false;
+            this.lvListParts.View = System.Windows.Forms.View.Details;
             // 
             // chPartName
             // 
@@ -101,7 +104,7 @@
             this.groupBox1.Controls.Add(this.btnRemoveEntry);
             this.groupBox1.Controls.Add(this.btnEditEntry);
             this.groupBox1.Controls.Add(this.btnAddEntry);
-            this.groupBox1.Controls.Add(this.listView1);
+            this.groupBox1.Controls.Add(this.lvListParts);
             this.groupBox1.Location = new System.Drawing.Point(12, 39);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(493, 232);
@@ -201,7 +204,7 @@
         private Label label1;
         private TextBox tbListName;
         private Button btnRename;
-        private ListView listView1;
+        private ListView lvListParts;
         private ColumnHeader chPartName;
         private ColumnHeader chQuantity;
         private GroupBox groupBox1;
