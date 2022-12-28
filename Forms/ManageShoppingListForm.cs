@@ -19,6 +19,7 @@ namespace WarsztatSamochodowy.Forms
     public partial class ManageShoppingListForm : Form
     {
         protected string? listName;
+        protected bool isFulfilled = false;
 
         public ManageShoppingListForm(string? listName)
         {
@@ -48,9 +49,12 @@ namespace WarsztatSamochodowy.Forms
                     $"{entry[2]}"
                 };
                 var lvItem = new ListViewItem(fields);
+                lvItem.Tag = entry[0];
                 lvListParts.Items.Add(lvItem);
             }
         }
+
+        #region List renaming
 
         private void btnRename_Click(object sender, EventArgs e)
         {
@@ -137,5 +141,43 @@ namespace WarsztatSamochodowy.Forms
             }
             listName = newListName;
         }
+
+        #endregion
+
+        #region Part management
+
+        private void lvListParts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnEditEntry.Enabled =
+                btnRemoveEntry.Enabled = (lvListParts.SelectedItems.Count == 1) && !isFulfilled;
+            btnMoveEntry.Enabled = (lvListParts.SelectedItems.Count == 1);
+        }
+
+        private void btnRemoveEntry_Click(object sender, EventArgs e)
+        {
+            if (listName == null) return;
+
+            if (isFulfilled)
+            {
+                MessageBox.Show("Nie można skasować pozycji ze zrealizowanej listy zakupów.", "Lista została zrealizowana",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if(lvListParts.SelectedItems.Count != 1)
+            {
+                MessageBox.Show("Zaznacz pozycję do usunięcia.", "Nic nie wybrano");
+                return;
+            }
+
+            ListViewItem selectedItem = lvListParts.SelectedItems[0];
+            string partCode = (string)selectedItem.Tag;
+
+            DatabaseService.Get().delete(DatabaseService.TABLE_SHOPPING_LISTS_PARTS,
+                new() { ["listName"] = listName, ["partCode"] = partCode });
+            selectedItem.Remove();
+        }
+
+        #endregion
     }
 }

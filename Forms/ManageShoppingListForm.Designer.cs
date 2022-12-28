@@ -85,11 +85,13 @@
             this.chQuantity});
             this.lvListParts.FullRowSelect = true;
             this.lvListParts.Location = new System.Drawing.Point(6, 26);
+            this.lvListParts.MultiSelect = false;
             this.lvListParts.Name = "lvListParts";
             this.lvListParts.Size = new System.Drawing.Size(322, 200);
             this.lvListParts.TabIndex = 3;
             this.lvListParts.UseCompatibleStateImageBehavior = false;
             this.lvListParts.View = System.Windows.Forms.View.Details;
+            this.lvListParts.SelectedIndexChanged += new System.EventHandler(this.lvListParts_SelectedIndexChanged);
             // 
             // chPartName
             // 
@@ -134,6 +136,7 @@
             this.btnRemoveEntry.TabIndex = 6;
             this.btnRemoveEntry.Text = "Usuń pozycję";
             this.btnRemoveEntry.UseVisualStyleBackColor = true;
+            this.btnRemoveEntry.Click += new System.EventHandler(this.btnRemoveEntry_Click);
             // 
             // btnEditEntry
             // 

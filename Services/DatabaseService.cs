@@ -17,6 +17,7 @@ namespace WarsztatSamochodowy.Services
         public const string TABLE_CAR_MANUFACTURERS = "carManufacturers";
         public const string TABLE_PARTS_CAR_MODELS = "partsToCarModels";
         public const string TABLE_SHOPPING_LISTS = "shoppingLists";
+        public const string TABLE_SHOPPING_LISTS_PARTS = "shoppingListsParts";
         public const string TABLE_SHOPPING_LISTS_PARTS_WITH_NAMES = "shoppingListsPartsWithNames";
         public const string TABLE_SHOPPING_LISTS_WITH_PART_COUNT = "shoppingListsWithPartCount";
 
