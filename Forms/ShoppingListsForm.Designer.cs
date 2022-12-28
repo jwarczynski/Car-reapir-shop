@@ -53,7 +53,6 @@
             this.lvShoppingLists.Name = "lvShoppingLists";
             this.lvShoppingLists.Size = new System.Drawing.Size(476, 426);
             this.lvShoppingLists.TabIndex = 0;
-            this.lvShoppingLists.UseCompatibleStateImageBehavior = false;
             this.lvShoppingLists.View = System.Windows.Forms.View.Details;
             this.lvShoppingLists.ItemActivate += new System.EventHandler(this.lvShoppingLists_ItemActivate);
             this.lvShoppingLists.SelectedIndexChanged += new System.EventHandler(this.lvShoppingLists_SelectedIndexChanged);
@@ -61,12 +60,12 @@
             // chListName
             // 
             this.chListName.Text = "Nazwa listy";
-            this.chListName.Width = 240;
+            this.chListName.Width = 220;
             // 
             // chPartsCount
             // 
-            this.chPartsCount.Text = "Liczba części";
-            this.chPartsCount.Width = 100;
+            this.chPartsCount.Text = "Liczba pozycji";
+            this.chPartsCount.Width = 120;
             // 
             // chListStatus
             // 
