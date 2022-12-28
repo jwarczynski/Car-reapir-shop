@@ -118,9 +118,9 @@ CREATE TABLE `orderEntries` (
 
 
 CREATE VIEW `shoppingListsWithPartCount` AS
-    SELECT sl.`name` AS `name`, sl.`isFulfilled` AS `isFulfilled`, COUNT(*) AS `partsCount`
+    SELECT sl.`name` AS `name`, sl.`isFulfilled` AS `isFulfilled`, COUNT(slp.`partCode`) AS `partsCount`
         FROM `shoppingLists` sl
-        JOIN `shoppingListsParts` slp ON sl.`name` = slp.`listName`
+        LEFT JOIN `shoppingListsParts` slp ON sl.`name` = slp.`listName`
         GROUP BY sl.`name`;
 
 CREATE VIEW `shoppingListsPartsWithNames` AS
