@@ -65,6 +65,8 @@
             this.tbListName.Size = new System.Drawing.Size(330, 27);
             this.tbListName.TabIndex = 1;
             this.tbListName.ReadOnlyChanged += new System.EventHandler(this.tbListName_ReadOnlyChanged);
+            this.tbListName.DoubleClick += new System.EventHandler(this.tbListName_DoubleClick);
+            this.tbListName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbListName_KeyPress);
             // 
             // btnRename
             // 
@@ -114,6 +116,7 @@
             // 
             // btnMoveEntry
             // 
+            this.btnMoveEntry.Enabled = false;
             this.btnMoveEntry.Location = new System.Drawing.Point(334, 149);
             this.btnMoveEntry.Name = "btnMoveEntry";
             this.btnMoveEntry.Size = new System.Drawing.Size(151, 29);
@@ -124,6 +127,7 @@
             // 
             // btnRemoveEntry
             // 
+            this.btnRemoveEntry.Enabled = false;
             this.btnRemoveEntry.Location = new System.Drawing.Point(334, 105);
             this.btnRemoveEntry.Name = "btnRemoveEntry";
             this.btnRemoveEntry.Size = new System.Drawing.Size(151, 29);
@@ -133,6 +137,7 @@
             // 
             // btnEditEntry
             // 
+            this.btnEditEntry.Enabled = false;
             this.btnEditEntry.Location = new System.Drawing.Point(334, 70);
             this.btnEditEntry.Name = "btnEditEntry";
             this.btnEditEntry.Size = new System.Drawing.Size(151, 29);
