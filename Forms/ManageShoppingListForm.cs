@@ -21,20 +21,32 @@ namespace WarsztatSamochodowy.Forms
         protected string? listName;
         protected bool isFulfilled = false;
 
+        protected const string NOT_FULFILLED_TEXT = "Możesz oznaczyć tę listę jako zrealizowaną. Spowoduje to dodanie wszystkich zawartych na niej części do stanu magazynu. Operacji tej nie da się wycofać.";
+        protected const string FULFILLED_TEXT = "Ta lista została oznaczona jako zrealizowana. Wszystkie znajdujące się na niej części zostały dodane do stanu magazynu. Operacji tej nie da się wycofać.";
+
         public ManageShoppingListForm(string? listName)
         {
             InitializeComponent();
 
             this.listName = listName;
+
+            if(listName != null)
+            {
+                var rows = DatabaseService.Get().Select(DatabaseService.TABLE_SHOPPING_LISTS,
+                    new() { ["name"] = listName }, new() { "isFulfilled" });
+                var isFulfilled = rows[0][0];
+                this.isFulfilled = (isFulfilled != "0");
+            }
+            
             FillView();
+            RefreshButtonsState();
         }
 
         protected void FillView()
         {
             tbListName.Text = listName ?? "";
-            tbListName.ReadOnly =
-                btnAddEntry.Enabled =
-                btnMarkFulfilled.Enabled = (listName != null);
+            tbListName.ReadOnly = (listName != null);
+            lblFulfillText.Text = isFulfilled ? FULFILLED_TEXT : NOT_FULFILLED_TEXT;
 
             if (listName == null) return;
 
@@ -52,6 +64,14 @@ namespace WarsztatSamochodowy.Forms
                 lvItem.Tag = entry[0];
                 lvListParts.Items.Add(lvItem);
             }
+        }
+
+        protected void RefreshButtonsState()
+        {
+            btnEditEntry.Enabled =
+                btnRemoveEntry.Enabled = (lvListParts.SelectedItems.Count == 1) && !isFulfilled && (listName != null);
+            btnMoveEntry.Enabled = (lvListParts.SelectedItems.Count == 1) && (listName != null);
+            btnMarkFulfilled.Enabled = !isFulfilled && (listName != null);
         }
 
         #region List renaming
@@ -108,8 +128,7 @@ namespace WarsztatSamochodowy.Forms
 
                 SaveListName(tbListName.Text);
                 tbListName.ReadOnly = true;
-                btnAddEntry.Enabled = true;
-                btnMarkFulfilled.Enabled = true;
+                RefreshButtonsState();
             }
             catch (ArgumentException ex)
             {
@@ -148,9 +167,7 @@ namespace WarsztatSamochodowy.Forms
 
         private void lvListParts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnEditEntry.Enabled =
-                btnRemoveEntry.Enabled = (lvListParts.SelectedItems.Count == 1) && !isFulfilled;
-            btnMoveEntry.Enabled = (lvListParts.SelectedItems.Count == 1);
+            RefreshButtonsState();
         }
 
         private void btnRemoveEntry_Click(object sender, EventArgs e)
@@ -179,5 +196,33 @@ namespace WarsztatSamochodowy.Forms
         }
 
         #endregion
+
+        private void btnMarkFulfilled_Click(object sender, EventArgs e)
+        {
+            if (listName == null) return;
+
+            var result = MessageBox.Show($"Oznaczenie listy jako zrealizowana jest nieodwracalne. Czy oznaczyć listę „{listName}” jako zrealizowaną?",
+                "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No) return;
+
+            try
+            {
+                DatabaseService.Get().update(DatabaseService.TABLE_SHOPPING_LISTS,
+                    new() { ["name"] = listName }, new() { ["isFulfilled"] = "1" });
+                isFulfilled = true;
+                RefreshButtonsState();
+                lblFulfillText.Text = FULFILLED_TEXT;
+            }
+            catch(MySqlException ex)
+            {
+                string message = ex.ErrorCode switch
+                {
+                    _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
+                };
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+        }
     }
 }

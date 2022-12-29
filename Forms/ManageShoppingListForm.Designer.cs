@@ -43,7 +43,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnMarkFulfilled = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblFulfillText = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -160,7 +160,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.btnMarkFulfilled);
-            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.lblFulfillText);
             this.groupBox2.Location = new System.Drawing.Point(12, 277);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(493, 113);
@@ -176,14 +176,15 @@
             this.btnMarkFulfilled.TabIndex = 0;
             this.btnMarkFulfilled.Text = "Oznacz jako zrealizowaną";
             this.btnMarkFulfilled.UseVisualStyleBackColor = true;
+            this.btnMarkFulfilled.Click += new System.EventHandler(this.btnMarkFulfilled_Click);
             // 
-            // label2
+            // lblFulfillText
             // 
-            this.label2.Location = new System.Drawing.Point(7, 23);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(480, 64);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Możesz oznaczyć tę listę jako zrealizowaną. Spowoduje to dodanie wszystkich zawar" +
+            this.lblFulfillText.Location = new System.Drawing.Point(7, 23);
+            this.lblFulfillText.Name = "lblFulfillText";
+            this.lblFulfillText.Size = new System.Drawing.Size(480, 64);
+            this.lblFulfillText.TabIndex = 1;
+            this.lblFulfillText.Text = "Możesz oznaczyć tę listę jako zrealizowaną. Spowoduje to dodanie wszystkich zawar" +
     "tych na niej części do stanu magazynu. Operacji tej nie da się wycofać.";
             // 
             // ManageShoppingListForm
@@ -223,6 +224,6 @@
         private Button btnAddEntry;
         private GroupBox groupBox2;
         private Button btnMarkFulfilled;
-        private Label label2;
+        private Label lblFulfillText;
     }
 }
