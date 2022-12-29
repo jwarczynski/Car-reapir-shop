@@ -16,6 +16,12 @@ namespace WarsztatSamochodowy.Services
         public const string TABLE_CAR_MODELS = "carModels";
         public const string TABLE_CAR_MANUFACTURERS = "carManufacturers";
         public const string TABLE_PARTS_CAR_MODELS = "partsToCarModels";
+        public const string TABLE_SHOPPING_LISTS = "shoppingLists";
+        public const string TABLE_SHOPPING_LISTS_PARTS = "shoppingListsParts";
+        public const string TABLE_SHOPPING_LISTS_PARTS_WITH_NAMES = "shoppingListsPartsWithNames";
+        public const string TABLE_SHOPPING_LISTS_WITH_PART_COUNT = "shoppingListsWithPartCount";
+
+        public const string PROC_ADD_SHOPPING_LIST_ENTRY = "addShoppingListEntry";
 
         private readonly MySqlConnection mySqlConnection;
         private const string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
@@ -187,6 +193,33 @@ namespace WarsztatSamochodowy.Services
         {
             fillCommandWithData(sqlCommand, conditions, "s");
             fillCommandWithData(sqlCommand, valuesToSet, "u");
+        }
+
+        public void CallProcedure(string procedureName, List<string> arguments)
+        {
+            SortedDictionary<string, string> fields = new();
+            int i = 0;
+            foreach(var arg in arguments)
+            {
+                fields[$"arg{i}"] = arg;
+                i++;
+            }
+
+            string sqlCommandString = prepareCallCommandString(procedureName, fields);
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
+            fillCommandWithData(sqlCommand, fields);
+            sqlCommand.Prepare();
+            sqlCommand.ExecuteNonQuery();
+        }
+
+        private string prepareCallCommandString(string procName, SortedDictionary<string, string> args)
+        {
+            StringBuilder callStringBuilder = new();
+            callStringBuilder.Append($"CALL `{procName}`(");
+            callStringBuilder.Append(string.Join(", ", args.Keys.Select(k => $"@{k}")));
+            callStringBuilder.Append(")");
+
+            return callStringBuilder.ToString();
         }
     }
 }

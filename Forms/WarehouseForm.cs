@@ -41,6 +41,7 @@ namespace WarsztatSamochodowy.Forms
         private void lvPartsList_ItemActivate(object sender, EventArgs e)
         {
             EditSelectedPart();
+            RefreshEditButtonState();
         }
 
         private void WarehouseForm_Load(object sender, EventArgs e)
@@ -50,7 +51,7 @@ namespace WarsztatSamochodowy.Forms
 
         private void lvPartsList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnEditPart.Enabled = (lvPartsList.SelectedItems.Count == 1);
+            RefreshEditButtonState();
         }
 
         private void EditSelectedPart()
@@ -84,6 +85,12 @@ namespace WarsztatSamochodowy.Forms
                 var lvItem = new ListViewItem(part.ToArray());
                 lvPartsList.Items.Add(lvItem);
             }
+            RefreshEditButtonState();
+        }
+
+        private void RefreshEditButtonState()
+        {
+            btnEditPart.Enabled = (lvPartsList.SelectedItems.Count == 1);
         }
     }
 }

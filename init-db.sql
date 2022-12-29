@@ -70,13 +70,13 @@ CREATE TABLE `parts` (
     CONSTRAINT chk_lessThanMax CHECK (currentlyInStock <= maxInStock)
 );
 
-CREATE TABLE `shopingListsParts` (
+CREATE TABLE `shoppingListsParts` (
     `quantity` int NOT NULL,
     `partCode` varchar(25) NOT NULL,
     `listName` char(50) NOT NULL,
     PRIMARY KEY (`partCode`, `listName`),
-    CONSTRAINT `shopingListsParts_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`),
-    CONSTRAINT `shopingListsParts_shoppingList_fk` FOREIGN KEY (`listName`) REFERENCES `shoppingLists` (`name`)
+    CONSTRAINT `shoppingListsParts_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `shoppingListsParts_shoppingList_fk` FOREIGN KEY (`listName`) REFERENCES `shoppingLists` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE `partsToCarModels` (
@@ -95,10 +95,10 @@ CREATE TABLE `services` (
 CREATE TABLE `serviceParts` (
     `quantity` int NOT NULL,
     `serviceName` varchar(100) NOT NULL,
-    `partCode` varchar(25) NOT NULL,
+    `partPartCode` varchar(25) NOT NULL,
     PRIMARY KEY (`serviceName`, `partCode`),
-    CONSTRAINT `serviceParts_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`),
-    CONSTRAINT `serviceParts_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`)
+    CONSTRAINT `serviceParts_part_fk` FOREIGN KEY (`partPartCode`) REFERENCES `parts` (`partCode`),
+    CONSTRAINT `serviceParts_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `orderEntries` (
@@ -116,21 +116,33 @@ CREATE TABLE `orderEntries` (
     CONSTRAINT `orderEntry_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`)
 );
 
-ALTER TABLE serviceParts
-DROP CONSTRAINT serviceParts_service_fk;
 
-ALTER TABLE serviceParts
-ADD CONSTRAINT serviceParts_service_fk
-FOREIGN KEY (serviceName)
-REFERENCES services(name)
-ON UPDATE CASCADE
-ON DELETE CASCADE;
+CREATE VIEW `shoppingListsWithPartCount` AS
+    SELECT sl.`name` AS `name`, sl.`isFulfilled` AS `isFulfilled`, COUNT(slp.`partCode`) AS `partsCount`
+        FROM `shoppingLists` sl
+        LEFT JOIN `shoppingListsParts` slp ON sl.`name` = slp.`listName`
+        GROUP BY sl.`name`;
 
-ALTER TABLE serviceParts
-RENAME COLUMN partCode TO partPartCode;
+CREATE VIEW `shoppingListsPartsWithNames` AS
+    SELECT slp.`partCode` AS `partCode`, slp.`quantity` AS `quantity`, slp.`listName` AS `listName`, p.`name` AS `partName`
+        FROM `shoppingListsParts` slp
+        JOIN `parts` p ON slp.`partCode` = p.`partCode`;
+        
+CREATE VIEW servicesPartsView AS
+    SELECT serviceName, p.name AS partName, partPartCode AS partCode, quantity
+        FROM services s JOIN serviceParts ON s.name = serviceName
+        JOIN parts p ON partPartCode = p.partCode;
 
-CREATE OR REPLACE VIEW servicesPartsView AS
-SELECT serviceName, p.name AS partName, partPartCode AS partCode, quantity
-FROM services s JOIN serviceParts ON s.name = serviceName
-JOIN parts p ON partPartCode = p.partCode;
 
+DELIMITER $$
+CREATE PROCEDURE `addShoppingListEntry` (
+    IN listName CHAR(50),
+    IN partCode VARCHAR(25),
+    IN qty INT
+)
+BEGIN
+    INSERT INTO `shoppingListsParts` (`listName`, `partCode`, `quantity`)
+        VALUES (listName, partCode, qty)
+        ON DUPLICATE KEY UPDATE `quantity` = `quantity` + qty;
+END$$
+DELIMITER ;

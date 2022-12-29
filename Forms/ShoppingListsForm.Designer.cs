@@ -38,6 +38,8 @@
             this.btnSaveAutoList = new System.Windows.Forms.Button();
             this.cbAutoList = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnDeleteList = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,22 +49,26 @@
             this.chListName,
             this.chPartsCount,
             this.chListStatus});
+            this.lvShoppingLists.FullRowSelect = true;
             this.lvShoppingLists.Location = new System.Drawing.Point(12, 12);
+            this.lvShoppingLists.MultiSelect = false;
             this.lvShoppingLists.Name = "lvShoppingLists";
             this.lvShoppingLists.Size = new System.Drawing.Size(476, 426);
             this.lvShoppingLists.TabIndex = 0;
             this.lvShoppingLists.UseCompatibleStateImageBehavior = false;
             this.lvShoppingLists.View = System.Windows.Forms.View.Details;
+            this.lvShoppingLists.ItemActivate += new System.EventHandler(this.lvShoppingLists_ItemActivate);
+            this.lvShoppingLists.SelectedIndexChanged += new System.EventHandler(this.lvShoppingLists_SelectedIndexChanged);
             // 
             // chListName
             // 
             this.chListName.Text = "Nazwa listy";
-            this.chListName.Width = 240;
+            this.chListName.Width = 220;
             // 
             // chPartsCount
             // 
-            this.chPartsCount.Text = "Liczba części";
-            this.chPartsCount.Width = 100;
+            this.chPartsCount.Text = "Liczba pozycji";
+            this.chPartsCount.Width = 120;
             // 
             // chListStatus
             // 
@@ -77,9 +83,11 @@
             this.btnCreate.TabIndex = 1;
             this.btnCreate.Text = "Nowa lista...";
             this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
             // btnManageList
             // 
+            this.btnManageList.Enabled = false;
             this.btnManageList.Location = new System.Drawing.Point(494, 47);
             this.btnManageList.Name = "btnManageList";
             this.btnManageList.Size = new System.Drawing.Size(236, 29);
@@ -126,11 +134,32 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "W razie niskich zapasów, części zapisywane są na liście:";
             // 
+            // btnDeleteList
+            // 
+            this.btnDeleteList.Enabled = false;
+            this.btnDeleteList.Location = new System.Drawing.Point(494, 88);
+            this.btnDeleteList.Name = "btnDeleteList";
+            this.btnDeleteList.Size = new System.Drawing.Size(236, 29);
+            this.btnDeleteList.TabIndex = 4;
+            this.btnDeleteList.Text = "Usuń listę";
+            this.btnDeleteList.UseVisualStyleBackColor = true;
+            this.btnDeleteList.Click += new System.EventHandler(this.btnDeleteList_Click);
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(494, 120);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(236, 43);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Usuwanie jest dostępne wyłącznie dla pustych list.";
+            // 
             // ShoppingListsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(742, 450);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.btnDeleteList);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnManageList);
             this.Controls.Add(this.btnCreate);
@@ -139,6 +168,7 @@
             this.MinimizeBox = false;
             this.Name = "ShoppingListsForm";
             this.Text = "Listy zakupów";
+            this.Load += new System.EventHandler(this.ShoppingListsForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -156,5 +186,7 @@
         private Button btnSaveAutoList;
         private ComboBox cbAutoList;
         private Label label1;
+        private Button btnDeleteList;
+        private Label label2;
     }
 }

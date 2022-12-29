@@ -20,11 +20,23 @@ for manufacturer, modelList in zip(manufacturers, models):
         f.write(f'INSERT INTO `carModels` (`manufacturerName`, `modelName`) VALUES ("{manufacturer}", "{model}");\n')
 f.write('\n')
 
+f.write('-- Insert shopping lists\n')
+for i in range(3):
+    f.write(f'INSERT INTO `shoppingLists` (`name`, `isFulfilled`, `priority`) VALUES' + 
+        f' ("List {i}", {i == 0}, 0);\n')
+f.write('\n')
+
 f.write('-- Insert parts\n')
 for i in range(10):
     f.write(f'INSERT INTO `parts` (`partCode`, `name`, `cost`, `currentlyInStock`, `maxInStock`) VALUES' + 
         f' ("{i:0>3}", "Part {i}", {i}, {10+i}, {10*i+15});\n')
 f.write('\n')
+
+f.write('-- Add part to shopping lists\n');
+for i in range(3):
+    f.write(f'INSERT INTO `shoppingListsParts` (`quantity`, `partCode`, `listName`) VALUES ' + 
+        f' ({i*10+5}, "{i:0>3}", "List {i}");\n')
+f.write('\n');
 
 
 f.write('-- Insert car-part relations\n')
