@@ -8,6 +8,7 @@ namespace WarsztatSamochodowy.Forms
     public partial class EmployeeForm : Form
     {
         private static readonly string EMPLOYEE_TABLE = "EMPLOYEES";
+        private static readonly string EMPLOYEE_ROLE_TABLE = "EmployeeRoles";
 
         private SortedDictionary<string, string> selectedEmployee;
         private SortedDictionary<string, string> updatedEmployee;
@@ -23,6 +24,12 @@ namespace WarsztatSamochodowy.Forms
 
         private void showAll()
         {
+            roleListBox.Items.Clear();
+            List<List<string?>> employeeRoles = DatabaseService.Get().Select(EMPLOYEE_ROLE_TABLE);
+            foreach(var employeeRole in employeeRoles)
+            {
+                roleListBox.Items.Add(employeeRole.ElementAt(0));
+            }
             List<string> attributesNames = new List<string> { "Imie i Nazwisko", "Płaca", "Etat" };
             try
             {

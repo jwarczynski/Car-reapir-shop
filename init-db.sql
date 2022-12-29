@@ -95,10 +95,10 @@ CREATE TABLE `services` (
 CREATE TABLE `serviceParts` (
     `quantity` int NOT NULL,
     `serviceName` varchar(100) NOT NULL,
-    `partCode` varchar(25) NOT NULL,
+    `partPartCode` varchar(25) NOT NULL,
     PRIMARY KEY (`serviceName`, `partCode`),
-    CONSTRAINT `serviceParts_part_fk` FOREIGN KEY (`partCode`) REFERENCES `parts` (`partCode`),
-    CONSTRAINT `serviceParts_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`)
+    CONSTRAINT `serviceParts_part_fk` FOREIGN KEY (`partPartCode`) REFERENCES `parts` (`partCode`),
+    CONSTRAINT `serviceParts_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `orderEntries` (
@@ -127,6 +127,12 @@ CREATE VIEW `shoppingListsPartsWithNames` AS
     SELECT slp.`partCode` AS `partCode`, slp.`quantity` AS `quantity`, slp.`listName` AS `listName`, p.`name` AS `partName`
         FROM `shoppingListsParts` slp
         JOIN `parts` p ON slp.`partCode` = p.`partCode`;
+        
+CREATE VIEW servicesPartsView AS
+    SELECT serviceName, p.name AS partName, partPartCode AS partCode, quantity
+        FROM services s JOIN serviceParts ON s.name = serviceName
+        JOIN parts p ON partPartCode = p.partCode;
+
 
 DELIMITER $$
 CREATE PROCEDURE `addShoppingListEntry` (

@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             this.serviceDataGridView = new System.Windows.Forms.DataGridView();
-            this.label_price = new System.Windows.Forms.Label();
-            this.lastNameTextBox = new System.Windows.Forms.RichTextBox();
-            this.label_name = new System.Windows.Forms.Label();
-            this.firstNameTextBox = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnEditSerivce = new System.Windows.Forms.Button();
             this.btnRemoveService = new System.Windows.Forms.Button();
@@ -43,55 +39,23 @@
             // 
             // serviceDataGridView
             // 
+            this.serviceDataGridView.AllowUserToAddRows = false;
+            this.serviceDataGridView.AllowUserToDeleteRows = false;
             this.serviceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.serviceDataGridView.Location = new System.Drawing.Point(12, 14);
             this.serviceDataGridView.Name = "serviceDataGridView";
+            this.serviceDataGridView.ReadOnly = true;
             this.serviceDataGridView.RowTemplate.Height = 25;
+            this.serviceDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.serviceDataGridView.Size = new System.Drawing.Size(271, 424);
             this.serviceDataGridView.TabIndex = 0;
-            // 
-            // label_price
-            // 
-            this.label_price.AutoSize = true;
-            this.label_price.Location = new System.Drawing.Point(299, 76);
-            this.label_price.Name = "label_price";
-            this.label_price.Size = new System.Drawing.Size(105, 15);
-            this.label_price.TabIndex = 11;
-            this.label_price.Text = "Cena standardowa";
-            // 
-            // lastNameTextBox
-            // 
-            this.lastNameTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lastNameTextBox.Location = new System.Drawing.Point(299, 94);
-            this.lastNameTextBox.Name = "lastNameTextBox";
-            this.lastNameTextBox.Size = new System.Drawing.Size(280, 27);
-            this.lastNameTextBox.TabIndex = 10;
-            this.lastNameTextBox.Text = "";
-            // 
-            // label_name
-            // 
-            this.label_name.AutoSize = true;
-            this.label_name.Location = new System.Drawing.Point(299, 16);
-            this.label_name.Name = "label_name";
-            this.label_name.Size = new System.Drawing.Size(42, 15);
-            this.label_name.TabIndex = 9;
-            this.label_name.Text = "Nazwa";
-            // 
-            // firstNameTextBox
-            // 
-            this.firstNameTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.firstNameTextBox.Location = new System.Drawing.Point(299, 34);
-            this.firstNameTextBox.Name = "firstNameTextBox";
-            this.firstNameTextBox.Size = new System.Drawing.Size(280, 27);
-            this.firstNameTextBox.TabIndex = 8;
-            this.firstNameTextBox.Text = "";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnEditSerivce);
             this.groupBox1.Controls.Add(this.btnRemoveService);
             this.groupBox1.Controls.Add(this.btnAddService);
-            this.groupBox1.Location = new System.Drawing.Point(464, 332);
+            this.groupBox1.Location = new System.Drawing.Point(299, 14);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(115, 106);
             this.groupBox1.TabIndex = 12;
@@ -106,6 +70,7 @@
             this.btnEditSerivce.TabIndex = 5;
             this.btnEditSerivce.Text = "Edytuj...";
             this.btnEditSerivce.UseVisualStyleBackColor = true;
+            this.btnEditSerivce.Click += new System.EventHandler(this.btnEditSerivce_Click);
             // 
             // btnRemoveService
             // 
@@ -116,6 +81,7 @@
             this.btnRemoveService.TabIndex = 4;
             this.btnRemoveService.Text = "Usuń";
             this.btnRemoveService.UseVisualStyleBackColor = true;
+            this.btnRemoveService.Click += new System.EventHandler(this.btnRemoveService_Click);
             // 
             // btnAddService
             // 
@@ -126,34 +92,26 @@
             this.btnAddService.TabIndex = 2;
             this.btnAddService.Text = "Dodaj...";
             this.btnAddService.UseVisualStyleBackColor = true;
+            this.btnAddService.Click += new System.EventHandler(this.btnAddService_Click);
             // 
             // ServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 450);
+            this.ClientSize = new System.Drawing.Size(433, 450);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label_price);
-            this.Controls.Add(this.lastNameTextBox);
-            this.Controls.Add(this.label_name);
-            this.Controls.Add(this.firstNameTextBox);
             this.Controls.Add(this.serviceDataGridView);
             this.Name = "ServiceForm";
             this.Text = "ServiceForm";
             ((System.ComponentModel.ISupportInitialize)(this.serviceDataGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private DataGridView serviceDataGridView;
-        private Label label_price;
-        private RichTextBox lastNameTextBox;
-        private Label label_name;
-        private RichTextBox firstNameTextBox;
         private GroupBox groupBox1;
         private Button btnEditSerivce;
         private Button btnRemoveService;
