@@ -320,6 +320,48 @@ namespace WarsztatSamochodowy.Forms
             }
         }
 
+        private void btnMoveEntry_Click(object sender, EventArgs e)
+        {
+            if (listName == null) return;
+
+            if (lvListParts.SelectedItems.Count != 1)
+            {
+                MessageBox.Show("Zaznacz pozycję, którą chcesz przenieść.", "Nie nie wybrano",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            var selectedItem = lvListParts.SelectedItems[0];
+            var partCode = (string)selectedItem.Tag;
+            var quantity = selectedItem.SubItems[1].Text;
+
+            var pickShoppingListForm = new PickShoppingListForm
+            {
+                FilterFulfillmentState = isFulfilled,
+                SkipListName = listName
+            };
+            pickShoppingListForm.ShowDialog();
+
+            if (pickShoppingListForm.SelectedListName == null) return;
+
+            try
+            {
+                var db = DatabaseService.Get();
+                db.delete(DatabaseService.TABLE_SHOPPING_LISTS_PARTS,
+                        new() { ["listName"] = listName, ["partCode"] = partCode });
+                db.CallProcedure(DatabaseService.PROC_ADD_SHOPPING_LIST_ENTRY,
+                    new() { pickShoppingListForm.SelectedListName, partCode, quantity });
+                selectedItem.Remove();
+            } catch (MySqlException ex)
+            {
+                string message = ex.ErrorCode switch
+                {
+                    _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
+                };
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         #endregion
 
         private void btnMarkFulfilled_Click(object sender, EventArgs e)
