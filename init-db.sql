@@ -96,7 +96,7 @@ CREATE TABLE `serviceParts` (
     `quantity` int NOT NULL,
     `serviceName` varchar(100) NOT NULL,
     `partPartCode` varchar(25) NOT NULL,
-    PRIMARY KEY (`serviceName`, `partCode`),
+    PRIMARY KEY (`serviceName`, `partPartCode`),
     CONSTRAINT `serviceParts_part_fk` FOREIGN KEY (`partPartCode`) REFERENCES `parts` (`partCode`),
     CONSTRAINT `serviceParts_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`) ON UPDATE CASCADE ON DELETE CASCADE
 );
