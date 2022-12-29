@@ -127,6 +127,7 @@
             this.btnMoveEntry.Text = "Przenieś pozycję...";
             this.toolTip1.SetToolTip(this.btnMoveEntry, "Możesz przenosić pozycje między listami o tym samym statusie.");
             this.btnMoveEntry.UseVisualStyleBackColor = true;
+            this.btnMoveEntry.Click += new System.EventHandler(this.btnMoveEntry_Click);
             // 
             // btnRemoveEntry
             // 
