@@ -192,5 +192,32 @@ namespace WarsztatSamochodowy.Services
             fillCommandWithData(sqlCommand, conditions, "s");
             fillCommandWithData(sqlCommand, valuesToSet, "u");
         }
+
+        public void CallProcedure(string procedureName, List<string> arguments)
+        {
+            SortedDictionary<string, string> fields = new();
+            int i = 0;
+            foreach(var arg in arguments)
+            {
+                fields[$"arg{i}"] = arg;
+                i++;
+            }
+
+            string sqlCommandString = prepareCallCommandString(procedureName, fields);
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
+            fillCommandWithData(sqlCommand, fields);
+            sqlCommand.Prepare();
+            sqlCommand.ExecuteNonQuery();
+        }
+
+        private string prepareCallCommandString(string procName, SortedDictionary<string, string> args)
+        {
+            StringBuilder callStringBuilder = new();
+            callStringBuilder.Append($"CALL `{procName}`(");
+            callStringBuilder.Append(string.Join(", ", args.Keys.Select(k => $"@{k}")));
+            callStringBuilder.Append(")");
+
+            return callStringBuilder.ToString();
+        }
     }
 }
