@@ -53,17 +53,25 @@ namespace WarsztatSamochodowy.Forms
             var entries = DatabaseService.Get().Select(DatabaseService.TABLE_SHOPPING_LISTS_PARTS_WITH_NAMES,
                 new() { ["listName"] = listName }, new() { "partCode", "partName", "quantity" });
 
+            lvListParts.BeginUpdate();
             lvListParts.Items.Clear();
             foreach(var entry in entries)
             {
-                string[] fields = {
-                    $"{entry[1]} (#{entry[0]})",
-                    $"{entry[2]}"
-                };
-                var lvItem = new ListViewItem(fields);
-                lvItem.Tag = entry[0];
-                lvListParts.Items.Add(lvItem);
+                string label = $"{entry[1]} (#{entry[0]})";
+                InsertPartToList(entry[0]!, label, entry[2]!);
             }
+            lvListParts.EndUpdate();
+        }
+
+        protected void InsertPartToList(string partCode, string label, string quantity)
+        {
+            string[] fields = { label, quantity };
+            var lvItem = new ListViewItem(fields)
+            {
+                Tag = partCode
+            };
+            lvListParts.Items.Add(lvItem);
+            // TODO: If the same part already exists, sum quantities into one item
         }
 
         protected void RefreshButtonsState()
@@ -71,7 +79,8 @@ namespace WarsztatSamochodowy.Forms
             btnEditEntry.Enabled =
                 btnRemoveEntry.Enabled = (lvListParts.SelectedItems.Count == 1) && !isFulfilled && (listName != null);
             btnMoveEntry.Enabled = (lvListParts.SelectedItems.Count == 1) && (listName != null);
-            btnMarkFulfilled.Enabled = !isFulfilled && (listName != null);
+            btnAddEntry.Enabled =
+                btnMarkFulfilled.Enabled = !isFulfilled && (listName != null);
         }
 
         #region List renaming
@@ -190,9 +199,49 @@ namespace WarsztatSamochodowy.Forms
             ListViewItem selectedItem = lvListParts.SelectedItems[0];
             string partCode = (string)selectedItem.Tag;
 
-            DatabaseService.Get().delete(DatabaseService.TABLE_SHOPPING_LISTS_PARTS,
-                new() { ["listName"] = listName, ["partCode"] = partCode });
-            selectedItem.Remove();
+            try
+            {
+                DatabaseService.Get().delete(DatabaseService.TABLE_SHOPPING_LISTS_PARTS,
+                    new() { ["listName"] = listName, ["partCode"] = partCode });
+                selectedItem.Remove();
+            } catch(MySqlException ex)
+            {
+                string message = ex.ErrorCode switch
+                {
+                    _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
+                };
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnAddEntry_Click(object sender, EventArgs e)
+        {
+            if (listName == null) return;
+
+            if (isFulfilled)
+            {
+                MessageBox.Show("Nie można dodać pozycji do zrealizowanej listy zakupów.", "Lista została zrealizowana",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var pickPartForm = new PickPartForm(null);
+            pickPartForm.ShowDialog();
+            if (pickPartForm.PartCode == null) return;
+
+            try
+            {
+                DatabaseService.Get().insert(DatabaseService.TABLE_SHOPPING_LISTS_PARTS,
+                    new() { ["listName"] = listName, ["partCode"] = pickPartForm.PartCode, ["quantity"] = pickPartForm.Quantity.ToString() });
+                InsertPartToList(pickPartForm.PartCode, pickPartForm.SelectedPartLabel!, pickPartForm.Quantity.ToString());
+            } catch (MySqlException ex)
+            {
+                string message = ex.ErrorCode switch
+                {
+                    _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
+                };
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         #endregion

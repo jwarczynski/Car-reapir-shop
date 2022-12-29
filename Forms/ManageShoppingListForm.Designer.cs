@@ -156,6 +156,7 @@
             this.btnAddEntry.TabIndex = 4;
             this.btnAddEntry.Text = "Dodaj pozycję...";
             this.btnAddEntry.UseVisualStyleBackColor = true;
+            this.btnAddEntry.Click += new System.EventHandler(this.btnAddEntry_Click);
             // 
             // groupBox2
             // 
