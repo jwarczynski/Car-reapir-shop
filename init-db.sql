@@ -127,3 +127,16 @@ CREATE VIEW `shoppingListsPartsWithNames` AS
     SELECT slp.`partCode` AS `partCode`, slp.`quantity` AS `quantity`, slp.`listName` AS `listName`, p.`name` AS `partName`
         FROM `shoppingListsParts` slp
         JOIN `parts` p ON slp.`partCode` = p.`partCode`;
+
+DELIMITER $$
+CREATE PROCEDURE `addShoppingListEntry` (
+    IN listName CHAR(50),
+    IN partCode VARCHAR(25),
+    IN qty INT
+)
+BEGIN
+    INSERT INTO `shoppingListsParts` (`listName`, `partCode`, `quantity`)
+        VALUES (listName, partCode, qty)
+        ON DUPLICATE KEY UPDATE `quantity` = `quantity` + qty;
+END$$
+DELIMITER ;
