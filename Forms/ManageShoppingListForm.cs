@@ -65,13 +65,23 @@ namespace WarsztatSamochodowy.Forms
 
         protected void InsertPartToList(string partCode, string label, string quantity)
         {
+            foreach(ListViewItem item in lvListParts.Items)
+            {
+                if((string)item.Tag == partCode)
+                {
+                    int existingQuantity = int.Parse(item.SubItems[1].Text);
+                    existingQuantity += int.Parse(quantity);
+                    item.SubItems[1].Text = existingQuantity.ToString();
+                    return;
+                }
+            }
+
             string[] fields = { label, quantity };
             var lvItem = new ListViewItem(fields)
             {
                 Tag = partCode
             };
             lvListParts.Items.Add(lvItem);
-            // TODO: If the same part already exists, sum quantities into one item
         }
 
         protected void RefreshButtonsState()
@@ -231,8 +241,8 @@ namespace WarsztatSamochodowy.Forms
 
             try
             {
-                DatabaseService.Get().insert(DatabaseService.TABLE_SHOPPING_LISTS_PARTS,
-                    new() { ["listName"] = listName, ["partCode"] = pickPartForm.PartCode, ["quantity"] = pickPartForm.Quantity.ToString() });
+                DatabaseService.Get().CallProcedure(DatabaseService.PROC_ADD_SHOPPING_LIST_ENTRY,
+                    new() { listName, pickPartForm.PartCode, pickPartForm.Quantity.ToString() });
                 InsertPartToList(pickPartForm.PartCode, pickPartForm.SelectedPartLabel!, pickPartForm.Quantity.ToString());
             } catch (MySqlException ex)
             {
