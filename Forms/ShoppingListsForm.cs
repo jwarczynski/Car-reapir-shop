@@ -34,6 +34,7 @@ namespace WarsztatSamochodowy.Forms
         {
             var manageShoppingListForm = new ManageShoppingListForm(null);
             manageShoppingListForm.ShowDialog();
+            ReloadLists();
         }
 
         private void btnManageList_Click(object sender, EventArgs e)
