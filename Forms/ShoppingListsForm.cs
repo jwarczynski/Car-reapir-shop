@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MySqlConnector;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,7 +29,7 @@ namespace WarsztatSamochodowy.Forms
 
         private void lvShoppingLists_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RefreshEditButtonState();
+            RefreshButtonsStates();
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
@@ -45,7 +47,7 @@ namespace WarsztatSamochodowy.Forms
         private void lvShoppingLists_ItemActivate(object sender, EventArgs e)
         {
             EditSelectedList();
-            RefreshEditButtonState();
+            RefreshButtonsStates();
         }
 
         private void EditSelectedList()
@@ -58,8 +60,7 @@ namespace WarsztatSamochodowy.Forms
             }
 
             var selectedItem = selectedItems[0];
-            var listNameSubItem = selectedItem.SubItems[0];
-            var listName = listNameSubItem.Text;
+            var listName = (string)selectedItem.Tag;
 
             var manageShoppingListForm = new ManageShoppingListForm(listName);
             manageShoppingListForm.ShowDialog();
@@ -82,15 +83,64 @@ namespace WarsztatSamochodowy.Forms
                 else
                     fields[2] = "Oczekująca";
 
-                var lvItem = new ListViewItem(fields);
+                var lvItem = new ListViewItem(fields)
+                {
+                    Tag = fields[0]
+                };
                 lvShoppingLists.Items.Add(lvItem);
             }
-            RefreshEditButtonState();
+            RefreshButtonsStates();
         }
 
-        private void RefreshEditButtonState()
+        private void RefreshButtonsStates()
         {
-            btnManageList.Enabled = (lvShoppingLists.SelectedItems.Count == 1);
+            bool isSingleSelected = (lvShoppingLists.SelectedItems.Count == 1);
+            btnManageList.Enabled = isSingleSelected;
+
+            if(!isSingleSelected)
+            {
+                btnDeleteList.Enabled = false;
+            }
+            else
+            {
+                var selectedItem = lvShoppingLists.SelectedItems[0];
+                var entriesCount = selectedItem.SubItems[1].Text;
+                btnDeleteList.Enabled = (entriesCount == "0");
+            }
+        }
+
+        private void btnDeleteList_Click(object sender, EventArgs e)
+        {
+            if(lvShoppingLists.SelectedItems.Count != 1)
+            {
+                MessageBox.Show("Wybierz listę, którą chcesz usunąć.", "Nic nie wybrano");
+                return;
+            }
+
+            var selectedItem = lvShoppingLists.SelectedItems[0];
+            var entriesCount = selectedItem.SubItems[1].Text;
+            if(entriesCount != "0")
+            {
+                MessageBox.Show("Wybrana lista nie jest pusta. Aby ją usunąć, przenieś z niej wszystkie pozycje na inną listę.", "Lista jest niepusta");
+                return;
+            }
+
+            var listName = (string)selectedItem.Tag;
+
+            try
+            {
+                DatabaseService.Get().delete(DatabaseService.TABLE_SHOPPING_LISTS,
+                    new() { ["name"] = listName });
+                selectedItem.Remove();
+            }
+            catch(MySqlException ex)
+            {
+                string message = ex.ErrorCode switch
+                {
+                    _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
+                };
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
