@@ -254,6 +254,72 @@ namespace WarsztatSamochodowy.Forms
             }
         }
 
+        private void btnEditEntry_Click(object sender, EventArgs e)
+        {
+            EditSelectedEntry();
+        }
+
+        private void lvListParts_ItemActivate(object sender, EventArgs e)
+        {
+            EditSelectedEntry();
+        }
+
+        protected void EditSelectedEntry()
+        {
+            if (listName == null) return;
+
+            if (isFulfilled)
+            {
+                MessageBox.Show("Nie można edytować pozycji na zrealizowanej liście zakupów.", "Lista została zrealizowana",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (lvListParts.SelectedItems.Count != 1)
+            {
+                MessageBox.Show("Zaznacz pozycję, którą chcesz edytować.", "Nie nie wybrano",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            ListViewItem selectedItem = lvListParts.SelectedItems[0];
+            string partCode = (string)selectedItem.Tag;
+            int quantity = int.Parse(selectedItem.SubItems[1].Text);
+
+            var pickPartForm = new PickPartForm(partCode, quantity);
+            pickPartForm.ShowDialog();
+            if (pickPartForm.PartCode == partCode && pickPartForm.Quantity == quantity) return;
+
+            try
+            {
+                var db = DatabaseService.Get();
+                if(pickPartForm.PartCode == partCode)
+                {
+                    db.update(DatabaseService.TABLE_SHOPPING_LISTS_PARTS,
+                        new() { ["listName"] = listName, ["partCode"] = partCode },
+                        new() { ["quantity"] = pickPartForm.Quantity.ToString() });
+                    selectedItem.SubItems[1].Text = pickPartForm.Quantity.ToString();
+                }
+                else
+                {
+                    db.delete(DatabaseService.TABLE_SHOPPING_LISTS_PARTS,
+                        new() { ["listName"] = listName, ["partCode"] = partCode });
+                    db.CallProcedure(DatabaseService.PROC_ADD_SHOPPING_LIST_ENTRY,
+                        new() { listName, pickPartForm.PartCode!, pickPartForm.Quantity.ToString() });
+                    selectedItem.Remove();
+                    InsertPartToList(pickPartForm.PartCode!, pickPartForm.SelectedPartLabel!, pickPartForm.Quantity.ToString());
+                }
+            }
+            catch (MySqlException ex)
+            {
+                string message = ex.ErrorCode switch
+                {
+                    _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
+                };
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         #endregion
 
         private void btnMarkFulfilled_Click(object sender, EventArgs e)

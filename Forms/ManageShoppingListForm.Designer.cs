@@ -91,6 +91,7 @@
             this.lvListParts.TabIndex = 3;
             this.lvListParts.UseCompatibleStateImageBehavior = false;
             this.lvListParts.View = System.Windows.Forms.View.Details;
+            this.lvListParts.ItemActivate += new System.EventHandler(this.lvListParts_ItemActivate);
             this.lvListParts.SelectedIndexChanged += new System.EventHandler(this.lvListParts_SelectedIndexChanged);
             // 
             // chPartName
@@ -100,7 +101,7 @@
             // 
             // chQuantity
             // 
-            this.chQuantity.Text = "Ilość";
+            this.chQuantity.Text = "Sztuk";
             // 
             // groupBox1
             // 
@@ -147,6 +148,7 @@
             this.btnEditEntry.TabIndex = 5;
             this.btnEditEntry.Text = "Edytuj pozycję...";
             this.btnEditEntry.UseVisualStyleBackColor = true;
+            this.btnEditEntry.Click += new System.EventHandler(this.btnEditEntry_Click);
             // 
             // btnAddEntry
             // 
