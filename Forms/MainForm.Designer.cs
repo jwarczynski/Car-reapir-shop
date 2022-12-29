@@ -135,9 +135,9 @@
             // 
             this.label1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(34, 0);
+            this.label1.Location = new System.Drawing.Point(27, -5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(142, 40);
+            this.label1.Size = new System.Drawing.Size(158, 40);
             this.label1.TabIndex = 9;
             this.label1.Text = "Samochody";
             // 
@@ -190,7 +190,7 @@
             this.btnShoppingLists.Name = "btnShoppingLists";
             this.btnShoppingLists.Size = new System.Drawing.Size(215, 96);
             this.btnShoppingLists.TabIndex = 4;
-            this.btnShoppingLists.Text = "Lista zakupów";
+            this.btnShoppingLists.Text = "Listy zakupów";
             this.btnShoppingLists.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnShoppingLists.UseVisualStyleBackColor = true;
             this.btnShoppingLists.Click += new System.EventHandler(this.btnShoppingLists_Click);
@@ -256,7 +256,6 @@
             // 
             // btn_service
             // 
-
             this.btn_service.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_service.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btn_service.FlatAppearance.BorderSize = 0;
@@ -274,16 +273,15 @@
             this.btn_service.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_service.UseVisualStyleBackColor = true;
             this.btn_service.Click += new System.EventHandler(this.btn_service_Click);
-
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(0, 231);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(919, 619);
+            this.pictureBox2.Size = new System.Drawing.Size(912, 557);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
             // 
@@ -291,10 +289,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(912, 819);
+            this.ClientSize = new System.Drawing.Size(912, 786);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
