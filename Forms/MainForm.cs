@@ -59,5 +59,11 @@ namespace WarsztatSamochodowy
             var manufacturersForm = new CarManufacturersForm();
             manufacturersForm.Show();
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var modelsForm = new CarModelsForm();
+            modelsForm.Show();
+        }
     }
 }
