@@ -33,15 +33,15 @@ CREATE TABLE `carModels` (
     `modelName` varchar(50) NOT NULL,
     `manufacturerName` varchar(50) NOT NULL,
     PRIMARY KEY (`modelName`, `manufacturerName`),
-    CONSTRAINT `carModels_carManufaturers_fk` FOREIGN KEY (`manufacturerName`) REFERENCES `carManufacturers`(`manufacturerName`)
+    CONSTRAINT `carModels_carManufaturers_fk` FOREIGN KEY (`manufacturerName`) REFERENCES `carManufacturers`(`manufacturerName`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
 CREATE TABLE `cars` (
     `licensePlate` varchar(20) NOT NULL PRIMARY KEY,
-    `manufacturerName` varchar(50) NOT NULL,
-    `modelName` varchar(50) NOT NULL,
-    CONSTRAINT `cars_carModel_fk` FOREIGN KEY (`modelName`, `manufacturerName`) REFERENCES `carModels`(`modelName`, `manufacturerName`)
+    `manufacturerName` varchar(50),
+    `modelName` varchar(50),
+    CONSTRAINT `cars_carModel_fk` FOREIGN KEY (`modelName`, `manufacturerName`) REFERENCES `carModels`(`modelName`, `manufacturerName`) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE `orders` (
@@ -135,6 +135,17 @@ CREATE VIEW servicesPartsView AS
 
 
 DELIMITER $$
+CREATE FUNCTION `countModelsByManufacturer` (
+    manufacturer VARCHAR(50)
+) RETURNS INT
+BEGIN
+    DECLARE manufacturerCount INT;
+    SELECT COUNT(*) INTO manufacturerCount
+        FROM `carModels`
+        WHERE `manufacturerName` = manufacturer;
+    RETURN manufacturerCount;
+END$$
+
 CREATE PROCEDURE `addShoppingListEntry` (
     IN listName CHAR(50),
     IN partCode VARCHAR(25),

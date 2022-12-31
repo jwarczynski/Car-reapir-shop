@@ -23,6 +23,8 @@ namespace WarsztatSamochodowy.Services
 
         public const string PROC_ADD_SHOPPING_LIST_ENTRY = "addShoppingListEntry";
 
+        public const string FUNC_COUNT_MODELS_BY_MANUFACTURER = "countModelsByManufacturer";
+
         private readonly MySqlConnection mySqlConnection;
         private const string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
         private static DatabaseService? service = null;
@@ -205,17 +207,44 @@ namespace WarsztatSamochodowy.Services
                 i++;
             }
 
-            string sqlCommandString = prepareCallCommandString(procedureName, fields);
+            string sqlCommandString = prepareCallProcCommandString(procedureName, fields);
             var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
             fillCommandWithData(sqlCommand, fields);
             sqlCommand.Prepare();
             sqlCommand.ExecuteNonQuery();
         }
 
-        private string prepareCallCommandString(string procName, SortedDictionary<string, string> args)
+        public object? CallFunction(string procedureName, List<string> arguments)
+        {
+            SortedDictionary<string, string> fields = new();
+            int i = 0;
+            foreach (var arg in arguments)
+            {
+                fields[$"arg{i}"] = arg;
+                i++;
+            }
+
+            string sqlCommandString = prepareCallFuncCommandString(procedureName, fields);
+            var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
+            fillCommandWithData(sqlCommand, fields);
+            sqlCommand.Prepare();
+            return sqlCommand.ExecuteScalar();
+        }
+
+        private string prepareCallProcCommandString(string procName, SortedDictionary<string, string> args)
         {
             StringBuilder callStringBuilder = new();
             callStringBuilder.Append($"CALL `{procName}`(");
+            callStringBuilder.Append(string.Join(", ", args.Keys.Select(k => $"@{k}")));
+            callStringBuilder.Append(")");
+
+            return callStringBuilder.ToString();
+        }
+
+        private string prepareCallFuncCommandString(string funcName, SortedDictionary<string, string> args)
+        {
+            StringBuilder callStringBuilder = new();
+            callStringBuilder.Append($"SELECT `{funcName}`(");
             callStringBuilder.Append(string.Join(", ", args.Keys.Select(k => $"@{k}")));
             callStringBuilder.Append(")");
 

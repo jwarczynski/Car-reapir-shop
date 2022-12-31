@@ -117,6 +117,7 @@
             this.button9.TabIndex = 11;
             this.button9.Text = "zarządzaj producentami";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button8
             // 
@@ -130,6 +131,7 @@
             this.button8.TabIndex = 10;
             this.button8.Text = "zarządaj modelami";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // label1
             // 
