@@ -269,6 +269,11 @@ namespace WarsztatSamochodowy.Forms
                 chckListBoxAllModels.SelectedItems.Clear();
             }
         }
-        
+
+        private void lbPartCounter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbPartCounter.SelectedItems.Count == 0) return;
+            numericUpDown1.Value = decimal.Parse(lbPartCounter.SelectedItem.ToString() ?? "0");
+        }
     }
 }
