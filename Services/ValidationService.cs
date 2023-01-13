@@ -17,7 +17,7 @@ namespace WarsztatSamochodowy.Services
             }
             string validNameRegex = @"^[a-zżźćńółęąś\  ]{1,40}$";
             Regex nameRegex = new Regex(validNameRegex);
-            if (!nameRegex.IsMatch(name))
+            if (!nameRegex.IsMatch(name.ToLower()))
             {
                 throw new ArgumentException("podano niepoprawny format");
             }
