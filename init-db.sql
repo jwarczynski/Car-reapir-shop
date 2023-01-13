@@ -1,5 +1,7 @@
 DROP DATABASE IF EXISTS `warsztat`;
-CREATE DATABASE `warsztat`;
+CREATE DATABASE `warsztat`
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_polish_ci;
 
 USE `warsztat`;
 
