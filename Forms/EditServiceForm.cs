@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -122,7 +123,7 @@ namespace WarsztatSamochodowy.Forms
             {
                 validateNewService(serviceName, serviceCost);
                 newServiceMap.Add("name", serviceName);
-                newServiceMap.Add("standardCost", serviceCost);
+                newServiceMap.Add("standardCost", float.Parse(serviceCost).ToString(CultureInfo.InvariantCulture));
 
                 if(serviceNameToUpdate == null)
                 {
