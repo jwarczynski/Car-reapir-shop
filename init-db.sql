@@ -92,6 +92,15 @@ CREATE TABLE `services` (
     `standardCost` decimal(5,2) NOT NULL
 );
 
+CREATE TABLE servicesToCarModels(
+	`modelName` varchar(50) NOT NULL,
+	`manufacturerName` varchar(50) NOT NULL,
+	`serviceName` varchar(100) NOT NULL,
+	CONSTRAINT `servicesToCarModels_carModels_fk` FOREIGN KEY (`modelName`) REFERENCES `carModels` (`modelName`) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT `servicesToCarModels_services_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY (`modelName`, `manufacturerName`, `serviceName`)
+);
+
 CREATE TABLE `serviceParts` (
     `quantity` int NOT NULL,
     `serviceName` varchar(100) NOT NULL,
