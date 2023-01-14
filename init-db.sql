@@ -16,8 +16,8 @@ CREATE TABLE `customers` (
 
 CREATE TABLE `employeeRoles` (
     `roleName` varchar(20) NOT NULL PRIMARY KEY,
-    `minWage` decimal(5,2) NOT NULL,
-    `maxWage` decimal(5,2) NOT NULL
+    `minimumWage` decimal(5,2) NOT NULL,
+    `maximumWage` decimal(5,2) NOT NULL
 );
 
 CREATE TABLE `employees` (
