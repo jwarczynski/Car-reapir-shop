@@ -195,5 +195,11 @@ namespace WarsztatSamochodowy.Forms
             }
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            EmployeeRoleForm employeeRoleForm = new EmployeeRoleForm();
+            employeeRoleForm.Show();
+        }
     }
 }
