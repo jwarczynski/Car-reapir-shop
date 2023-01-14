@@ -24,7 +24,7 @@ CREATE TABLE `employees` (
     `fullName` varchar(40) NOT NULL PRIMARY KEY,
     `wage` decimal(5,2) NOT NULL,
     `roleName` varchar(20) NOT NULL,
-    CONSTRAINT `employees_empRoles` FOREIGN KEY (`roleName`) REFERENCES `employeeRoles` (`roleName`)
+    CONSTRAINT `employee_employeeRole_fk` FOREIGN KEY (`roleName`) REFERENCES `employeeRoles` (`roleName`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `carManufacturers` (
