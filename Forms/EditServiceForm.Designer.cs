@@ -55,9 +55,10 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(418, 436);
+            this.btnSave.Location = new System.Drawing.Point(366, 327);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(94, 29);
+            this.btnSave.Size = new System.Drawing.Size(82, 22);
             this.btnSave.TabIndex = 21;
             this.btnSave.Text = "Zapisz";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -65,9 +66,10 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(543, 436);
+            this.btnCancel.Location = new System.Drawing.Point(475, 327);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(94, 29);
+            this.btnCancel.Size = new System.Drawing.Size(82, 22);
             this.btnCancel.TabIndex = 20;
             this.btnCancel.Text = "Anuluj";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -83,9 +85,11 @@
             this.groupBox1.Controls.Add(this.clbAllParts);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(11, 96);
+            this.groupBox1.Location = new System.Drawing.Point(10, 72);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(573, 315);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox1.Size = new System.Drawing.Size(501, 236);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Potrzebne części:";
@@ -93,43 +97,41 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(465, 36);
+            this.label3.Location = new System.Drawing.Point(407, 27);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 20);
+            this.label3.Size = new System.Drawing.Size(71, 15);
             this.label3.TabIndex = 16;
             this.label3.Text = "Zmień Ilość:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(373, 36);
+            this.label2.Location = new System.Drawing.Point(326, 27);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 20);
+            this.label2.Size = new System.Drawing.Size(34, 15);
             this.label2.TabIndex = 15;
             this.label2.Text = "Ilość:";
             // 
             // lbPartCounter
             // 
             this.lbPartCounter.FormattingEnabled = true;
-            this.lbPartCounter.ItemHeight = 20;
-            this.lbPartCounter.Location = new System.Drawing.Point(373, 60);
-            this.lbPartCounter.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.lbPartCounter.ItemHeight = 15;
+            this.lbPartCounter.Location = new System.Drawing.Point(326, 45);
             this.lbPartCounter.Name = "lbPartCounter";
-            this.lbPartCounter.Size = new System.Drawing.Size(82, 244);
+            this.lbPartCounter.Size = new System.Drawing.Size(72, 184);
             this.lbPartCounter.TabIndex = 14;
             this.lbPartCounter.SelectedIndexChanged += new System.EventHandler(this.lbPartCounter_SelectedIndexChanged);
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(465, 60);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.numericUpDown1.Location = new System.Drawing.Point(407, 45);
             this.numericUpDown1.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(94, 27);
+            this.numericUpDown1.Size = new System.Drawing.Size(82, 23);
             this.numericUpDown1.TabIndex = 13;
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
@@ -142,71 +144,71 @@
             // 
             this.lbSelectedParts.Enabled = false;
             this.lbSelectedParts.FormattingEnabled = true;
-            this.lbSelectedParts.ItemHeight = 20;
-            this.lbSelectedParts.Location = new System.Drawing.Point(193, 60);
-            this.lbSelectedParts.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.lbSelectedParts.ItemHeight = 15;
+            this.lbSelectedParts.Location = new System.Drawing.Point(169, 45);
             this.lbSelectedParts.Name = "lbSelectedParts";
-            this.lbSelectedParts.Size = new System.Drawing.Size(172, 244);
+            this.lbSelectedParts.Size = new System.Drawing.Size(151, 184);
             this.lbSelectedParts.TabIndex = 12;
             // 
             // clbAllParts
             // 
             this.clbAllParts.CheckOnClick = true;
             this.clbAllParts.FormattingEnabled = true;
-            this.clbAllParts.Location = new System.Drawing.Point(13, 60);
-            this.clbAllParts.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.clbAllParts.Location = new System.Drawing.Point(11, 45);
             this.clbAllParts.Name = "clbAllParts";
-            this.clbAllParts.Size = new System.Drawing.Size(173, 224);
+            this.clbAllParts.Size = new System.Drawing.Size(152, 184);
             this.clbAllParts.TabIndex = 11;
             this.clbAllParts.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(193, 36);
+            this.label6.Location = new System.Drawing.Point(169, 27);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(114, 20);
+            this.label6.Size = new System.Drawing.Size(91, 15);
             this.label6.TabIndex = 3;
             this.label6.Text = "Wybrane części:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 36);
+            this.label5.Location = new System.Drawing.Point(11, 27);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(119, 20);
+            this.label5.Size = new System.Drawing.Size(95, 15);
             this.label5.TabIndex = 1;
             this.label5.Text = "Wszystkie części:";
             // 
             // tbStandardPrice
             // 
-            this.tbStandardPrice.Location = new System.Drawing.Point(543, 45);
+            this.tbStandardPrice.Location = new System.Drawing.Point(475, 34);
+            this.tbStandardPrice.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbStandardPrice.Name = "tbStandardPrice";
-            this.tbStandardPrice.Size = new System.Drawing.Size(180, 27);
+            this.tbStandardPrice.Size = new System.Drawing.Size(158, 23);
             this.tbStandardPrice.TabIndex = 18;
             // 
             // tbServiceName
             // 
-            this.tbServiceName.Location = new System.Drawing.Point(331, 45);
+            this.tbServiceName.Location = new System.Drawing.Point(290, 34);
+            this.tbServiceName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbServiceName.Name = "tbServiceName";
-            this.tbServiceName.Size = new System.Drawing.Size(180, 27);
+            this.tbServiceName.Size = new System.Drawing.Size(158, 23);
             this.tbServiceName.TabIndex = 15;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(543, 12);
+            this.label4.Location = new System.Drawing.Point(475, 9);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(135, 20);
+            this.label4.Size = new System.Drawing.Size(108, 15);
             this.label4.TabIndex = 14;
             this.label4.Text = "Cena standardowa:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(331, 12);
+            this.label1.Location = new System.Drawing.Point(290, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 20);
+            this.label1.Size = new System.Drawing.Size(80, 15);
             this.label1.TabIndex = 11;
             this.label1.Text = "Nazwa usługi:";
             // 
@@ -216,9 +218,11 @@
             this.groupBox2.Controls.Add(this.chckListBoxAllModels);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Location = new System.Drawing.Point(606, 96);
+            this.groupBox2.Location = new System.Drawing.Point(530, 72);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(378, 315);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox2.Size = new System.Drawing.Size(331, 236);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Dostępna dla modeli samochodów";
@@ -227,47 +231,45 @@
             // 
             this.listBoxSelectedModels.Enabled = false;
             this.listBoxSelectedModels.FormattingEnabled = true;
-            this.listBoxSelectedModels.ItemHeight = 20;
-            this.listBoxSelectedModels.Location = new System.Drawing.Point(193, 60);
-            this.listBoxSelectedModels.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.listBoxSelectedModels.ItemHeight = 15;
+            this.listBoxSelectedModels.Location = new System.Drawing.Point(169, 45);
             this.listBoxSelectedModels.Name = "listBoxSelectedModels";
-            this.listBoxSelectedModels.Size = new System.Drawing.Size(172, 244);
+            this.listBoxSelectedModels.Size = new System.Drawing.Size(151, 184);
             this.listBoxSelectedModels.TabIndex = 12;
             // 
             // chckListBoxAllModels
             // 
             this.chckListBoxAllModels.CheckOnClick = true;
             this.chckListBoxAllModels.FormattingEnabled = true;
-            this.chckListBoxAllModels.Location = new System.Drawing.Point(13, 60);
-            this.chckListBoxAllModels.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.chckListBoxAllModels.Location = new System.Drawing.Point(11, 45);
             this.chckListBoxAllModels.Name = "chckListBoxAllModels";
-            this.chckListBoxAllModels.Size = new System.Drawing.Size(173, 224);
+            this.chckListBoxAllModels.Size = new System.Drawing.Size(152, 184);
             this.chckListBoxAllModels.TabIndex = 11;
             this.chckListBoxAllModels.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxAllModels_ItemCheck);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(193, 36);
+            this.label9.Location = new System.Drawing.Point(169, 27);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(120, 20);
+            this.label9.Size = new System.Drawing.Size(95, 15);
             this.label9.TabIndex = 3;
             this.label9.Text = "wybrane modele";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(13, 36);
+            this.label10.Location = new System.Drawing.Point(11, 27);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(128, 20);
+            this.label10.Size = new System.Drawing.Size(101, 15);
             this.label10.TabIndex = 1;
             this.label10.Text = "Wszystkie modele";
             // 
             // EditServiceForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 480);
+            this.ClientSize = new System.Drawing.Size(882, 360);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnSave);
@@ -276,7 +278,6 @@
             this.Controls.Add(this.tbServiceName);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "EditServiceForm";
             this.Text = "EditServiceForm";
             this.groupBox1.ResumeLayout(false);

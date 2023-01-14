@@ -41,6 +41,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.wageTextBox = new System.Windows.Forms.RichTextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.mySqlCommandBuilder1 = new MySqlConnector.MySqlCommandBuilder();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.employeesDataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -51,10 +53,12 @@
             this.employeesDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.employeesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.employeesDataGridView.Location = new System.Drawing.Point(11, 14);
+            this.employeesDataGridView.MultiSelect = false;
             this.employeesDataGridView.Name = "employeesDataGridView";
             this.employeesDataGridView.RowTemplate.Height = 25;
             this.employeesDataGridView.RowTemplate.ReadOnly = true;
             this.employeesDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.employeesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.employeesDataGridView.Size = new System.Drawing.Size(431, 428);
             this.employeesDataGridView.TabIndex = 0;
             this.employeesDataGridView.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.employeesDataGridView_CellMouseClick);
@@ -64,7 +68,7 @@
             this.groupBox1.Controls.Add(this.btnEditCustomer);
             this.groupBox1.Controls.Add(this.btnRemoveCustomer);
             this.groupBox1.Controls.Add(this.btnAddCustomer);
-            this.groupBox1.Location = new System.Drawing.Point(630, 334);
+            this.groupBox1.Location = new System.Drawing.Point(621, 200);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(111, 106);
             this.groupBox1.TabIndex = 1;
@@ -179,11 +183,28 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "Etat";
             // 
+            // mySqlCommandBuilder1
+            // 
+            this.mySqlCommandBuilder1.DataAdapter = null;
+            this.mySqlCommandBuilder1.QuotePrefix = "`";
+            this.mySqlCommandBuilder1.QuoteSuffix = "`";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(461, 384);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(281, 52);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Zarządzają rolami";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // EmployeeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(753, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.wageTextBox);
             this.Controls.Add(this.label3);
@@ -218,5 +239,7 @@
         private Label label3;
         private RichTextBox wageTextBox;
         private Label label4;
+        private MySqlConnector.MySqlCommandBuilder mySqlCommandBuilder1;
+        private Button button1;
     }
 }
