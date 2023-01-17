@@ -20,6 +20,7 @@ namespace WarsztatSamochodowy.Services
         public const string TABLE_SHOPPING_LISTS_PARTS = "shoppingListsParts";
         public const string TABLE_SHOPPING_LISTS_PARTS_WITH_NAMES = "shoppingListsPartsWithNames";
         public const string TABLE_SHOPPING_LISTS_WITH_PART_COUNT = "shoppingListsWithPartCount";
+        public const string TABLE_CUSTOMERS = "customers";
 
         public const string PROC_ADD_SHOPPING_LIST_ENTRY = "addShoppingListEntry";
 

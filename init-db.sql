@@ -6,12 +6,11 @@ CREATE DATABASE `warsztat`
 USE `warsztat`;
 
 CREATE TABLE `customers` (
-    `customerId` int NOT NULL,
+    `customerId` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `fullName` varchar(100) NOT NULL,
     `phoneNumber` varchar(16) NOT NULL,
     `email` varchar(100) DEFAULT NULL,
-    `taxId` varchar(16) DEFAULT NULL,
-    PRIMARY KEY (`customerId`)
+    `taxId` varchar(16) DEFAULT NULL
 );
 
 CREATE TABLE `employeeRoles` (

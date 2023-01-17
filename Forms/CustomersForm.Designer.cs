@@ -46,7 +46,9 @@
             this.chPhoneNumber,
             this.chEmailAddress,
             this.chTaxId});
+            this.lvCustomers.FullRowSelect = true;
             this.lvCustomers.Location = new System.Drawing.Point(12, 12);
+            this.lvCustomers.MultiSelect = false;
             this.lvCustomers.Name = "lvCustomers";
             this.lvCustomers.Size = new System.Drawing.Size(628, 426);
             this.lvCustomers.TabIndex = 0;
@@ -91,6 +93,7 @@
             this.btnEditCustomer.TabIndex = 2;
             this.btnEditCustomer.Text = "Edytuj...";
             this.btnEditCustomer.UseVisualStyleBackColor = true;
+            this.btnEditCustomer.Click += new System.EventHandler(this.btnEditCustomer_Click);
             // 
             // btnRemoveCustomer
             // 
@@ -124,6 +127,7 @@
             this.MinimizeBox = false;
             this.Name = "CustomersForm";
             this.Text = "Klienci";
+            this.Load += new System.EventHandler(this.CustomersForm_Load);
             this.ResumeLayout(false);
 
         }
