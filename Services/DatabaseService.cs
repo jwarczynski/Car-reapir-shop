@@ -52,7 +52,7 @@ namespace WarsztatSamochodowy.Services
             return service;
         }
 
-        public List<List<string?>> Select(string tableName, SortedDictionary<string, string>? conditions = null, List<string>? fields = null)
+        public List<List<string?>> Select(string tableName, SortedDictionary<string, string?>? conditions = null, List<string>? fields = null)
         {
             string sqlCommandString = prepareSelectCommandString(tableName, conditions?.Keys.ToList(), fields);
             var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
@@ -84,12 +84,12 @@ namespace WarsztatSamochodowy.Services
                 dataTable.Columns.Add(attributeName, typeof(string));
             }
 
-            string[]? row = new string[attributesNames.Count];
+            string?[] row = new string[attributesNames.Count];
             List<List<string?>> rows = Get().Select(tableName);
 
             foreach(var dataRow in rows)
             {
-                for(int i = 0;i< dataRow.Count; ++i)
+                for(int i = 0;i < dataRow.Count; ++i)
                 {
                     row[i] = dataRow.ElementAt(i);
                 }
@@ -99,7 +99,7 @@ namespace WarsztatSamochodowy.Services
             return dataTable;
         }
 
-        public void insert(string tableName, SortedDictionary<string, string> data)
+        public void insert(string tableName, SortedDictionary<string, string?> data)
         {
             string sqlCommandString = prepareInsertCommandString(tableName, data);
             var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
@@ -107,7 +107,7 @@ namespace WarsztatSamochodowy.Services
             sqlCommand.ExecuteNonQuery();
         }
 
-        public void update(string tableName, SortedDictionary<string, string> conditions, SortedDictionary<string, string> valuesToSet)
+        public void update(string tableName, SortedDictionary<string, string?> conditions, SortedDictionary<string, string?> valuesToSet)
         {
             string sqlCommandString = prepareUpdateCommandString(tableName, conditions.Keys.ToList(), valuesToSet.Keys.ToList());
             var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
@@ -115,7 +115,7 @@ namespace WarsztatSamochodowy.Services
             sqlCommand.ExecuteNonQuery();
         }
 
-        public void delete(string tableName, SortedDictionary<string, string> conditions)
+        public void delete(string tableName, SortedDictionary<string, string?> conditions)
         {
             string sqlCommandString = prepareDeleteCommandString(tableName, conditions.Keys.ToList());
             var sqlCommand = new MySqlCommand(sqlCommandString, mySqlConnection);
@@ -143,7 +143,7 @@ namespace WarsztatSamochodowy.Services
             return selectStringBuilder.ToString();
         }
 
-        private string prepareInsertCommandString(string tableName, SortedDictionary<string, string> data)
+        private string prepareInsertCommandString(string tableName, SortedDictionary<string, string?> data)
         {
             StringBuilder commandBuilder = new StringBuilder();
             commandBuilder.Append("INSERT INTO " + tableName + "(");
@@ -182,7 +182,7 @@ namespace WarsztatSamochodowy.Services
             return deleteStringBuilder.ToString();
         }
 
-        private void fillCommandWithData(MySqlCommand sqlCommand, SortedDictionary<string, string> data, string identyfingPrefix = "")
+        private void fillCommandWithData(MySqlCommand sqlCommand, SortedDictionary<string, string?> data, string identyfingPrefix = "")
         {
             sqlCommand ??= new MySqlCommand() { Connection = mySqlConnection };
 
@@ -192,7 +192,7 @@ namespace WarsztatSamochodowy.Services
             }
         }
 
-        private void prepareSqlUpdateCommand(MySqlCommand sqlCommand, SortedDictionary<string, string> conditions, SortedDictionary<string, string> valuesToSet)
+        private void prepareSqlUpdateCommand(MySqlCommand sqlCommand, SortedDictionary<string, string?> conditions, SortedDictionary<string, string?> valuesToSet)
         {
             fillCommandWithData(sqlCommand, conditions, "s");
             fillCommandWithData(sqlCommand, valuesToSet, "u");
@@ -200,7 +200,7 @@ namespace WarsztatSamochodowy.Services
 
         public void CallProcedure(string procedureName, List<string> arguments)
         {
-            SortedDictionary<string, string> fields = new();
+            SortedDictionary<string, string?> fields = new();
             int i = 0;
             foreach(var arg in arguments)
             {
@@ -217,7 +217,7 @@ namespace WarsztatSamochodowy.Services
 
         public object? CallFunction(string procedureName, List<string> arguments)
         {
-            SortedDictionary<string, string> fields = new();
+            SortedDictionary<string, string?> fields = new();
             int i = 0;
             foreach (var arg in arguments)
             {
@@ -232,7 +232,7 @@ namespace WarsztatSamochodowy.Services
             return sqlCommand.ExecuteScalar();
         }
 
-        private string prepareCallProcCommandString(string procName, SortedDictionary<string, string> args)
+        private string prepareCallProcCommandString(string procName, SortedDictionary<string, string?> args)
         {
             StringBuilder callStringBuilder = new();
             callStringBuilder.Append($"CALL `{procName}`(");
@@ -242,7 +242,7 @@ namespace WarsztatSamochodowy.Services
             return callStringBuilder.ToString();
         }
 
-        private string prepareCallFuncCommandString(string funcName, SortedDictionary<string, string> args)
+        private string prepareCallFuncCommandString(string funcName, SortedDictionary<string, string?> args)
         {
             StringBuilder callStringBuilder = new();
             callStringBuilder.Append($"SELECT `{funcName}`(");
