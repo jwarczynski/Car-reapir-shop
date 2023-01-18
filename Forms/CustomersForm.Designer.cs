@@ -54,6 +54,8 @@
             this.lvCustomers.TabIndex = 0;
             this.lvCustomers.UseCompatibleStateImageBehavior = false;
             this.lvCustomers.View = System.Windows.Forms.View.Details;
+            this.lvCustomers.ItemActivate += new System.EventHandler(this.lvCustomers_ItemActivate);
+            this.lvCustomers.SelectedIndexChanged += new System.EventHandler(this.lvCustomers_SelectedIndexChanged);
             // 
             // chCustomerName
             // 
@@ -87,6 +89,7 @@
             // 
             // btnEditCustomer
             // 
+            this.btnEditCustomer.Enabled = false;
             this.btnEditCustomer.Location = new System.Drawing.Point(646, 82);
             this.btnEditCustomer.Name = "btnEditCustomer";
             this.btnEditCustomer.Size = new System.Drawing.Size(117, 29);
@@ -97,12 +100,14 @@
             // 
             // btnRemoveCustomer
             // 
+            this.btnRemoveCustomer.Enabled = false;
             this.btnRemoveCustomer.Location = new System.Drawing.Point(646, 47);
             this.btnRemoveCustomer.Name = "btnRemoveCustomer";
             this.btnRemoveCustomer.Size = new System.Drawing.Size(117, 29);
             this.btnRemoveCustomer.TabIndex = 3;
             this.btnRemoveCustomer.Text = "Usuń";
             this.btnRemoveCustomer.UseVisualStyleBackColor = true;
+            this.btnRemoveCustomer.Click += new System.EventHandler(this.btnRemoveCustomer_Click);
             // 
             // btnNewOrder
             // 
