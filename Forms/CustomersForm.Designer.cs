@@ -46,12 +46,16 @@
             this.chPhoneNumber,
             this.chEmailAddress,
             this.chTaxId});
+            this.lvCustomers.FullRowSelect = true;
             this.lvCustomers.Location = new System.Drawing.Point(12, 12);
+            this.lvCustomers.MultiSelect = false;
             this.lvCustomers.Name = "lvCustomers";
             this.lvCustomers.Size = new System.Drawing.Size(628, 426);
             this.lvCustomers.TabIndex = 0;
             this.lvCustomers.UseCompatibleStateImageBehavior = false;
             this.lvCustomers.View = System.Windows.Forms.View.Details;
+            this.lvCustomers.ItemActivate += new System.EventHandler(this.lvCustomers_ItemActivate);
+            this.lvCustomers.SelectedIndexChanged += new System.EventHandler(this.lvCustomers_SelectedIndexChanged);
             // 
             // chCustomerName
             // 
@@ -85,21 +89,25 @@
             // 
             // btnEditCustomer
             // 
+            this.btnEditCustomer.Enabled = false;
             this.btnEditCustomer.Location = new System.Drawing.Point(646, 82);
             this.btnEditCustomer.Name = "btnEditCustomer";
             this.btnEditCustomer.Size = new System.Drawing.Size(117, 29);
             this.btnEditCustomer.TabIndex = 2;
             this.btnEditCustomer.Text = "Edytuj...";
             this.btnEditCustomer.UseVisualStyleBackColor = true;
+            this.btnEditCustomer.Click += new System.EventHandler(this.btnEditCustomer_Click);
             // 
             // btnRemoveCustomer
             // 
+            this.btnRemoveCustomer.Enabled = false;
             this.btnRemoveCustomer.Location = new System.Drawing.Point(646, 47);
             this.btnRemoveCustomer.Name = "btnRemoveCustomer";
             this.btnRemoveCustomer.Size = new System.Drawing.Size(117, 29);
             this.btnRemoveCustomer.TabIndex = 3;
             this.btnRemoveCustomer.Text = "Usuń";
             this.btnRemoveCustomer.UseVisualStyleBackColor = true;
+            this.btnRemoveCustomer.Click += new System.EventHandler(this.btnRemoveCustomer_Click);
             // 
             // btnNewOrder
             // 
@@ -124,6 +132,7 @@
             this.MinimizeBox = false;
             this.Name = "CustomersForm";
             this.Text = "Klienci";
+            this.Load += new System.EventHandler(this.CustomersForm_Load);
             this.ResumeLayout(false);
 
         }
