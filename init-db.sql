@@ -143,6 +143,13 @@ CREATE VIEW servicesPartsView AS
         FROM services s JOIN serviceParts ON s.name = serviceName
         JOIN parts p ON partPartCode = p.partCode;
 
+CREATE VIEW ordersView AS
+    SELECT o.`id` AS `orderId`, c.`fullName` AS `customerName`, o.`carLicensePlate` AS `carLicensePlate`,
+        o.`acceptDate` AS `acceptDate`, o.`finishDate` AS `finishDate`
+        FROM `orders` o
+        JOIN `customers` c ON c.`customerId` = o.`customerId`
+        ORDER BY o.`acceptDate` DESC;
+
 
 DELIMITER $$
 CREATE FUNCTION `countModelsByManufacturer` (
