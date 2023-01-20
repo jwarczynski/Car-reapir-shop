@@ -19,6 +19,7 @@ namespace WarsztatSamochodowy.Forms
     {
         protected string? orderId;
         protected string? originalCustomerId;
+        protected string? uneditedComment;
 
         public OrderDetailsForm(string? orderId, string? customerId = null)
         {
@@ -80,7 +81,7 @@ namespace WarsztatSamochodowy.Forms
                 lblFinishDate.Text = "brak";
                 lblStatus.Text = "w trakcie";
             }
-            tbOrderComment.Text = order[4];
+            tbOrderComment.Text = uneditedComment = order[4];
         }
 
         private void btnSaveSubject_Click(object sender, EventArgs e)
@@ -124,6 +125,45 @@ namespace WarsztatSamochodowy.Forms
             }catch(MySqlException ex)
             {
                 string message = "Nie udało się zapisać zamówienia do bazy danych.";
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEditComment_Click(object sender, EventArgs e)
+        {
+            if (tbOrderComment.ReadOnly)
+            {
+                tbOrderComment.ReadOnly = false;
+                btnSaveComment.Enabled = true;
+                btnEditComment.Text = "Anuluj";
+            }
+            else
+            {
+                tbOrderComment.Text = uneditedComment;
+                tbOrderComment.ReadOnly = true;
+                btnSaveComment.Enabled = false;
+                btnEditComment.Text = "Edytuj";
+            }
+        }
+
+        private void btnSaveComment_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string? comment = tbOrderComment.Text;
+                if (string.IsNullOrWhiteSpace(comment)) comment = null;
+
+                DatabaseService.Get().update(DatabaseService.TABLE_ORDERS,
+                    new() { ["id"] = orderId },
+                    new() { ["comment"] = comment });
+                uneditedComment = comment;
+                tbOrderComment.ReadOnly = true;
+                btnSaveComment.Enabled = false;
+                btnEditComment.Text = "Edytuj";
+            }
+            catch (MySqlException ex)
+            {
+                string message = "Nie udało się zapisać komentarza.";
                 MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

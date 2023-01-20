@@ -317,6 +317,7 @@
             this.btnEditComment.TabIndex = 13;
             this.btnEditComment.Text = "Edytuj";
             this.btnEditComment.UseVisualStyleBackColor = true;
+            this.btnEditComment.Click += new System.EventHandler(this.btnEditComment_Click);
             // 
             // btnSaveComment
             // 
@@ -327,6 +328,7 @@
             this.btnSaveComment.TabIndex = 12;
             this.btnSaveComment.Text = "Zapisz";
             this.btnSaveComment.UseVisualStyleBackColor = true;
+            this.btnSaveComment.Click += new System.EventHandler(this.btnSaveComment_Click);
             // 
             // tbOrderComment
             // 
