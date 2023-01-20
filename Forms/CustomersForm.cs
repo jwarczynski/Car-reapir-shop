@@ -101,5 +101,15 @@ namespace WarsztatSamochodowy.Forms
                 MessageBox.Show(message, "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnNewOrder_Click(object sender, EventArgs e)
+        {
+            string? customerId = null;
+            if(lvCustomers.SelectedItems.Count == 1)
+                customerId = (string?)lvCustomers.SelectedItems[0].Tag;
+
+            var orderDetailsForm = new OrderDetailsForm(null, customerId);
+            orderDetailsForm.ShowDialog();
+        }
     }
 }

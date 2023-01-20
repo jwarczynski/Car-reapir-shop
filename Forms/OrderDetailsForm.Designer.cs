@@ -38,29 +38,32 @@
             this.cbCar = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnNewCustomer = new System.Windows.Forms.Button();
             this.btnNewCar = new System.Windows.Forms.Button();
+            this.btnNewCustomer = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.tbOrderComment = new System.Windows.Forms.TextBox();
-            this.btnSaveComment = new System.Windows.Forms.Button();
-            this.btnEditComment = new System.Windows.Forms.Button();
+            this.btnRemovePosition = new System.Windows.Forms.Button();
+            this.btnPositionDetails = new System.Windows.Forms.Button();
+            this.btnAddPosition = new System.Windows.Forms.Button();
             this.lvOrderPositions = new System.Windows.Forms.ListView();
             this.chServiceName = new System.Windows.Forms.ColumnHeader();
             this.chDate = new System.Windows.Forms.ColumnHeader();
             this.chPrice = new System.Windows.Forms.ColumnHeader();
             this.chEmployee = new System.Windows.Forms.ColumnHeader();
-            this.btnAddPosition = new System.Windows.Forms.Button();
-            this.btnPositionDetails = new System.Windows.Forms.Button();
-            this.btnRemovePosition = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnEditComment = new System.Windows.Forms.Button();
+            this.btnSaveComment = new System.Windows.Forms.Button();
+            this.tbOrderComment = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblPositionsFulfilled = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.lblTotalCost = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnCancelOrder = new System.Windows.Forms.Button();
             this.btnFulfillOrder = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.lblPositionsFulfilled = new System.Windows.Forms.Label();
+            this.btnSaveSubject = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -101,9 +104,9 @@
             this.lblFinishDate.AutoSize = true;
             this.lblFinishDate.Location = new System.Drawing.Point(141, 57);
             this.lblFinishDate.Name = "lblFinishDate";
-            this.lblFinishDate.Size = new System.Drawing.Size(68, 20);
+            this.lblFinishDate.Size = new System.Drawing.Size(38, 20);
             this.lblFinishDate.TabIndex = 3;
-            this.lblFinishDate.Text = "w trakcie";
+            this.lblFinishDate.Text = "brak";
             // 
             // label5
             // 
@@ -125,6 +128,8 @@
             // 
             // cbCustomer
             // 
+            this.cbCustomer.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbCustomer.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbCustomer.FormattingEnabled = true;
             this.cbCustomer.Location = new System.Drawing.Point(95, 20);
             this.cbCustomer.Name = "cbCustomer";
@@ -133,6 +138,8 @@
             // 
             // cbCar
             // 
+            this.cbCar.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbCar.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbCar.FormattingEnabled = true;
             this.cbCar.Location = new System.Drawing.Point(95, 54);
             this.cbCar.Name = "cbCar";
@@ -141,19 +148,22 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblStatus);
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.lblAcceptDate);
             this.groupBox1.Controls.Add(this.lblFinishDate);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(252, 91);
+            this.groupBox1.Size = new System.Drawing.Size(252, 123);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Terminy";
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnSaveSubject);
             this.groupBox2.Controls.Add(this.btnNewCar);
             this.groupBox2.Controls.Add(this.btnNewCustomer);
             this.groupBox2.Controls.Add(this.label5);
@@ -162,19 +172,10 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(270, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(453, 91);
+            this.groupBox2.Size = new System.Drawing.Size(453, 123);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Klient";
-            // 
-            // btnNewCustomer
-            // 
-            this.btnNewCustomer.Location = new System.Drawing.Point(353, 19);
-            this.btnNewCustomer.Name = "btnNewCustomer";
-            this.btnNewCustomer.Size = new System.Drawing.Size(94, 29);
-            this.btnNewCustomer.TabIndex = 10;
-            this.btnNewCustomer.Text = "Nowy...";
-            this.btnNewCustomer.UseVisualStyleBackColor = true;
             // 
             // btnNewCar
             // 
@@ -185,58 +186,54 @@
             this.btnNewCar.Text = "Nowy...";
             this.btnNewCar.UseVisualStyleBackColor = true;
             // 
+            // btnNewCustomer
+            // 
+            this.btnNewCustomer.Location = new System.Drawing.Point(353, 19);
+            this.btnNewCustomer.Name = "btnNewCustomer";
+            this.btnNewCustomer.Size = new System.Drawing.Size(94, 29);
+            this.btnNewCustomer.TabIndex = 10;
+            this.btnNewCustomer.Text = "Nowy...";
+            this.btnNewCustomer.UseVisualStyleBackColor = true;
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.btnRemovePosition);
             this.groupBox3.Controls.Add(this.btnPositionDetails);
             this.groupBox3.Controls.Add(this.btnAddPosition);
             this.groupBox3.Controls.Add(this.lvOrderPositions);
-            this.groupBox3.Location = new System.Drawing.Point(12, 260);
+            this.groupBox3.Location = new System.Drawing.Point(12, 292);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(711, 260);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Pozycje";
             // 
-            // groupBox4
+            // btnRemovePosition
             // 
-            this.groupBox4.Controls.Add(this.btnEditComment);
-            this.groupBox4.Controls.Add(this.btnSaveComment);
-            this.groupBox4.Controls.Add(this.tbOrderComment);
-            this.groupBox4.Location = new System.Drawing.Point(12, 109);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(711, 145);
-            this.groupBox4.TabIndex = 11;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Komentarz";
+            this.btnRemovePosition.Location = new System.Drawing.Point(611, 224);
+            this.btnRemovePosition.Name = "btnRemovePosition";
+            this.btnRemovePosition.Size = new System.Drawing.Size(94, 29);
+            this.btnRemovePosition.TabIndex = 12;
+            this.btnRemovePosition.Text = "Usuń";
+            this.btnRemovePosition.UseVisualStyleBackColor = true;
             // 
-            // tbOrderComment
+            // btnPositionDetails
             // 
-            this.tbOrderComment.Location = new System.Drawing.Point(6, 26);
-            this.tbOrderComment.Multiline = true;
-            this.tbOrderComment.Name = "tbOrderComment";
-            this.tbOrderComment.ReadOnly = true;
-            this.tbOrderComment.Size = new System.Drawing.Size(699, 78);
-            this.tbOrderComment.TabIndex = 0;
+            this.btnPositionDetails.Location = new System.Drawing.Point(6, 224);
+            this.btnPositionDetails.Name = "btnPositionDetails";
+            this.btnPositionDetails.Size = new System.Drawing.Size(167, 29);
+            this.btnPositionDetails.TabIndex = 2;
+            this.btnPositionDetails.Text = "Szczegóły pozycji...";
+            this.btnPositionDetails.UseVisualStyleBackColor = true;
             // 
-            // btnSaveComment
+            // btnAddPosition
             // 
-            this.btnSaveComment.Enabled = false;
-            this.btnSaveComment.Location = new System.Drawing.Point(611, 110);
-            this.btnSaveComment.Name = "btnSaveComment";
-            this.btnSaveComment.Size = new System.Drawing.Size(94, 29);
-            this.btnSaveComment.TabIndex = 12;
-            this.btnSaveComment.Text = "Zapisz";
-            this.btnSaveComment.UseVisualStyleBackColor = true;
-            // 
-            // btnEditComment
-            // 
-            this.btnEditComment.Location = new System.Drawing.Point(511, 110);
-            this.btnEditComment.Name = "btnEditComment";
-            this.btnEditComment.Size = new System.Drawing.Size(94, 29);
-            this.btnEditComment.TabIndex = 13;
-            this.btnEditComment.Text = "Edytuj";
-            this.btnEditComment.UseVisualStyleBackColor = true;
+            this.btnAddPosition.Location = new System.Drawing.Point(511, 224);
+            this.btnAddPosition.Name = "btnAddPosition";
+            this.btnAddPosition.Size = new System.Drawing.Size(94, 29);
+            this.btnAddPosition.TabIndex = 1;
+            this.btnAddPosition.Text = "Dodaj...";
+            this.btnAddPosition.UseVisualStyleBackColor = true;
             // 
             // lvOrderPositions
             // 
@@ -272,32 +269,45 @@
             this.chEmployee.Text = "Wykonawca";
             this.chEmployee.Width = 150;
             // 
-            // btnAddPosition
+            // groupBox4
             // 
-            this.btnAddPosition.Location = new System.Drawing.Point(511, 224);
-            this.btnAddPosition.Name = "btnAddPosition";
-            this.btnAddPosition.Size = new System.Drawing.Size(94, 29);
-            this.btnAddPosition.TabIndex = 1;
-            this.btnAddPosition.Text = "Dodaj...";
-            this.btnAddPosition.UseVisualStyleBackColor = true;
+            this.groupBox4.Controls.Add(this.btnEditComment);
+            this.groupBox4.Controls.Add(this.btnSaveComment);
+            this.groupBox4.Controls.Add(this.tbOrderComment);
+            this.groupBox4.Location = new System.Drawing.Point(12, 141);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(711, 145);
+            this.groupBox4.TabIndex = 11;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Komentarz";
             // 
-            // btnPositionDetails
+            // btnEditComment
             // 
-            this.btnPositionDetails.Location = new System.Drawing.Point(6, 224);
-            this.btnPositionDetails.Name = "btnPositionDetails";
-            this.btnPositionDetails.Size = new System.Drawing.Size(167, 29);
-            this.btnPositionDetails.TabIndex = 2;
-            this.btnPositionDetails.Text = "Szczegóły pozycji...";
-            this.btnPositionDetails.UseVisualStyleBackColor = true;
+            this.btnEditComment.Location = new System.Drawing.Point(511, 110);
+            this.btnEditComment.Name = "btnEditComment";
+            this.btnEditComment.Size = new System.Drawing.Size(94, 29);
+            this.btnEditComment.TabIndex = 13;
+            this.btnEditComment.Text = "Edytuj";
+            this.btnEditComment.UseVisualStyleBackColor = true;
             // 
-            // btnRemovePosition
+            // btnSaveComment
             // 
-            this.btnRemovePosition.Location = new System.Drawing.Point(611, 224);
-            this.btnRemovePosition.Name = "btnRemovePosition";
-            this.btnRemovePosition.Size = new System.Drawing.Size(94, 29);
-            this.btnRemovePosition.TabIndex = 12;
-            this.btnRemovePosition.Text = "Usuń";
-            this.btnRemovePosition.UseVisualStyleBackColor = true;
+            this.btnSaveComment.Enabled = false;
+            this.btnSaveComment.Location = new System.Drawing.Point(611, 110);
+            this.btnSaveComment.Name = "btnSaveComment";
+            this.btnSaveComment.Size = new System.Drawing.Size(94, 29);
+            this.btnSaveComment.TabIndex = 12;
+            this.btnSaveComment.Text = "Zapisz";
+            this.btnSaveComment.UseVisualStyleBackColor = true;
+            // 
+            // tbOrderComment
+            // 
+            this.tbOrderComment.Location = new System.Drawing.Point(6, 26);
+            this.tbOrderComment.Multiline = true;
+            this.tbOrderComment.Name = "tbOrderComment";
+            this.tbOrderComment.ReadOnly = true;
+            this.tbOrderComment.Size = new System.Drawing.Size(699, 78);
+            this.tbOrderComment.TabIndex = 0;
             // 
             // groupBox5
             // 
@@ -305,21 +315,31 @@
             this.groupBox5.Controls.Add(this.label7);
             this.groupBox5.Controls.Add(this.lblTotalCost);
             this.groupBox5.Controls.Add(this.label3);
-            this.groupBox5.Location = new System.Drawing.Point(12, 526);
+            this.groupBox5.Location = new System.Drawing.Point(12, 558);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(497, 97);
             this.groupBox5.TabIndex = 12;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Podsumowanie";
             // 
-            // label3
+            // lblPositionsFulfilled
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 23);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(217, 20);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Łączny koszt wszystkich pozycji:";
+            this.lblPositionsFulfilled.Font = new System.Drawing.Font("Segoe UI Semibold", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblPositionsFulfilled.Location = new System.Drawing.Point(310, 43);
+            this.lblPositionsFulfilled.Name = "lblPositionsFulfilled";
+            this.lblPositionsFulfilled.Size = new System.Drawing.Size(153, 38);
+            this.lblPositionsFulfilled.TabIndex = 3;
+            this.lblPositionsFulfilled.Text = "0 / 0";
+            this.lblPositionsFulfilled.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(310, 23);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(153, 20);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "Zrealizowano pozycji:";
             // 
             // lblTotalCost
             // 
@@ -330,6 +350,15 @@
             this.lblTotalCost.TabIndex = 1;
             this.lblTotalCost.Text = "0,00 zł";
             this.lblTotalCost.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 23);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(217, 20);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Łączny koszt wszystkich pozycji:";
             // 
             // btnCancelOrder
             // 
@@ -353,37 +382,45 @@
             // 
             this.groupBox6.Controls.Add(this.btnFulfillOrder);
             this.groupBox6.Controls.Add(this.btnCancelOrder);
-            this.groupBox6.Location = new System.Drawing.Point(515, 526);
+            this.groupBox6.Location = new System.Drawing.Point(515, 558);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(208, 97);
             this.groupBox6.TabIndex = 13;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Operacje";
             // 
-            // label7
+            // btnSaveSubject
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(310, 23);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(153, 20);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "Zrealizowano pozycji:";
+            this.btnSaveSubject.Location = new System.Drawing.Point(253, 88);
+            this.btnSaveSubject.Name = "btnSaveSubject";
+            this.btnSaveSubject.Size = new System.Drawing.Size(94, 29);
+            this.btnSaveSubject.TabIndex = 12;
+            this.btnSaveSubject.Text = "Zapisz";
+            this.btnSaveSubject.UseVisualStyleBackColor = true;
             // 
-            // lblPositionsFulfilled
+            // label4
             // 
-            this.lblPositionsFulfilled.Font = new System.Drawing.Font("Segoe UI Semibold", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblPositionsFulfilled.Location = new System.Drawing.Point(310, 43);
-            this.lblPositionsFulfilled.Name = "lblPositionsFulfilled";
-            this.lblPositionsFulfilled.Size = new System.Drawing.Size(153, 38);
-            this.lblPositionsFulfilled.TabIndex = 3;
-            this.lblPositionsFulfilled.Text = "0 / 0";
-            this.lblPositionsFulfilled.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 89);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 20);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Status:";
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(141, 89);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(93, 20);
+            this.lblStatus.TabIndex = 5;
+            this.lblStatus.Text = "nie wpłynęło";
             // 
             // OrderDetailsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(733, 635);
+            this.ClientSize = new System.Drawing.Size(733, 664);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -444,5 +481,8 @@
         private Button btnCancelOrder;
         private Button btnFulfillOrder;
         private GroupBox groupBox6;
+        private Label lblStatus;
+        private Label label4;
+        private Button btnSaveSubject;
     }
 }

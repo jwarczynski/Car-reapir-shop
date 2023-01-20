@@ -13,6 +13,7 @@ namespace WarsztatSamochodowy.Services
     internal class DatabaseService : IDisposable
     {
         public const string TABLE_PARTS = "parts";
+        public const string TABLE_CARS = "cars";
         public const string TABLE_CAR_MODELS = "carModels";
         public const string TABLE_CAR_MANUFACTURERS = "carManufacturers";
         public const string TABLE_PARTS_CAR_MODELS = "partsToCarModels";
@@ -21,6 +22,7 @@ namespace WarsztatSamochodowy.Services
         public const string TABLE_SHOPPING_LISTS_PARTS_WITH_NAMES = "shoppingListsPartsWithNames";
         public const string TABLE_SHOPPING_LISTS_WITH_PART_COUNT = "shoppingListsWithPartCount";
         public const string TABLE_CUSTOMERS = "customers";
+        public const string TABLE_ORDERS = "orders";
         public const string TABLE_ORDERS_VIEW = "ordersView";
 
         public const string PROC_ADD_SHOPPING_LIST_ENTRY = "addShoppingListEntry";

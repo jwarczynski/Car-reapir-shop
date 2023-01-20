@@ -50,5 +50,20 @@ namespace WarsztatSamochodowy.Forms
         {
             btnDetails.Enabled = lvOrders.SelectedItems.Count == 1;
         }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            var orderDetailsForm = new OrderDetailsForm(null);
+            orderDetailsForm.ShowDialog();
+        }
+
+        private void btnDetails_Click(object sender, EventArgs e)
+        {
+            if (lvOrders.SelectedItems.Count != 1) return;
+
+            var orderId = (string?)lvOrders.SelectedItems[0].Tag;
+            var orderDetailsForm = new OrderDetailsForm(orderId);
+            orderDetailsForm.ShowDialog();
+        }
     }
 }

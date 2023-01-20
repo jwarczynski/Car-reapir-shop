@@ -82,6 +82,7 @@
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "Dodaj...";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnDetails
             // 
@@ -92,6 +93,7 @@
             this.btnDetails.TabIndex = 2;
             this.btnDetails.Text = "Szczegóły...";
             this.btnDetails.UseVisualStyleBackColor = true;
+            this.btnDetails.Click += new System.EventHandler(this.btnDetails_Click);
             // 
             // OrdersForm
             // 
