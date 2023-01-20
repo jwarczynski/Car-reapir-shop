@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MySqlConnector;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -56,6 +58,10 @@ namespace WarsztatSamochodowy.Forms
             {
                 cbCustomer.SelectedItem = new CustomerRow(originalCustomerId ?? "", "");
                 lblAcceptDate.Text = DateTime.Now.ToShortDateString();
+
+                gbComment.Enabled =
+                    gbPositions.Enabled =
+                    gbActions.Enabled = false;
                 return;
             }
 
@@ -75,6 +81,51 @@ namespace WarsztatSamochodowy.Forms
                 lblStatus.Text = "w trakcie";
             }
             tbOrderComment.Text = order[4];
+        }
+
+        private void btnSaveSubject_Click(object sender, EventArgs e)
+        {
+            if(cbCustomer.SelectedIndex == -1)
+            {
+                MessageBox.Show("Wybierz albo utwórz klienta", "Niekompletne dane", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            if(cbCar.SelectedIndex == -1)
+            {
+                MessageBox.Show("Wybierz albo utwórz samochód", "Niekompletne dane", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            var db = DatabaseService.Get();
+            try
+            {
+                if(orderId != null)
+                {
+                    db.update(DatabaseService.TABLE_ORDERS,
+                        new() { ["id"] = orderId },
+                        new() { ["customerId"] = ((CustomerRow)cbCustomer.SelectedItem).CustomerId,
+                            ["carLicensePlate"] = cbCar.SelectedItem.ToString() });
+                    MessageBox.Show("Zaktualizowano", "Powodzenie");
+                }
+                else
+                {
+                    orderId = db.CallFunction(DatabaseService.FUNC_ADD_ORDER,
+                        new()
+                        {
+                            ((CustomerRow)cbCustomer.SelectedItem).CustomerId,
+                            cbCar.SelectedItem.ToString()!
+                        })?.ToString();
+                    gbComment.Enabled =
+                        gbPositions.Enabled =
+                        gbActions.Enabled = true;
+                    lblStatus.Text = "w trakcie";
+                    MessageBox.Show("Dodano zamówienie", "Powodzenie");
+                }
+            }catch(MySqlException ex)
+            {
+                string message = "Nie udało się zapisać zamówienia do bazy danych.";
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private class CustomerRow

@@ -46,8 +46,8 @@ CREATE TABLE `cars` (
 );
 
 CREATE TABLE `orders` (
-    `id` int NOT NULL PRIMARY KEY,
-    `acceptDate` date NOT NULL,
+    `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `acceptDate` date NOT NULL DEFAULT NOW(),
     `finishDate` date,
     `comment` longtext DEFAULT NULL,
     `customerId` int NOT NULL,
@@ -148,7 +148,7 @@ CREATE VIEW ordersView AS
         o.`acceptDate` AS `acceptDate`, o.`finishDate` AS `finishDate`
         FROM `orders` o
         JOIN `customers` c ON c.`customerId` = o.`customerId`
-        ORDER BY o.`acceptDate` DESC;
+        ORDER BY o.`acceptDate` DESC, o.`id` DESC;
 
 
 DELIMITER $$
@@ -161,6 +161,18 @@ BEGIN
         FROM `carModels`
         WHERE `manufacturerName` = manufacturer;
     RETURN manufacturerCount;
+END$$
+
+CREATE FUNCTION `addOrder` (
+    customerId INT,
+    carLicensePlate VARCHAR(10)
+) RETURNS INT
+BEGIN
+    DECLARE orderId INT;
+    INSERT INTO `orders` (`customerId`, `carLicensePlate`)
+        VALUES (customerId, carLicensePlate);
+    SELECT LAST_INSERT_ID() INTO orderId;
+    RETURN orderId;
 END$$
 
 CREATE PROCEDURE `addShoppingListEntry` (

@@ -55,6 +55,7 @@ namespace WarsztatSamochodowy.Forms
         {
             var orderDetailsForm = new OrderDetailsForm(null);
             orderDetailsForm.ShowDialog();
+            LoadOrders();
         }
 
         private void btnDetails_Click(object sender, EventArgs e)
@@ -64,6 +65,7 @@ namespace WarsztatSamochodowy.Forms
             var orderId = (string?)lvOrders.SelectedItems[0].Tag;
             var orderDetailsForm = new OrderDetailsForm(orderId);
             orderDetailsForm.ShowDialog();
+            LoadOrders();
         }
     }
 }

@@ -28,6 +28,7 @@ namespace WarsztatSamochodowy.Services
         public const string PROC_ADD_SHOPPING_LIST_ENTRY = "addShoppingListEntry";
 
         public const string FUNC_COUNT_MODELS_BY_MANUFACTURER = "countModelsByManufacturer";
+        public const string FUNC_ADD_ORDER = "addOrder";
 
         private readonly MySqlConnection mySqlConnection;
         private const string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
