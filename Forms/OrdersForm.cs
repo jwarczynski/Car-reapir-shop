@@ -60,6 +60,16 @@ namespace WarsztatSamochodowy.Forms
 
         private void btnDetails_Click(object sender, EventArgs e)
         {
+            ViewSelectedOrder();
+        }
+
+        private void lvOrders_ItemActivate(object sender, EventArgs e)
+        {
+            ViewSelectedOrder();
+        }
+
+        protected void ViewSelectedOrder()
+        {
             if (lvOrders.SelectedItems.Count != 1) return;
 
             var orderId = (string?)lvOrders.SelectedItems[0].Tag;

@@ -52,6 +52,7 @@
             this.lvOrders.TabIndex = 0;
             this.lvOrders.UseCompatibleStateImageBehavior = false;
             this.lvOrders.View = System.Windows.Forms.View.Details;
+            this.lvOrders.ItemActivate += new System.EventHandler(this.lvOrders_ItemActivate);
             this.lvOrders.SelectedIndexChanged += new System.EventHandler(this.lvOrders_SelectedIndexChanged);
             // 
             // chLicensePlate
