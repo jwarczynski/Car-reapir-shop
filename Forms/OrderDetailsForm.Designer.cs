@@ -42,7 +42,7 @@
             this.btnNewCar = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbOrderComment = new System.Windows.Forms.TextBox();
             this.btnSaveComment = new System.Windows.Forms.Button();
             this.btnEditComment = new System.Windows.Forms.Button();
             this.lvOrderPositions = new System.Windows.Forms.ListView();
@@ -55,12 +55,12 @@
             this.btnRemovePosition = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblTotalCost = new System.Windows.Forms.Label();
             this.btnCancelOrder = new System.Windows.Forms.Button();
             this.btnFulfillOrder = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblPositionsFulfilled = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -202,7 +202,7 @@
             // 
             this.groupBox4.Controls.Add(this.btnEditComment);
             this.groupBox4.Controls.Add(this.btnSaveComment);
-            this.groupBox4.Controls.Add(this.textBox1);
+            this.groupBox4.Controls.Add(this.tbOrderComment);
             this.groupBox4.Location = new System.Drawing.Point(12, 109);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(711, 145);
@@ -210,14 +210,14 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Komentarz";
             // 
-            // textBox1
+            // tbOrderComment
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 26);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(699, 78);
-            this.textBox1.TabIndex = 0;
+            this.tbOrderComment.Location = new System.Drawing.Point(6, 26);
+            this.tbOrderComment.Multiline = true;
+            this.tbOrderComment.Name = "tbOrderComment";
+            this.tbOrderComment.ReadOnly = true;
+            this.tbOrderComment.Size = new System.Drawing.Size(699, 78);
+            this.tbOrderComment.TabIndex = 0;
             // 
             // btnSaveComment
             // 
@@ -301,9 +301,9 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.label8);
+            this.groupBox5.Controls.Add(this.lblPositionsFulfilled);
             this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Controls.Add(this.label4);
+            this.groupBox5.Controls.Add(this.lblTotalCost);
             this.groupBox5.Controls.Add(this.label3);
             this.groupBox5.Location = new System.Drawing.Point(12, 526);
             this.groupBox5.Name = "groupBox5";
@@ -321,15 +321,15 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Łączny koszt wszystkich pozycji:";
             // 
-            // label4
+            // lblTotalCost
             // 
-            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(6, 43);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(214, 38);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "0,00 zł";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTotalCost.Font = new System.Drawing.Font("Segoe UI Semibold", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTotalCost.Location = new System.Drawing.Point(6, 43);
+            this.lblTotalCost.Name = "lblTotalCost";
+            this.lblTotalCost.Size = new System.Drawing.Size(214, 38);
+            this.lblTotalCost.TabIndex = 1;
+            this.lblTotalCost.Text = "0,00 zł";
+            this.lblTotalCost.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnCancelOrder
             // 
@@ -369,15 +369,15 @@
             this.label7.TabIndex = 2;
             this.label7.Text = "Zrealizowano pozycji:";
             // 
-            // label8
+            // lblPositionsFulfilled
             // 
-            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label8.Location = new System.Drawing.Point(310, 43);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(153, 38);
-            this.label8.TabIndex = 3;
-            this.label8.Text = "0 / 0";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblPositionsFulfilled.Font = new System.Drawing.Font("Segoe UI Semibold", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblPositionsFulfilled.Location = new System.Drawing.Point(310, 43);
+            this.lblPositionsFulfilled.Name = "lblPositionsFulfilled";
+            this.lblPositionsFulfilled.Size = new System.Drawing.Size(153, 38);
+            this.lblPositionsFulfilled.TabIndex = 3;
+            this.lblPositionsFulfilled.Text = "0 / 0";
+            this.lblPositionsFulfilled.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // OrderDetailsForm
             // 
@@ -435,11 +435,11 @@
         private GroupBox groupBox4;
         private Button btnEditComment;
         private Button btnSaveComment;
-        private TextBox textBox1;
+        private TextBox tbOrderComment;
         private GroupBox groupBox5;
-        private Label label8;
+        private Label lblPositionsFulfilled;
         private Label label7;
-        private Label label4;
+        private Label lblTotalCost;
         private Label label3;
         private Button btnCancelOrder;
         private Button btnFulfillOrder;
