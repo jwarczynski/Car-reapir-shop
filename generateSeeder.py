@@ -115,6 +115,15 @@ for s in services:
     f.write(f'INSERT INTO `services` (`name`, `standardCost`) VALUES ("{s[0]}", {s[1]});\n')
 f.write('\n')
 
+f.write('-- Insert service-car model relations\n')
+for s in services:
+    for i in range(randint(3,6)):
+        manIdx = randint(0, len(manufacturers) - 1)
+        modelIdx = randint(0, len(models[manIdx]) - 1)
+        f.write(f'INSERT INTO `servicesToCarModels` (`serviceName`, `manufacturerName`, `modelName`) VALUES' +
+            f' ("{s[0]}", "{manufacturers[manIdx]}", "{models[manIdx][modelIdx]}");\n')
+f.write('\n')
+
 f.write('-- Insert car-part relations\n')
 for i in range(10):
     manIdx = randint(0, len(manufacturers) - 1)
@@ -135,5 +144,5 @@ for o in orders:
         employee = 'NULL' if isDone == '0' else f'"{employees[randint(0, len(employees) - 1)][0]}"'
 
         f.write(f'INSERT INTO `orderEntries` (`orderId`, `position`, `serviceName`, `isDone`, `date`, `employeeName`) VALUES' +
-            f' ({o[0]}, {i+1}, "{serviceName}", "{isDone}", {date}, {employee});\n')
+            f' ({o[0]}, {i+1}, (SELECT `serviceName` FROM `servicesToCarModels` NATURAL JOIN `cars` WHERE `licensePlate` = "{o[5]}" ORDER BY RAND() LIMIT 1), "{isDone}", {date}, {employee});\n')
 f.write('\n')

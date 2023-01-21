@@ -26,11 +26,13 @@ namespace WarsztatSamochodowy.Services
         public const string TABLE_ORDERS_VIEW = "ordersView";
         public const string TABLE_ORDER_ENTRIES = "orderEntries";
         public const string TABLE_ORDER_ENTRIES_VIEW = "orderEntriesView";
+        public const string TABLE_SERVICES_FOR_CAR = "servicesForCar";
 
         public const string PROC_ADD_SHOPPING_LIST_ENTRY = "addShoppingListEntry";
 
         public const string FUNC_COUNT_MODELS_BY_MANUFACTURER = "countModelsByManufacturer";
         public const string FUNC_ADD_ORDER = "addOrder";
+        public const string FUNC_ADD_ORDER_ENTRY = "addOrderEntry";
 
         private readonly MySqlConnection mySqlConnection;
         private const string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
@@ -204,7 +206,7 @@ namespace WarsztatSamochodowy.Services
             fillCommandWithData(sqlCommand, valuesToSet, "u");
         }
 
-        public void CallProcedure(string procedureName, List<string> arguments)
+        public void CallProcedure(string procedureName, List<string?> arguments)
         {
             SortedDictionary<string, string?> fields = new();
             int i = 0;
@@ -221,7 +223,7 @@ namespace WarsztatSamochodowy.Services
             sqlCommand.ExecuteNonQuery();
         }
 
-        public object? CallFunction(string procedureName, List<string> arguments)
+        public object? CallFunction(string procedureName, List<string?> arguments)
         {
             SortedDictionary<string, string?> fields = new();
             int i = 0;

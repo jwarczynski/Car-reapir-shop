@@ -254,6 +254,7 @@
             this.btnPositionDetails.TabIndex = 2;
             this.btnPositionDetails.Text = "Szczegóły pozycji...";
             this.btnPositionDetails.UseVisualStyleBackColor = true;
+            this.btnPositionDetails.Click += new System.EventHandler(this.btnPositionDetails_Click);
             // 
             // btnAddPosition
             // 
@@ -263,6 +264,7 @@
             this.btnAddPosition.TabIndex = 1;
             this.btnAddPosition.Text = "Dodaj...";
             this.btnAddPosition.UseVisualStyleBackColor = true;
+            this.btnAddPosition.Click += new System.EventHandler(this.btnAddPosition_Click);
             // 
             // lvOrderPositions
             // 
@@ -279,6 +281,7 @@
             this.lvOrderPositions.TabIndex = 0;
             this.lvOrderPositions.UseCompatibleStateImageBehavior = false;
             this.lvOrderPositions.View = System.Windows.Forms.View.Details;
+            this.lvOrderPositions.ItemActivate += new System.EventHandler(this.lvOrderPositions_ItemActivate);
             this.lvOrderPositions.SelectedIndexChanged += new System.EventHandler(this.lvOrderPositions_SelectedIndexChanged);
             // 
             // chServiceName

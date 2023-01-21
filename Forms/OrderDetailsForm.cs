@@ -21,6 +21,7 @@ namespace WarsztatSamochodowy.Forms
         protected string? originalCustomerId;
 
         protected bool isFinished = false;
+        protected string? carLicensePlate;
         protected string? uneditedComment;
 
         public OrderDetailsForm(string? orderId, string? customerId = null)
@@ -73,7 +74,7 @@ namespace WarsztatSamochodowy.Forms
                 new() { "customerId", "carLicensePlate", "acceptDate", "finishDate", "comment" })[0];
 
             cbCustomer.SelectedItem = new CustomerRow(order[0]!, "");
-            cbCar.SelectedItem = order[1];
+            cbCar.SelectedItem = carLicensePlate = order[1];
             lblAcceptDate.Text = DateTime.Parse(order[2]!).ToShortDateString();
             if (!string.IsNullOrEmpty(order[3]))
             {
@@ -152,6 +153,7 @@ namespace WarsztatSamochodowy.Forms
                         new() { ["id"] = orderId },
                         new() { ["customerId"] = ((CustomerRow)cbCustomer.SelectedItem).CustomerId,
                             ["carLicensePlate"] = cbCar.SelectedItem.ToString() });
+                    carLicensePlate = cbCar.SelectedItem.ToString();
                     MessageBox.Show("Zaktualizowano", "Powodzenie");
                 }
                 else
@@ -321,6 +323,34 @@ namespace WarsztatSamochodowy.Forms
             {
                 return CustomerName;
             }
+        }
+
+        private void btnPositionDetails_Click(object sender, EventArgs e)
+        {
+            DisplaySelectedEntryDetails();
+        }
+
+        protected void DisplaySelectedEntryDetails()
+        {
+            if (lvOrderPositions.SelectedItems.Count != 1) return;
+            var entryItem = lvOrderPositions.SelectedItems[0];
+            var entryId = ((string?[])entryItem.Tag)[0];
+
+            var editOrderEntryForm = new EditOrderEntryForm(carLicensePlate!, orderId!, entryId);
+            editOrderEntryForm.ShowDialog();
+            LoadOrderEntries();
+        }
+
+        private void btnAddPosition_Click(object sender, EventArgs e)
+        {
+            var editOrderEntryForm = new EditOrderEntryForm(carLicensePlate!, orderId!, null);
+            editOrderEntryForm.ShowDialog();
+            LoadOrderEntries();
+        }
+
+        private void lvOrderPositions_ItemActivate(object sender, EventArgs e)
+        {
+            DisplaySelectedEntryDetails();
         }
     }
 }

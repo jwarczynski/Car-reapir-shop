@@ -65,7 +65,7 @@ CREATE TABLE `shoppingLists` (
 CREATE TABLE `parts` (
     `partCode` varchar(25) NOT NULL PRIMARY KEY,
     `name` varchar(50) NOT NULL,
-    `cost` decimal(5,2) NOT NULL CHECK (cost >= 0),
+    `cost` decimal(7,2) NOT NULL CHECK (cost >= 0),
     `currentlyInStock` int NOT NULL DEFAULT 0 CHECK (currentlyInStock >= 0),
     `maxInStock` int,
     CONSTRAINT chk_lessThanMax CHECK (currentlyInStock <= maxInStock)
@@ -90,7 +90,7 @@ CREATE TABLE `partsToCarModels` (
 
 CREATE TABLE `services` (
     `name` varchar(100) NOT NULL PRIMARY KEY,
-    `standardCost` decimal(5,2) NOT NULL
+    `standardCost` decimal(7,2) NOT NULL
 );
 
 CREATE TABLE servicesToCarModels(
@@ -115,7 +115,7 @@ CREATE TABLE `orderEntries` (
     `position` int NOT NULL,
     `isDone` char(1) NOT NULL DEFAULT "0",
     `date` date,
-    `actualCost` decimal(5,2),
+    `actualCost` decimal(7,2),
     `comment` longtext,
     `orderId` int NOT NULL,
     `employeeName` varchar(40), 
@@ -158,6 +158,12 @@ CREATE VIEW `orderEntriesView` AS
         JOIN `services` s ON oe.`serviceName` = s.`name`
         ORDER BY oe.`position` ASC;
 
+CREATE VIEW `servicesForCar` AS
+    SELECT s.`name` AS `serviceName`, s.`standardCost` AS `standardCost`, c.`licensePlate` AS `licensePlate`
+        FROM `services` s
+        JOIN `servicesToCarModels` sm ON s.`name` = sm.`serviceName`
+        JOIN `cars` c ON c.`modelName` = sm.`modelName` AND c.`manufacturerName` = sm.`manufacturerName`;
+
 
 DELIMITER $$
 CREATE FUNCTION `countModelsByManufacturer` (
@@ -181,6 +187,21 @@ BEGIN
         VALUES (customerId, carLicensePlate);
     SELECT LAST_INSERT_ID() INTO orderId;
     RETURN orderId;
+END$$
+
+CREATE FUNCTION `addOrderEntry` (
+    orderId INT,
+    serviceName VARCHAR(100),
+    actualCost DECIMAL(7, 2)
+) RETURNS INT
+BEGIN
+    DECLARE entryId INT;
+    SELECT MAX(position) + 1 INTO entryId
+        FROM `orderEntries`
+        WHERE `orderId` = orderId;
+    INSERT INTO `orderEntries` (`orderId`, `position`, `serviceName`, `actualCost`)
+        VALUES (orderId, entryId, serviceName, actualCost);
+    RETURN entryId;
 END$$
 
 CREATE PROCEDURE `addShoppingListEntry` (
