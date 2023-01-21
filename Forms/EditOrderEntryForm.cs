@@ -21,6 +21,8 @@ namespace WarsztatSamochodowy.Forms
         protected string orderId;
         protected string? entryId;
 
+        protected bool isFinished = false;
+
         protected Dictionary<string, decimal> serviceCosts;
 
         public EditOrderEntryForm(string carLicensePlate, string orderId, string? entryId)
@@ -35,6 +37,7 @@ namespace WarsztatSamochodowy.Forms
         private void EditOrderEntryForm_Load(object sender, EventArgs e)
         {
             PopulateServices();
+            PopulateEmployees();
 
             if(entryId == null)
             {
@@ -45,11 +48,21 @@ namespace WarsztatSamochodowy.Forms
 
             var entry = DatabaseService.Get().Select(DatabaseService.TABLE_ORDER_ENTRIES,
                 new() { ["orderId"] = orderId, ["position"] = entryId },
-                new() { "serviceName", "actualCost", "employeeName", "date", "isDone", "comment" })[0];
+                new() { "serviceName", "actualCost", "employeeName", "date", "comment" })[0];
+
+            isFinished = !string.IsNullOrWhiteSpace(entry[3]);
 
             cbService.SelectedItem = entry[0];
             tbCost.Text = !string.IsNullOrWhiteSpace(entry[1]) ? entry[1] : serviceCosts[entry[0]!].ToString();
             ckIndividualPrice.Checked = !string.IsNullOrWhiteSpace(entry[1]);
+
+            cbEmployee.SelectedItem = entry[2];
+            
+            lblDate.Text = isFinished ? DateTime.Parse(entry[3]!).ToShortDateString() : "nie wykonano";
+
+            tbComment.Text = entry[4];
+            
+            UpdateButtonsStates();
         }
 
         protected void PopulateServices()
@@ -67,6 +80,28 @@ namespace WarsztatSamochodowy.Forms
                 cbService.Items.Add(service[0]);
             }
             cbService.EndUpdate();
+        }
+
+        protected void PopulateEmployees()
+        {
+            var employees = DatabaseService.Get().Select(DatabaseService.TABLE_EMPLOYEES,
+                fields: new() { "fullName" });
+
+            cbEmployee.BeginUpdate();
+            cbEmployee.Items.Clear();
+            foreach (var employee in employees)
+            {
+                cbEmployee.Items.Add(employee[0]);
+            }
+            cbEmployee.EndUpdate();
+        }
+
+        protected void UpdateButtonsStates()
+        {
+            gbService.Enabled = !isFinished;
+            cbEmployee.Enabled = !isFinished;
+            btnSaveEmployee.Enabled = !isFinished && cbEmployee.SelectedIndex >= 0;
+            btnMarkDone.Enabled = !isFinished && cbEmployee.SelectedIndex >= 0;
         }
 
         private void ckIndividualPrice_CheckedChanged(object sender, EventArgs e)
@@ -124,6 +159,69 @@ namespace WarsztatSamochodowy.Forms
             } catch(MySqlException ex)
             {
                 string message = "Nie udało się zapisać usługi związanej z pozycją zamówienia.";
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnSaveEmployee_Click(object sender, EventArgs e)
+        {
+            if (cbEmployee.SelectedIndex < 0) return;
+            string employeeName = cbEmployee.SelectedItem.ToString()!;
+
+            try
+            {
+                DatabaseService.Get().update(DatabaseService.TABLE_ORDER_ENTRIES,
+                    new() { ["orderId"] = orderId, ["position"] = entryId },
+                    new() { ["employeeName"] = employeeName });
+
+                btnMarkDone.Enabled = true;
+            }catch(MySqlException ex)
+            {
+                string message = "Nie udało się zapisać pracownika.";
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void cbEmployee_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnSaveEmployee.Enabled = cbEmployee.SelectedIndex >= 0;
+        }
+
+        private void btnMarkDone_Click(object sender, EventArgs e)
+        {
+            if (cbEmployee.SelectedIndex < 0) return;
+
+            var result = MessageBox.Show("Po oznaczeniu pozycji jako wykonanej, nie będzie można jej już zmodyfikować. Kontynuować?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(result != DialogResult.Yes) return;
+
+            try
+            {
+                DatabaseService.Get().update(DatabaseService.TABLE_ORDER_ENTRIES,
+                    new() { ["orderId"] = orderId, ["position"] = entryId },
+                    new() { ["isDone"] = "1", ["date"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
+
+                isFinished = true;
+                lblDate.Text = DateTime.Now.ToShortDateString();
+                UpdateButtonsStates();
+            }
+            catch (MySqlException ex)
+            {
+                string message = "Nie udało się oznaczyć pozycji jako wykonanej.";
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnSaveComment_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DatabaseService.Get().update(DatabaseService.TABLE_ORDER_ENTRIES,
+                    new() { ["orderId"] = orderId, ["position"] = entryId },
+                    new() { ["comment"] = tbComment.Text });
+            }
+            catch (MySqlException ex)
+            {
+                string message = "Nie udało się zapisać komentarza.";
                 MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

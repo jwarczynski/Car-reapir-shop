@@ -282,10 +282,10 @@ namespace WarsztatSamochodowy.Forms
                 DatabaseService.Get().update(DatabaseService.TABLE_ORDERS,
                     new() { ["id"] = orderId },
                     new() { ["finishDate"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
-                UpdatePositionButtonsState();
+                isFinished = true;
                 btnFulfillOrder.Enabled = false;
                 gbSubject.Enabled = false;
-                isFinished = true;
+                UpdatePositionButtonsState();
             }
             catch (MySqlException ex)
             {

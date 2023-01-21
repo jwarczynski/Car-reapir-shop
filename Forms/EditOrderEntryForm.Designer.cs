@@ -38,7 +38,7 @@
             this.gbComment = new System.Windows.Forms.GroupBox();
             this.btnSaveComment = new System.Windows.Forms.Button();
             this.tbComment = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.gbService = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.ckIndividualPrice = new System.Windows.Forms.CheckBox();
             this.tbCost = new System.Windows.Forms.TextBox();
@@ -47,7 +47,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.gbEmployee.SuspendLayout();
             this.gbComment.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.gbService.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,6 +75,7 @@
             this.btnMarkDone.TabIndex = 5;
             this.btnMarkDone.Text = "Oznacz jako wykonane";
             this.btnMarkDone.UseVisualStyleBackColor = true;
+            this.btnMarkDone.Click += new System.EventHandler(this.btnMarkDone_Click);
             // 
             // lblDate
             // 
@@ -102,6 +103,7 @@
             this.btnSaveEmployee.TabIndex = 2;
             this.btnSaveEmployee.Text = "Zapisz";
             this.btnSaveEmployee.UseVisualStyleBackColor = true;
+            this.btnSaveEmployee.Click += new System.EventHandler(this.btnSaveEmployee_Click);
             // 
             // cbEmployee
             // 
@@ -111,6 +113,7 @@
             this.cbEmployee.Name = "cbEmployee";
             this.cbEmployee.Size = new System.Drawing.Size(216, 28);
             this.cbEmployee.TabIndex = 1;
+            this.cbEmployee.SelectedIndexChanged += new System.EventHandler(this.cbEmployee_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -140,6 +143,7 @@
             this.btnSaveComment.TabIndex = 11;
             this.btnSaveComment.Text = "Zapisz";
             this.btnSaveComment.UseVisualStyleBackColor = true;
+            this.btnSaveComment.Click += new System.EventHandler(this.btnSaveComment_Click);
             // 
             // tbComment
             // 
@@ -149,18 +153,18 @@
             this.tbComment.Size = new System.Drawing.Size(401, 58);
             this.tbComment.TabIndex = 0;
             // 
-            // groupBox3
+            // gbService
             // 
-            this.groupBox3.Controls.Add(this.groupBox4);
-            this.groupBox3.Controls.Add(this.btnSaveService);
-            this.groupBox3.Controls.Add(this.cbService);
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Location = new System.Drawing.Point(12, 12);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(250, 247);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Usługa";
+            this.gbService.Controls.Add(this.groupBox4);
+            this.gbService.Controls.Add(this.btnSaveService);
+            this.gbService.Controls.Add(this.cbService);
+            this.gbService.Controls.Add(this.label3);
+            this.gbService.Location = new System.Drawing.Point(12, 12);
+            this.gbService.Name = "gbService";
+            this.gbService.Size = new System.Drawing.Size(250, 247);
+            this.gbService.TabIndex = 2;
+            this.gbService.TabStop = false;
+            this.gbService.Text = "Usługa";
             // 
             // groupBox4
             // 
@@ -226,7 +230,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(692, 268);
-            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.gbService);
             this.Controls.Add(this.gbComment);
             this.Controls.Add(this.gbEmployee);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -239,8 +243,8 @@
             this.gbEmployee.PerformLayout();
             this.gbComment.ResumeLayout(false);
             this.gbComment.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.gbService.ResumeLayout(false);
+            this.gbService.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
@@ -257,7 +261,7 @@
         private ComboBox cbEmployee;
         private Label label1;
         private GroupBox gbComment;
-        private GroupBox groupBox3;
+        private GroupBox gbService;
         private Button btnSaveService;
         private TextBox tbCost;
         private CheckBox ckIndividualPrice;
