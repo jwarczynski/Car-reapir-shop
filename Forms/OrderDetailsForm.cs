@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,6 +19,8 @@ namespace WarsztatSamochodowy.Forms
     {
         protected string? orderId;
         protected string? originalCustomerId;
+
+        protected bool isFinished = false;
         protected string? uneditedComment;
 
         public OrderDetailsForm(string? orderId, string? customerId = null)
@@ -77,11 +79,54 @@ namespace WarsztatSamochodowy.Forms
             {
                 lblFinishDate.Text = DateTime.Parse(order[3]!).ToShortDateString();
                 lblStatus.Text = "zakończone";
+                isFinished = true;
             } else {
                 lblFinishDate.Text = "brak";
                 lblStatus.Text = "w trakcie";
             }
             tbOrderComment.Text = uneditedComment = order[4];
+
+            LoadOrderEntries();
+        }
+
+        protected void LoadOrderEntries()
+        {
+            var entries = DatabaseService.Get().Select(DatabaseService.TABLE_ORDER_ENTRIES_VIEW,
+                new() { ["orderId"] = orderId },
+                new() { "position", "serviceName", "date", "cost", "employeeName", "isDone" });
+
+            decimal totalCost = 0;
+            int donePositions = 0;
+
+            lvOrderPositions.BeginUpdate();
+            lvOrderPositions.Items.Clear();
+            foreach (var entry in entries)
+            {
+                var fields = entry.ToArray()[1..5];
+                if (!string.IsNullOrWhiteSpace(fields[1]))
+                    fields[1] = DateTime.Parse(fields[1]!).ToShortDateString();
+
+                var item = new ListViewItem(fields);
+                item.Tag = entry.ToArray();
+                lvOrderPositions.Items.Add(item);
+
+                totalCost += decimal.Parse(entry[3] ?? "0");
+                if (entry[5] != "0") donePositions++;
+            }
+            lvOrderPositions.EndUpdate();
+
+            lblTotalCost.Text = totalCost.ToString() + " zł";
+            lblPositionsFulfilled.Text = $"{donePositions} / {entries.Count}";
+
+            if(!isFinished && donePositions == entries.Count && donePositions > 0)
+            {
+                btnFulfillOrder.Enabled = true;
+            }
+            if(donePositions == 0)
+            {
+                btnCancelOrder.Enabled = true;
+            }
+            UpdatePositionButtonsState();
         }
 
         private void btnSaveSubject_Click(object sender, EventArgs e)
@@ -120,7 +165,8 @@ namespace WarsztatSamochodowy.Forms
                         gbPositions.Enabled =
                         gbActions.Enabled = true;
                     lblStatus.Text = "w trakcie";
-                    MessageBox.Show("Dodano zamówienie", "Powodzenie");
+                    btnCancelOrder.Enabled = true;
+                    UpdatePositionButtonsState();
                 }
             }catch(MySqlException ex)
             {
@@ -168,6 +214,44 @@ namespace WarsztatSamochodowy.Forms
             }
         }
 
+        private void lvOrderPositions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdatePositionButtonsState();
+        }
+
+        protected void UpdatePositionButtonsState()
+        {
+            bool isEntryDone = true;
+            if (lvOrderPositions.SelectedItems.Count == 1)
+            {
+                var entry = (string?[])lvOrderPositions.SelectedItems[0].Tag;
+                isEntryDone = (entry[5] != "0");
+            }
+
+            btnPositionDetails.Enabled = (lvOrderPositions.SelectedItems.Count == 1);
+            btnAddPosition.Enabled = !isFinished;
+            btnRemovePosition.Enabled = !isFinished && !isEntryDone;
+        }
+
+        private void btnRemovePosition_Click(object sender, EventArgs e)
+        {
+            if (lvOrderPositions.SelectedItems.Count != 1) return;
+            var entryItem = lvOrderPositions.SelectedItems[0];
+            var entryId = ((string?[])entryItem.Tag)[0];
+
+            try
+            {
+                DatabaseService.Get().delete(DatabaseService.TABLE_ORDER_ENTRIES,
+                    new() { ["orderId"] = orderId, ["position"] = entryId });
+                LoadOrderEntries();
+            }
+            catch (MySqlException ex)
+            {
+                string message = "Nie udało się usunąć pozycji zamówienia";
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private class CustomerRow
         {
             public string CustomerId { get; private set; }
@@ -196,6 +280,43 @@ namespace WarsztatSamochodowy.Forms
             public override string ToString()
             {
                 return CustomerName;
+            }
+        }
+
+        private void btnCancelOrder_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Czy na pewno chcesz wycofać to zamówienie? Ta operacja jest nieodwracalna", "Wycofanie zamówienia", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result != DialogResult.Yes) return;
+            
+            try
+            {
+                DatabaseService.Get().delete(DatabaseService.TABLE_ORDERS,
+                    new() { ["id"] = orderId });
+                Close();
+            }catch(MySqlException ex)
+            {
+                string message = "Nie udało się wycofać zamówienia." + ex.Message;
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnFulfillOrder_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Jeśli oznaczysz to zamówienie jako wykonane, nie będzie można go już zmienić. Kontynuować?", "Wykonanie zamówienia", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result != DialogResult.Yes) return;
+
+            try
+            {
+                DatabaseService.Get().update(DatabaseService.TABLE_ORDERS,
+                    new() { ["id"] = orderId },
+                    new() { ["finishDate"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
+                UpdatePositionButtonsState();
+                btnFulfillOrder.Enabled = false;
+            }
+            catch (MySqlException ex)
+            {
+                string message = "Nie udało się oznaczyć zamówienia jako wykonane. " + ex.Message;
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

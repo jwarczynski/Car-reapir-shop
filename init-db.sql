@@ -15,13 +15,13 @@ CREATE TABLE `customers` (
 
 CREATE TABLE `employeeRoles` (
     `roleName` varchar(20) NOT NULL PRIMARY KEY,
-    `minimumWage` decimal(5,2) NOT NULL,
-    `maximumWage` decimal(5,2) NOT NULL
+    `minimumWage` decimal(7,2) NOT NULL,
+    `maximumWage` decimal(7,2) NOT NULL
 );
 
 CREATE TABLE `employees` (
     `fullName` varchar(40) NOT NULL PRIMARY KEY,
-    `wage` decimal(5,2) NOT NULL,
+    `wage` decimal(7,2) NOT NULL,
     `roleName` varchar(20) NOT NULL,
     CONSTRAINT `employee_employeeRole_fk` FOREIGN KEY (`roleName`) REFERENCES `employeeRoles` (`roleName`) ON UPDATE CASCADE
 );
@@ -113,7 +113,7 @@ CREATE TABLE `serviceParts` (
 
 CREATE TABLE `orderEntries` (
     `position` int NOT NULL,
-    `isDone` char(1) NOT NULL,
+    `isDone` char(1) NOT NULL DEFAULT "0",
     `date` date,
     `actualCost` decimal(5,2),
     `comment` longtext,
@@ -121,9 +121,9 @@ CREATE TABLE `orderEntries` (
     `employeeName` varchar(40), 
     `serviceName` varchar(100) NOT NULL,
     PRIMARY KEY (`position`, `orderId`),
-    CONSTRAINT `orderEntry_order_fk` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`),
-    CONSTRAINT `orderEntry_employee_fk` FOREIGN KEY (`employeeName`) REFERENCES `employees` (`fullName`),
-    CONSTRAINT `orderEntry_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`)
+    CONSTRAINT `orderEntry_order_fk` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `orderEntry_employee_fk` FOREIGN KEY (`employeeName`) REFERENCES `employees` (`fullName`) ON UPDATE CASCADE ON DELETE SET NULL,
+    CONSTRAINT `orderEntry_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`) ON UPDATE CASCADE
 );
 
 
@@ -149,6 +149,14 @@ CREATE VIEW ordersView AS
         FROM `orders` o
         JOIN `customers` c ON c.`customerId` = o.`customerId`
         ORDER BY o.`acceptDate` DESC, o.`id` DESC;
+
+CREATE VIEW `orderEntriesView` AS
+    SELECT oe.`orderId` AS `orderId`, oe.`position` AS `position`, oe.serviceName AS `serviceName`,
+        oe.date AS `date`, IFNULL(oe.`actualCost`, s.`standardCost`) AS `cost`, (oe.`actualCost` IS NULL) AS `isCostStandard`,
+        oe.employeeName AS `employeeName`, oe.`isDone` AS `isDone`, oe.comment AS `comment`
+        FROM `orderEntries` oe
+        JOIN `services` s ON oe.`serviceName` = s.`name`
+        ORDER BY oe.`position` ASC;
 
 
 DELIMITER $$

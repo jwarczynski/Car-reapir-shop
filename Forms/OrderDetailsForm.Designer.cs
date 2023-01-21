@@ -244,6 +244,7 @@
             this.btnRemovePosition.TabIndex = 12;
             this.btnRemovePosition.Text = "Usuń";
             this.btnRemovePosition.UseVisualStyleBackColor = true;
+            this.btnRemovePosition.Click += new System.EventHandler(this.btnRemovePosition_Click);
             // 
             // btnPositionDetails
             // 
@@ -270,12 +271,15 @@
             this.chDate,
             this.chPrice,
             this.chEmployee});
+            this.lvOrderPositions.FullRowSelect = true;
             this.lvOrderPositions.Location = new System.Drawing.Point(6, 26);
+            this.lvOrderPositions.MultiSelect = false;
             this.lvOrderPositions.Name = "lvOrderPositions";
             this.lvOrderPositions.Size = new System.Drawing.Size(699, 192);
             this.lvOrderPositions.TabIndex = 0;
             this.lvOrderPositions.UseCompatibleStateImageBehavior = false;
             this.lvOrderPositions.View = System.Windows.Forms.View.Details;
+            this.lvOrderPositions.SelectedIndexChanged += new System.EventHandler(this.lvOrderPositions_SelectedIndexChanged);
             // 
             // chServiceName
             // 
@@ -392,21 +396,25 @@
             // 
             // btnCancelOrder
             // 
+            this.btnCancelOrder.Enabled = false;
             this.btnCancelOrder.Location = new System.Drawing.Point(6, 26);
             this.btnCancelOrder.Name = "btnCancelOrder";
             this.btnCancelOrder.Size = new System.Drawing.Size(196, 29);
             this.btnCancelOrder.TabIndex = 2;
             this.btnCancelOrder.Text = "Wycofaj zamówienie";
             this.btnCancelOrder.UseVisualStyleBackColor = true;
+            this.btnCancelOrder.Click += new System.EventHandler(this.btnCancelOrder_Click);
             // 
             // btnFulfillOrder
             // 
+            this.btnFulfillOrder.Enabled = false;
             this.btnFulfillOrder.Location = new System.Drawing.Point(6, 61);
             this.btnFulfillOrder.Name = "btnFulfillOrder";
             this.btnFulfillOrder.Size = new System.Drawing.Size(196, 29);
             this.btnFulfillOrder.TabIndex = 3;
             this.btnFulfillOrder.Text = "Oznacz jako zrealizowane";
             this.btnFulfillOrder.UseVisualStyleBackColor = true;
+            this.btnFulfillOrder.Click += new System.EventHandler(this.btnFulfillOrder_Click);
             // 
             // gbActions
             // 

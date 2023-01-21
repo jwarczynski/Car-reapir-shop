@@ -24,6 +24,8 @@ namespace WarsztatSamochodowy.Services
         public const string TABLE_CUSTOMERS = "customers";
         public const string TABLE_ORDERS = "orders";
         public const string TABLE_ORDERS_VIEW = "ordersView";
+        public const string TABLE_ORDER_ENTRIES = "orderEntries";
+        public const string TABLE_ORDER_ENTRIES_VIEW = "orderEntriesView";
 
         public const string PROC_ADD_SHOPPING_LIST_ENTRY = "addShoppingListEntry";
 
