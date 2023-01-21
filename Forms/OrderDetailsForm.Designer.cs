@@ -39,7 +39,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gbSubject = new System.Windows.Forms.GroupBox();
             this.btnSaveSubject = new System.Windows.Forms.Button();
             this.btnNewCar = new System.Windows.Forms.Button();
             this.btnNewCustomer = new System.Windows.Forms.Button();
@@ -65,7 +65,7 @@
             this.btnFulfillOrder = new System.Windows.Forms.Button();
             this.gbActions = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gbSubject.SuspendLayout();
             this.gbPositions.SuspendLayout();
             this.gbComment.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -179,21 +179,21 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "Status:";
             // 
-            // groupBox2
+            // gbSubject
             // 
-            this.groupBox2.Controls.Add(this.btnSaveSubject);
-            this.groupBox2.Controls.Add(this.btnNewCar);
-            this.groupBox2.Controls.Add(this.btnNewCustomer);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.cbCustomer);
-            this.groupBox2.Controls.Add(this.cbCar);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(270, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(453, 123);
-            this.groupBox2.TabIndex = 9;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Klient";
+            this.gbSubject.Controls.Add(this.btnSaveSubject);
+            this.gbSubject.Controls.Add(this.btnNewCar);
+            this.gbSubject.Controls.Add(this.btnNewCustomer);
+            this.gbSubject.Controls.Add(this.label5);
+            this.gbSubject.Controls.Add(this.cbCustomer);
+            this.gbSubject.Controls.Add(this.cbCar);
+            this.gbSubject.Controls.Add(this.label6);
+            this.gbSubject.Location = new System.Drawing.Point(270, 12);
+            this.gbSubject.Name = "gbSubject";
+            this.gbSubject.Size = new System.Drawing.Size(453, 123);
+            this.gbSubject.TabIndex = 9;
+            this.gbSubject.TabStop = false;
+            this.gbSubject.Text = "Klient";
             // 
             // btnSaveSubject
             // 
@@ -436,7 +436,7 @@
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.gbComment);
             this.Controls.Add(this.gbPositions);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.gbSubject);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -445,8 +445,8 @@
             this.Text = "Szczegóły zamówienia";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.gbSubject.ResumeLayout(false);
+            this.gbSubject.PerformLayout();
             this.gbPositions.ResumeLayout(false);
             this.gbComment.ResumeLayout(false);
             this.gbComment.PerformLayout();
@@ -468,7 +468,7 @@
         private ComboBox cbCustomer;
         private ComboBox cbCar;
         private GroupBox groupBox1;
-        private GroupBox groupBox2;
+        private GroupBox gbSubject;
         private Button btnNewCar;
         private Button btnNewCustomer;
         private GroupBox gbPositions;

@@ -79,6 +79,7 @@ namespace WarsztatSamochodowy.Forms
             {
                 lblFinishDate.Text = DateTime.Parse(order[3]!).ToShortDateString();
                 lblStatus.Text = "zakończone";
+                gbSubject.Enabled = false;
                 isFinished = true;
             } else {
                 lblFinishDate.Text = "brak";
@@ -252,6 +253,45 @@ namespace WarsztatSamochodowy.Forms
             }
         }
 
+        private void btnCancelOrder_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Czy na pewno chcesz wycofać to zamówienie? Ta operacja jest nieodwracalna", "Wycofanie zamówienia", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result != DialogResult.Yes) return;
+
+            try
+            {
+                DatabaseService.Get().delete(DatabaseService.TABLE_ORDERS,
+                    new() { ["id"] = orderId });
+                Close();
+            }catch(MySqlException ex)
+            {
+                string message = "Nie udało się wycofać zamówienia." + ex.Message;
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnFulfillOrder_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Jeśli oznaczysz to zamówienie jako wykonane, nie będzie można go już zmienić. Kontynuować?", "Wykonanie zamówienia", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result != DialogResult.Yes) return;
+
+            try
+            {
+                DatabaseService.Get().update(DatabaseService.TABLE_ORDERS,
+                    new() { ["id"] = orderId },
+                    new() { ["finishDate"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
+                UpdatePositionButtonsState();
+                btnFulfillOrder.Enabled = false;
+                gbSubject.Enabled = false;
+                isFinished = true;
+            }
+            catch (MySqlException ex)
+            {
+                string message = "Nie udało się oznaczyć zamówienia jako wykonane. " + ex.Message;
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private class CustomerRow
         {
             public string CustomerId { get; private set; }
@@ -280,43 +320,6 @@ namespace WarsztatSamochodowy.Forms
             public override string ToString()
             {
                 return CustomerName;
-            }
-        }
-
-        private void btnCancelOrder_Click(object sender, EventArgs e)
-        {
-            var result = MessageBox.Show("Czy na pewno chcesz wycofać to zamówienie? Ta operacja jest nieodwracalna", "Wycofanie zamówienia", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result != DialogResult.Yes) return;
-            
-            try
-            {
-                DatabaseService.Get().delete(DatabaseService.TABLE_ORDERS,
-                    new() { ["id"] = orderId });
-                Close();
-            }catch(MySqlException ex)
-            {
-                string message = "Nie udało się wycofać zamówienia." + ex.Message;
-                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnFulfillOrder_Click(object sender, EventArgs e)
-        {
-            var result = MessageBox.Show("Jeśli oznaczysz to zamówienie jako wykonane, nie będzie można go już zmienić. Kontynuować?", "Wykonanie zamówienia", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result != DialogResult.Yes) return;
-
-            try
-            {
-                DatabaseService.Get().update(DatabaseService.TABLE_ORDERS,
-                    new() { ["id"] = orderId },
-                    new() { ["finishDate"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
-                UpdatePositionButtonsState();
-                btnFulfillOrder.Enabled = false;
-            }
-            catch (MySqlException ex)
-            {
-                string message = "Nie udało się oznaczyć zamówienia jako wykonane. " + ex.Message;
-                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
