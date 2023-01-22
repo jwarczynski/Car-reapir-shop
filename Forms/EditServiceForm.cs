@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,7 @@ namespace WarsztatSamochodowy.Forms
         private const string SERVICES_PARTS_VIEW = "servicesPartsView";
         private const string SERVICES_TO_CAR_MODELS = "servicesToCarModels";
         private const string CAR_MODELS_TABLE = "carModels";
+        private const string DUPLICATED_SERVICE_MESSAGE = "Usługa o podanej nazwie już istnieje";
 
 
         private readonly string? serviceNameToUpdate;
@@ -122,9 +124,16 @@ namespace WarsztatSamochodowy.Forms
             try
             {
                 validateNewService(serviceName, serviceCost);
-                newServiceMap.Add("name", serviceName);
-                newServiceMap.Add("standardCost", float.Parse(serviceCost).ToString(CultureInfo.InvariantCulture));
+            } catch(ArgumentException ae)
+            {
+                MessageBox.Show(ae.Message);
+                return;
+            }
 
+            newServiceMap.Add("name", serviceName);
+            newServiceMap.Add("standardCost", float.Parse(serviceCost).ToString(CultureInfo.InvariantCulture));
+            try
+            {
                 if(serviceNameToUpdate == null)
                 {
                     insertNewService(serviceName, newServiceMap);
@@ -133,13 +142,14 @@ namespace WarsztatSamochodowy.Forms
                     updateService(serviceName, newServiceMap);
                 }
 
-                clearInputs();
-                MessageBox.Show("Usługa została zapisana");
-
-            } catch(ArgumentException ae)
+            } catch(MySqlException sqlException)
             {
-                MessageBox.Show(ae.Message);
+                DatabaseService.HandleSqlException(sqlException, DUPLICATED_SERVICE_MESSAGE);
+                return;
             }
+
+            clearInputs();
+            MessageBox.Show("Usługa została zapisana");
         }
 
         private void insertNewService(string serviceName, SortedDictionary<string, string> newServiceMap)

@@ -10,6 +10,8 @@ namespace WarsztatSamochodowy.Forms
         private static readonly string EMPLOYEE_TABLE = "EMPLOYEES";
         private static readonly string EMPLOYEE_ROLE_TABLE = "EmployeeRoles";
 
+        private static readonly string DUPLICATED_EMPLOYEE_MESSAGE = "Taki praconwik już jest zatrudniony";
+
         private SortedDictionary<string, string> selectedEmployee;
         private SortedDictionary<string, string> updatedEmployee;
 
@@ -125,7 +127,14 @@ namespace WarsztatSamochodowy.Forms
                 employeeMap.Add("wage", float.Parse(wageTextBox.Text).ToString());
                 employeeMap.Add("role", roleListBox.SelectedItem.ToString());
 
-                addEmployee(employeeMap);
+                try
+                {
+                    addEmployee(employeeMap);
+                } catch(MySqlException sqlException)
+                {
+                    DatabaseService.HandleSqlException(sqlException, DUPLICATED_EMPLOYEE_MESSAGE);
+                    return;
+                }
                 clear();
                 showAll();
             }
@@ -159,7 +168,14 @@ namespace WarsztatSamochodowy.Forms
 
         private void btnRemoveCustomer_Click(object sender, EventArgs e)
         {
-            deleteEmployee();
+            try
+            {
+                deleteEmployee();
+            } catch(MySqlException sqlException)
+            {
+                DatabaseService.HandleSqlException(sqlException, DUPLICATED_EMPLOYEE_MESSAGE);
+                return;
+            }
             showAll();
             clear();
         }
@@ -185,7 +201,14 @@ namespace WarsztatSamochodowy.Forms
 
                 validateEmployee(firstName, lastName, wageString);
 
-                updateEmployee();
+                try
+                {
+                    updateEmployee();
+                } catch(MySqlException sqlException)
+                {
+                    DatabaseService.HandleSqlException(sqlException, DUPLICATED_EMPLOYEE_MESSAGE);
+                    return;
+                }
                 clear();
                 showAll();
             }

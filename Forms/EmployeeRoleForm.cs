@@ -77,7 +77,7 @@ namespace WarsztatSamochodowy.Forms
 
                 try
                 {
-                    DatabaseService.Get().insert(EMPLOYEE_ROLES_TABLE, roleMap);
+                    DatabaseService.Get().insert(EMPLOYEE_ROLES_TABLE, roleMap!);
                 } catch(MySqlException sqlException)
                 {
                     if(sqlException.ErrorCode == MySqlErrorCode.DuplicateKeyEntry)
