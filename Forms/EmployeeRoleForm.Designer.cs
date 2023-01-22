@@ -84,6 +84,7 @@
             this.roleDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.roleDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.roleDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.roleDataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.roleDataGrid.Location = new System.Drawing.Point(0, 0);
             this.roleDataGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.roleDataGrid.MultiSelect = false;
