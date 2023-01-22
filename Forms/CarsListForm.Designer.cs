@@ -43,12 +43,15 @@
             this.chLicencePlate,
             this.chManufacturer,
             this.chModel});
-            this.lvCars.Location = new System.Drawing.Point(12, 12);
+            this.lvCars.Location = new System.Drawing.Point(10, 9);
+            this.lvCars.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lvCars.Name = "lvCars";
-            this.lvCars.Size = new System.Drawing.Size(488, 426);
+            this.lvCars.Size = new System.Drawing.Size(428, 320);
             this.lvCars.TabIndex = 0;
             this.lvCars.UseCompatibleStateImageBehavior = false;
             this.lvCars.View = System.Windows.Forms.View.Details;
+            this.lvCars.ItemActivate += new System.EventHandler(this.lvCars_ItemActivate);
+            this.lvCars.SelectedIndexChanged += new System.EventHandler(this.lvCars_SelectedIndexChanged);
             // 
             // chLicencePlate
             // 
@@ -67,27 +70,32 @@
             // 
             // btnAddCar
             // 
-            this.btnAddCar.Location = new System.Drawing.Point(506, 12);
+            this.btnAddCar.Location = new System.Drawing.Point(443, 9);
+            this.btnAddCar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAddCar.Name = "btnAddCar";
-            this.btnAddCar.Size = new System.Drawing.Size(94, 29);
+            this.btnAddCar.Size = new System.Drawing.Size(82, 22);
             this.btnAddCar.TabIndex = 1;
             this.btnAddCar.Text = "Dodaj...";
             this.btnAddCar.UseVisualStyleBackColor = true;
+            this.btnAddCar.Click += new System.EventHandler(this.btnAddCar_Click);
             // 
             // btnRemoveCar
             // 
-            this.btnRemoveCar.Location = new System.Drawing.Point(506, 47);
+            this.btnRemoveCar.Location = new System.Drawing.Point(443, 35);
+            this.btnRemoveCar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRemoveCar.Name = "btnRemoveCar";
-            this.btnRemoveCar.Size = new System.Drawing.Size(94, 29);
+            this.btnRemoveCar.Size = new System.Drawing.Size(82, 22);
             this.btnRemoveCar.TabIndex = 2;
             this.btnRemoveCar.Text = "Usuń";
             this.btnRemoveCar.UseVisualStyleBackColor = true;
+            this.btnRemoveCar.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnEditCar
             // 
-            this.btnEditCar.Location = new System.Drawing.Point(506, 82);
+            this.btnEditCar.Location = new System.Drawing.Point(443, 62);
+            this.btnEditCar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEditCar.Name = "btnEditCar";
-            this.btnEditCar.Size = new System.Drawing.Size(94, 29);
+            this.btnEditCar.Size = new System.Drawing.Size(82, 22);
             this.btnEditCar.TabIndex = 3;
             this.btnEditCar.Text = "Edytuj...";
             this.btnEditCar.UseVisualStyleBackColor = true;
@@ -95,19 +103,21 @@
             // 
             // CarsListForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(609, 450);
+            this.ClientSize = new System.Drawing.Size(533, 338);
             this.Controls.Add(this.btnEditCar);
             this.Controls.Add(this.btnRemoveCar);
             this.Controls.Add(this.btnAddCar);
             this.Controls.Add(this.lvCars);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CarsListForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Lista samochodów";
+            this.Load += new System.EventHandler(this.CarsListForm_Load);
             this.ResumeLayout(false);
 
         }
