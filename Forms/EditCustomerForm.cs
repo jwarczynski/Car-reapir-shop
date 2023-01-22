@@ -19,11 +19,16 @@ namespace WarsztatSamochodowy.Forms
     {
         protected string? customerId;
 
-        public EditCustomerForm(string? customerId)
+        public EditCustomerForm(string? customerId, string? suggestedFullName = null)
         {
             this.customerId = customerId;
             InitializeComponent();
             PopulateInputs();
+
+            if(suggestedFullName != null)
+            {
+                tbCustomerName.Text = suggestedFullName;
+            }
         }
 
         protected void PopulateInputs()

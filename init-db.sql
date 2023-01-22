@@ -15,13 +15,13 @@ CREATE TABLE `customers` (
 
 CREATE TABLE `employeeRoles` (
     `roleName` varchar(20) NOT NULL PRIMARY KEY,
-    `minimumWage` decimal(5,2) NOT NULL,
-    `maximumWage` decimal(5,2) NOT NULL
+    `minimumWage` decimal(7,2) NOT NULL,
+    `maximumWage` decimal(7,2) NOT NULL
 );
 
 CREATE TABLE `employees` (
     `fullName` varchar(40) NOT NULL PRIMARY KEY,
-    `wage` decimal(5,2) NOT NULL,
+    `wage` decimal(7,2) NOT NULL,
     `roleName` varchar(20) NOT NULL,
     CONSTRAINT `employee_employeeRole_fk` FOREIGN KEY (`roleName`) REFERENCES `employeeRoles` (`roleName`) ON UPDATE CASCADE
 );
@@ -46,8 +46,8 @@ CREATE TABLE `cars` (
 );
 
 CREATE TABLE `orders` (
-    `id` int NOT NULL PRIMARY KEY,
-    `acceptDate` date NOT NULL,
+    `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `acceptDate` date NOT NULL DEFAULT NOW(),
     `finishDate` date,
     `comment` longtext DEFAULT NULL,
     `customerId` int NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `shoppingLists` (
 CREATE TABLE `parts` (
     `partCode` varchar(25) NOT NULL PRIMARY KEY,
     `name` varchar(50) NOT NULL,
-    `cost` decimal(5,2) NOT NULL CHECK (cost >= 0),
+    `cost` decimal(7,2) NOT NULL CHECK (cost >= 0),
     `currentlyInStock` int NOT NULL DEFAULT 0 CHECK (currentlyInStock >= 0),
     `maxInStock` int,
     CONSTRAINT chk_lessThanMax CHECK (currentlyInStock <= maxInStock)
@@ -90,7 +90,7 @@ CREATE TABLE `partsToCarModels` (
 
 CREATE TABLE `services` (
     `name` varchar(100) NOT NULL PRIMARY KEY,
-    `standardCost` decimal(5,2) NOT NULL
+    `standardCost` decimal(7,2) NOT NULL
 );
 
 CREATE TABLE servicesToCarModels(
@@ -113,17 +113,17 @@ CREATE TABLE `serviceParts` (
 
 CREATE TABLE `orderEntries` (
     `position` int NOT NULL,
-    `isDone` char(1) NOT NULL,
+    `isDone` char(1) NOT NULL DEFAULT "0",
     `date` date,
-    `actualCost` decimal(5,2),
+    `actualCost` decimal(7,2),
     `comment` longtext,
     `orderId` int NOT NULL,
     `employeeName` varchar(40), 
     `serviceName` varchar(100) NOT NULL,
     PRIMARY KEY (`position`, `orderId`),
-    CONSTRAINT `orderEntry_order_fk` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`),
-    CONSTRAINT `orderEntry_employee_fk` FOREIGN KEY (`employeeName`) REFERENCES `employees` (`fullName`),
-    CONSTRAINT `orderEntry_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`)
+    CONSTRAINT `orderEntry_order_fk` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `orderEntry_employee_fk` FOREIGN KEY (`employeeName`) REFERENCES `employees` (`fullName`) ON UPDATE CASCADE ON DELETE SET NULL,
+    CONSTRAINT `orderEntry_service_fk` FOREIGN KEY (`serviceName`) REFERENCES `services` (`name`) ON UPDATE CASCADE
 );
 
 
@@ -143,6 +143,27 @@ CREATE VIEW servicesPartsView AS
         FROM services s JOIN serviceParts ON s.name = serviceName
         JOIN parts p ON partPartCode = p.partCode;
 
+CREATE VIEW ordersView AS
+    SELECT o.`id` AS `orderId`, c.`fullName` AS `customerName`, o.`carLicensePlate` AS `carLicensePlate`,
+        o.`acceptDate` AS `acceptDate`, o.`finishDate` AS `finishDate`
+        FROM `orders` o
+        JOIN `customers` c ON c.`customerId` = o.`customerId`
+        ORDER BY o.`acceptDate` DESC, o.`id` DESC;
+
+CREATE VIEW `orderEntriesView` AS
+    SELECT oe.`orderId` AS `orderId`, oe.`position` AS `position`, oe.serviceName AS `serviceName`,
+        oe.date AS `date`, IFNULL(oe.`actualCost`, s.`standardCost`) AS `cost`, (oe.`actualCost` IS NULL) AS `isCostStandard`,
+        oe.employeeName AS `employeeName`, oe.`isDone` AS `isDone`, oe.comment AS `comment`
+        FROM `orderEntries` oe
+        JOIN `services` s ON oe.`serviceName` = s.`name`
+        ORDER BY oe.`position` ASC;
+
+CREATE VIEW `servicesForCar` AS
+    SELECT s.`name` AS `serviceName`, s.`standardCost` AS `standardCost`, c.`licensePlate` AS `licensePlate`
+        FROM `services` s
+        JOIN `servicesToCarModels` sm ON s.`name` = sm.`serviceName`
+        JOIN `cars` c ON c.`modelName` = sm.`modelName` AND c.`manufacturerName` = sm.`manufacturerName`;
+
 
 DELIMITER $$
 CREATE FUNCTION `countModelsByManufacturer` (
@@ -154,6 +175,33 @@ BEGIN
         FROM `carModels`
         WHERE `manufacturerName` = manufacturer;
     RETURN manufacturerCount;
+END$$
+
+CREATE FUNCTION `addOrder` (
+    customerId INT,
+    carLicensePlate VARCHAR(10)
+) RETURNS INT
+BEGIN
+    DECLARE orderId INT;
+    INSERT INTO `orders` (`customerId`, `carLicensePlate`)
+        VALUES (customerId, carLicensePlate);
+    SELECT LAST_INSERT_ID() INTO orderId;
+    RETURN orderId;
+END$$
+
+CREATE FUNCTION `addOrderEntry` (
+    orderId INT,
+    serviceName VARCHAR(100),
+    actualCost DECIMAL(7, 2)
+) RETURNS INT
+BEGIN
+    DECLARE entryId INT;
+    SELECT MAX(position) + 1 INTO entryId
+        FROM `orderEntries`
+        WHERE `orderId` = orderId;
+    INSERT INTO `orderEntries` (`orderId`, `position`, `serviceName`, `actualCost`)
+        VALUES (orderId, entryId, serviceName, actualCost);
+    RETURN entryId;
 END$$
 
 CREATE PROCEDURE `addShoppingListEntry` (
