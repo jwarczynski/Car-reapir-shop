@@ -285,4 +285,37 @@ BEGIN
     END IF;
 END$$
 
+CREATE TRIGGER `disableFulfilledAutolist`
+    BEFORE UPDATE ON `shoppingLists`
+    FOR EACH ROW
+BEGIN
+    IF OLD.isFulfilled = "0" AND NEW.isFulfilled <> "0" THEN
+        SET NEW.autolist = "0";
+    END IF;
+END$$
+
+CREATE TRIGGER `addToWarehouse`
+    AFTER UPDATE ON `shoppingLists`
+    FOR EACH ROW
+BEGIN
+    DECLARE overNumberParts INT;
+    IF OLD.isFulfilled = "0" AND NEW.isFulfilled <> "0" THEN
+        SELECT COUNT(*) INTO overNumberParts FROM shoppingListsParts slp
+            JOIN parts p ON slp.partCode = p.partCode
+            WHERE slp.listName = NEW.name
+                AND slp.quantity > (p.maxInStock - p.currentlyInStock);
+        IF overNumberParts > 0 THEN
+            SIGNAL SQLSTATE "45000"
+                SET MESSAGE_TEXT = "TOO_MANY_PARTS";
+        ELSE
+            UPDATE parts p
+                SET p.currentlyInStock = p.currentlyInStock + IFNULL((
+                    SELECT slp.quantity FROM shoppingListsParts slp
+                        WHERE slp.listName = NEW.name
+                            AND slp.partCode = p.partCode
+                ), 0);
+        END IF;
+    END IF;
+END$$
+
 DELIMITER ;
