@@ -80,6 +80,7 @@
             this.cbManufacturer.Name = "cbManufacturer";
             this.cbManufacturer.Size = new System.Drawing.Size(228, 28);
             this.cbManufacturer.TabIndex = 4;
+            this.cbManufacturer.SelectedIndexChanged += new System.EventHandler(this.cbManufacturer_SelectedIndexChanged);
             // 
             // cbModel
             // 
