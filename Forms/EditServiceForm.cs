@@ -25,7 +25,6 @@ namespace WarsztatSamochodowy.Forms
         private const string CAR_MODELS_TABLE = "carModels";
         private const string DUPLICATED_SERVICE_MESSAGE = "Usługa o podanej nazwie już istnieje";
 
-
         private readonly string? serviceNameToUpdate;
         
         public EditServiceForm()
@@ -106,6 +105,7 @@ namespace WarsztatSamochodowy.Forms
                 clbAllParts.Items.Add($"{part.ElementAt(1)} (#{part.ElementAt(0)})");
             }
         }
+
         private void PopulateAllModelsCheckBox()
         {
             List<List<string?>> models = DatabaseService.Get().Select(CAR_MODELS_TABLE);

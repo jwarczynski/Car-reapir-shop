@@ -30,8 +30,8 @@
         {
             this.lvCars = new System.Windows.Forms.ListView();
             this.chLicencePlate = new System.Windows.Forms.ColumnHeader();
-            this.chManufacturer = new System.Windows.Forms.ColumnHeader();
             this.chModel = new System.Windows.Forms.ColumnHeader();
+            this.chManufacturer = new System.Windows.Forms.ColumnHeader();
             this.btnAddCar = new System.Windows.Forms.Button();
             this.btnRemoveCar = new System.Windows.Forms.Button();
             this.btnEditCar = new System.Windows.Forms.Button();
@@ -41,29 +41,32 @@
             // 
             this.lvCars.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chLicencePlate,
-            this.chManufacturer,
-            this.chModel});
-            this.lvCars.Location = new System.Drawing.Point(12, 12);
+            this.chModel,
+            this.chManufacturer});
+            this.lvCars.FullRowSelect = true;
+            this.lvCars.Location = new System.Drawing.Point(11, 12);
             this.lvCars.Name = "lvCars";
-            this.lvCars.Size = new System.Drawing.Size(488, 426);
+            this.lvCars.Size = new System.Drawing.Size(489, 425);
             this.lvCars.TabIndex = 0;
             this.lvCars.UseCompatibleStateImageBehavior = false;
             this.lvCars.View = System.Windows.Forms.View.Details;
+            this.lvCars.ItemActivate += new System.EventHandler(this.lvCars_ItemActivate);
+            this.lvCars.SelectedIndexChanged += new System.EventHandler(this.lvCars_SelectedIndexChanged);
             // 
             // chLicencePlate
             // 
             this.chLicencePlate.Text = "Numer rejestracyjny";
             this.chLicencePlate.Width = 180;
             // 
-            // chManufacturer
-            // 
-            this.chManufacturer.Text = "Producent";
-            this.chManufacturer.Width = 120;
-            // 
             // chModel
             // 
             this.chModel.Text = "Model";
             this.chModel.Width = 120;
+            // 
+            // chManufacturer
+            // 
+            this.chManufacturer.Text = "Producent";
+            this.chManufacturer.Width = 120;
             // 
             // btnAddCar
             // 
@@ -73,6 +76,7 @@
             this.btnAddCar.TabIndex = 1;
             this.btnAddCar.Text = "Dodaj...";
             this.btnAddCar.UseVisualStyleBackColor = true;
+            this.btnAddCar.Click += new System.EventHandler(this.btnAddCar_Click);
             // 
             // btnRemoveCar
             // 
@@ -82,10 +86,11 @@
             this.btnRemoveCar.TabIndex = 2;
             this.btnRemoveCar.Text = "Usuń";
             this.btnRemoveCar.UseVisualStyleBackColor = true;
+            this.btnRemoveCar.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnEditCar
             // 
-            this.btnEditCar.Location = new System.Drawing.Point(506, 82);
+            this.btnEditCar.Location = new System.Drawing.Point(506, 83);
             this.btnEditCar.Name = "btnEditCar";
             this.btnEditCar.Size = new System.Drawing.Size(94, 29);
             this.btnEditCar.TabIndex = 3;
@@ -97,7 +102,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(609, 450);
+            this.ClientSize = new System.Drawing.Size(609, 451);
             this.Controls.Add(this.btnEditCar);
             this.Controls.Add(this.btnRemoveCar);
             this.Controls.Add(this.btnAddCar);
@@ -108,6 +113,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Lista samochodów";
+            this.Load += new System.EventHandler(this.CarsListForm_Load);
             this.ResumeLayout(false);
 
         }
@@ -116,8 +122,8 @@
 
         private ListView lvCars;
         private ColumnHeader chLicencePlate;
-        private ColumnHeader chManufacturer;
         private ColumnHeader chModel;
+        private ColumnHeader chManufacturer;
         private Button btnAddCar;
         private Button btnRemoveCar;
         private Button btnEditCar;
