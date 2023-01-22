@@ -213,6 +213,7 @@
             this.btnNewCar.TabIndex = 11;
             this.btnNewCar.Text = "Nowy...";
             this.btnNewCar.UseVisualStyleBackColor = true;
+            this.btnNewCar.Click += new System.EventHandler(this.btnNewCar_Click);
             // 
             // btnNewCustomer
             // 
@@ -222,6 +223,7 @@
             this.btnNewCustomer.TabIndex = 10;
             this.btnNewCustomer.Text = "Nowy...";
             this.btnNewCustomer.UseVisualStyleBackColor = true;
+            this.btnNewCustomer.Click += new System.EventHandler(this.btnNewCustomer_Click);
             // 
             // gbPositions
             // 

@@ -35,27 +35,8 @@ namespace WarsztatSamochodowy.Forms
 
         protected void Populate()
         {
-            var customers = DatabaseService.Get().Select(DatabaseService.TABLE_CUSTOMERS,
-                fields: new() { "customerId", "fullName" });
-
-            cbCustomer.BeginUpdate();
-            cbCustomer.Items.Clear();
-            foreach (var customer in customers)
-            {
-                cbCustomer.Items.Add(new CustomerRow(customer[0]!, customer[1]!));
-            }
-            cbCustomer.EndUpdate();
-
-            var cars = DatabaseService.Get().Select(DatabaseService.TABLE_CARS,
-                fields: new() { "licensePlate" });
-
-            cbCar.BeginUpdate();
-            cbCar.Items.Clear();
-            foreach (var car in cars)
-            {
-                cbCar.Items.Add(car[0]);
-            }
-            cbCar.EndUpdate();
+            LoadCustomers();
+            LoadCars();
 
 
             if (orderId == null)
@@ -89,6 +70,41 @@ namespace WarsztatSamochodowy.Forms
             tbOrderComment.Text = uneditedComment = order[4];
 
             LoadOrderEntries();
+        }
+
+        protected void LoadCustomers()
+        {
+            var selectedBefore = cbCustomer.Text;
+            var customers = DatabaseService.Get().Select(DatabaseService.TABLE_CUSTOMERS,
+                fields: new() { "customerId", "fullName" });
+
+            cbCustomer.BeginUpdate();
+            cbCustomer.Items.Clear();
+            foreach (var customer in customers)
+            {
+                cbCustomer.Items.Add(new CustomerRow(customer[0]!, customer[1]!));
+                if (customer[1] == selectedBefore)
+                {
+                    cbCustomer.SelectedIndex = cbCustomer.Items.Count - 1;
+                }
+            }
+            cbCustomer.EndUpdate();
+        }
+
+        protected void LoadCars()
+        {
+            var selectedBefore = cbCar.Text;
+            var cars = DatabaseService.Get().Select(DatabaseService.TABLE_CARS,
+                fields: new() { "licensePlate" });
+
+            cbCar.BeginUpdate();
+            cbCar.Items.Clear();
+            foreach (var car in cars)
+            {
+                cbCar.Items.Add(car[0]);
+            }
+            cbCar.EndUpdate();
+            cbCar.SelectedItem = selectedBefore;
         }
 
         protected void LoadOrderEntries()
@@ -351,6 +367,22 @@ namespace WarsztatSamochodowy.Forms
         private void lvOrderPositions_ItemActivate(object sender, EventArgs e)
         {
             DisplaySelectedEntryDetails();
+        }
+
+        private void btnNewCustomer_Click(object sender, EventArgs e)
+        {
+            var suggestedName = cbCustomer.Text;
+            var editCustomerForm = new EditCustomerForm(null, suggestedName);
+            editCustomerForm.ShowDialog();
+            LoadCustomers();
+        }
+
+        private void btnNewCar_Click(object sender, EventArgs e)
+        {
+            var suggestedPlate = cbCar.Text;
+            var editCarForm = new EditCarForm();
+            editCarForm.ShowDialog();
+            LoadCars();
         }
     }
 }
