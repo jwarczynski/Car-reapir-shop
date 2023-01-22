@@ -54,7 +54,8 @@ namespace WarsztatSamochodowy.Forms
             lvCars.Items.Clear();
             foreach (var car in cars)
             {
-                var item = new ListViewItem($"{car[0]} {car[1]}, {car[2]}");
+                var item = new ListViewItem(car.ToArray());
+                //var item = new ListViewItem($"{car[0]} {car[1]}, {car[2]}");
                 item.Tag = (car[0]!, car[1]!, car[2]!);
                 lvCars.Items.Add(item);
             }
@@ -103,7 +104,7 @@ namespace WarsztatSamochodowy.Forms
 
             try
             {
-                DatabaseService.Get().delete(DatabaseService.TABLE_CAR_MODELS,
+                DatabaseService.Get().delete(DatabaseService.TABLE_CARS,
                     new() { ["manufacturerName"] = manufacturer,
                             ["modelName"] = model,
                             ["licensePlate"] = licensePlate 
