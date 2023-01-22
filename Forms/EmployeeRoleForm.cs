@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,6 +79,7 @@ namespace WarsztatSamochodowy.Forms
                 try
                 {
                     DatabaseService.Get().insert(EMPLOYEE_ROLES_TABLE, roleMap!);
+                    showAllRoles();
                 } catch(MySqlException sqlException)
                 {
                     if(sqlException.ErrorCode == MySqlErrorCode.DuplicateKeyEntry)
@@ -93,9 +95,6 @@ namespace WarsztatSamochodowy.Forms
         {
             if(roleNameToEdit != null)
             {
-                minWageNumeric.Value = (decimal)float.Parse(minWageToEdit!);
-                maxWageNumeric.Value = (decimal)float.Parse(maxWageToEdit!);
-
                 string newRoleName = roleNameTextBox.Text;
                 //TODO validate roleName
                 if (!IsValidRoleName(newRoleName))
@@ -108,13 +107,13 @@ namespace WarsztatSamochodowy.Forms
                     MessageBox.Show("płaca minimalna nie może być większa od maksymalnej");
                     return;
                 }
-                string newMinWage = minWageNumeric.Value.ToString();
-                string newMaxWage = maxWageNumeric.Value.ToString();
+                string newMinWage = minWageNumeric.Value.ToString(CultureInfo.InvariantCulture);
+                string newMaxWage = maxWageNumeric.Value.ToString(CultureInfo.InvariantCulture);
 
-                SortedDictionary<string, string> oldRole = new SortedDictionary<string, string>();
+                SortedDictionary<string, string?> oldRole = new SortedDictionary<string, string?>();
                 oldRole.Add("roleName", roleNameToEdit);
 
-                SortedDictionary<string, string> newRole = new SortedDictionary<string, string>();
+                SortedDictionary<string, string?> newRole = new SortedDictionary<string, string?>();
                 newRole.Add("roleName", newRoleName);
                 newRole.Add("minimumWage", newMinWage);
                 newRole.Add("maximumWage", newMaxWage);
@@ -182,6 +181,7 @@ namespace WarsztatSamochodowy.Forms
                 try
                 {
                     DatabaseService.Get().delete(EMPLOYEE_ROLES_TABLE, roleToDelete);
+                    showAllRoles();
                 }
                 catch(MySqlException exception)
                 {
