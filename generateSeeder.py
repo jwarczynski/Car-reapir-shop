@@ -82,8 +82,8 @@ f.write('\n')
 
 f.write('-- Insert shopping lists\n')
 for i in range(3):
-    f.write(f'INSERT INTO `shoppingLists` (`name`, `isFulfilled`, `priority`) VALUES' + 
-        f' ("List {i}", {i == 0}, 0);\n')
+    f.write(f'INSERT INTO `shoppingLists` (`name`, `isFulfilled`) VALUES' + 
+        f' ("List {i}", {i == 0});\n')
 f.write('\n')
 
 f.write('-- Insert parts\n')

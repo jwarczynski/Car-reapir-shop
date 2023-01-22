@@ -59,7 +59,7 @@ CREATE TABLE `orders` (
 CREATE TABLE `shoppingLists` (
     `name` varchar(50) NOT NULL PRIMARY KEY,
     `isFulfilled` char(1) NOT NULL,
-    `priority` int(1)
+    `autolist` char(1) DEFAULT "0"
 );
 
 CREATE TABLE `parts` (
@@ -204,6 +204,27 @@ BEGIN
     RETURN entryId;
 END$$
 
+CREATE FUNCTION `getAutoShoppingListName` ()
+RETURNS CHAR(50)
+BEGIN
+    DECLARE listName CHAR(50);
+    SELECT IFNULL(name, "") INTO listName FROM `shoppingLists`
+        WHERE autolist = "1"
+        LIMIT 1;
+    RETURN listName;
+END$$
+
+CREATE PROCEDURE `setAutoShoppingListName` (
+    IN listName CHAR(50)
+)
+BEGIN
+    UPDATE `shoppingLists`
+        SET autolist = "0";
+    UPDATE `shoppingLists`
+        SET autolist = "1"
+        WHERE name = listName;
+END$$
+
 CREATE PROCEDURE `addShoppingListEntry` (
     IN listName CHAR(50),
     IN partCode VARCHAR(25),
@@ -238,4 +259,29 @@ BEGIN
         END IF;
     END IF;
 END$$
+
+CREATE TRIGGER `appendToAutoShoppingList`
+    AFTER UPDATE ON `parts`
+    FOR EACH ROW
+BEGIN
+    DECLARE entriesOnLists INT;
+
+    IF OLD.currentlyInStock > NEW.currentlyInStock THEN
+        IF NEW.currentlyInStock / NEW.maxInStock < 0.1 THEN
+            SELECT COUNT(*) INTO entriesOnLists FROM shoppingListsParts
+                JOIN shoppingLists ON listName = name
+                WHERE isFulfilled = "0"
+                    AND partCode = NEW.partCode;
+
+            IF entriesOnLists = 0 THEN
+                CALL addShoppingListEntry(
+                    (SELECT getAutoShoppingListName()),
+                    NEW.partCode,
+                    FLOOR(NEW.maxInStock / 2)
+                );
+            END IF;
+        END IF;
+    END IF;
+END$$
+
 DELIMITER ;
