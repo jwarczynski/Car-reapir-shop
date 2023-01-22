@@ -38,14 +38,6 @@ namespace WarsztatSamochodowy.Forms
                 cbManufacturer.Items.Add(manufacturer[0]);
             }
 
-            var models = db.Select(DatabaseService.TABLE_CAR_MODELS,
-                fields: new() { "modelName" });
-
-            foreach(var model in models)
-            {
-                cbModel.Items.Add(model[0]);
-            }
-
             cbManufacturer.SelectedIndex = cbManufacturer.Items.IndexOf(manufacturerName);
             cbModel.SelectedIndex = cbModel.Items.IndexOf(modelName);
             tbLicencePlate.Text = licensePlate ?? "";
@@ -126,6 +118,19 @@ namespace WarsztatSamochodowy.Forms
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void cbManufacturer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cbModel.Items.Clear();
+
+            var models = DatabaseService.Get().Select(DatabaseService.TABLE_CAR_MODELS,
+                new() { ["manufacturerName"] = (string)cbManufacturer.SelectedItem },
+                fields: new() { "modelName" });
+            foreach(var model in models)
+            {
+                cbModel.Items.Add(model[0]);
+            }
         }
     }
 }
