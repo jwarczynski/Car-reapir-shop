@@ -1,5 +1,6 @@
 ﻿using MySqlConnector;
 using System.Data;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using WarsztatSamochodowy.Services;
 
@@ -9,6 +10,8 @@ namespace WarsztatSamochodowy.Forms
     {
         private static readonly string EMPLOYEE_TABLE = "EMPLOYEES";
         private static readonly string EMPLOYEE_ROLE_TABLE = "EmployeeRoles";
+
+        private static readonly string DUPLICATED_EMPLOYEE_MESSAGE = "Taki praconwik już jest zatrudniony";
 
         private SortedDictionary<string, string> selectedEmployee;
         private SortedDictionary<string, string> updatedEmployee;
@@ -57,25 +60,20 @@ namespace WarsztatSamochodowy.Forms
 
         private void deleteEmployee()
         {
-            DatabaseService.Get().delete(EMPLOYEE_TABLE, selectedEmployee);
+            DatabaseService.Get().delete(EMPLOYEE_TABLE, new() { ["fullName"] = selectedEmployee["fullName"] });
         }
 
         private void updateEmployee()
         {
-            DatabaseService.Get().update(EMPLOYEE_TABLE, selectedEmployee, updatedEmployee);
+            DatabaseService.Get().update(EMPLOYEE_TABLE, new() { ["fullName"] = selectedEmployee["fullName"] }, updatedEmployee);
         }
 
         private void clear()
         {
-            roleListBox.ClearSelected();
+            roleListBox.SelectedIndex = -1;
             firstNameTextBox.Text = "";
             lastNameTextBox.Text = "";
             wageTextBox.Text = "";
-        }
-
-        private void roleListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            roleListBox.Height = 40;
         }
 
         private void validateEmployee(string firstName, string lastName, string wage)
@@ -122,10 +120,17 @@ namespace WarsztatSamochodowy.Forms
                 }
 
                 employeeMap.Add("fullName", firstNameTextBox.Text + " " + lastNameTextBox.Text);
-                employeeMap.Add("wage", float.Parse(wageTextBox.Text).ToString());
+                employeeMap.Add("wage", decimal.Parse(wageTextBox.Text).ToString(CultureInfo.InvariantCulture));
                 employeeMap.Add("role", roleListBox.SelectedItem.ToString());
 
-                addEmployee(employeeMap);
+                try
+                {
+                    addEmployee(employeeMap);
+                } catch(MySqlException sqlException)
+                {
+                    DatabaseService.HandleSqlException(sqlException, DUPLICATED_EMPLOYEE_MESSAGE);
+                    return;
+                }
                 clear();
                 showAll();
             }
@@ -159,7 +164,17 @@ namespace WarsztatSamochodowy.Forms
 
         private void btnRemoveCustomer_Click(object sender, EventArgs e)
         {
-            deleteEmployee();
+            var result = MessageBox.Show("Usunięcie pracownika spowoduje, że skasowane zostaną informacje o wykonanych przez niego usługach. Kontynuować?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result != DialogResult.Yes) return;
+
+            try
+            {
+                deleteEmployee();
+            } catch(MySqlException sqlException)
+            {
+                DatabaseService.HandleSqlException(sqlException, DUPLICATED_EMPLOYEE_MESSAGE);
+                return;
+            }
             showAll();
             clear();
         }
@@ -177,15 +192,30 @@ namespace WarsztatSamochodowy.Forms
                 {
                     throw new ArgumentException("Należy wybrać etat");
                 }
+                if (string.IsNullOrWhiteSpace(fullName))
+                {
+                    throw new ArgumentException("Należy podać imię i nazwisko pracownika");
+                }
+                if (!decimal.TryParse(wageString, out _))
+                {
+                    throw new ArgumentException("Podano niepoprawną wartość płacy");
+                }
 
                 string? roleName = roleListBox.SelectedItem.ToString();
                 updatedEmployee["fullName"] = fullName;
-                updatedEmployee["wage"] = wageString;
+                updatedEmployee["wage"] = decimal.Parse(wageString).ToString(CultureInfo.InvariantCulture);
                 updatedEmployee["roleName"] = roleName;
 
                 validateEmployee(firstName, lastName, wageString);
 
-                updateEmployee();
+                try
+                {
+                    updateEmployee();
+                } catch(MySqlException sqlException)
+                {
+                    DatabaseService.HandleSqlException(sqlException, DUPLICATED_EMPLOYEE_MESSAGE);
+                    return;
+                }
                 clear();
                 showAll();
             }

@@ -13,6 +13,7 @@ namespace WarsztatSamochodowy.Services
     internal class DatabaseService : IDisposable
     {
         public const string TABLE_PARTS = "parts";
+        public const string TABLE_CARS = "cars";
         public const string TABLE_CAR_MODELS = "carModels";
         public const string TABLE_CAR_MANUFACTURERS = "carManufacturers";
         public const string TABLE_PARTS_CAR_MODELS = "partsToCarModels";
@@ -22,10 +23,20 @@ namespace WarsztatSamochodowy.Services
         public const string TABLE_SHOPPING_LISTS_WITH_PART_COUNT = "shoppingListsWithPartCount";
         public const string TABLE_CUSTOMERS = "customers";
         public const string TABLE_CARS = "cars";
+        public const string TABLE_ORDERS = "orders";
+        public const string TABLE_ORDERS_VIEW = "ordersView";
+        public const string TABLE_ORDER_ENTRIES = "orderEntries";
+        public const string TABLE_ORDER_ENTRIES_VIEW = "orderEntriesView";
+        public const string TABLE_SERVICES_FOR_CAR = "servicesForCar";
+        public const string TABLE_EMPLOYEES = "employees";
 
         public const string PROC_ADD_SHOPPING_LIST_ENTRY = "addShoppingListEntry";
+        public const string PROC_SET_AUTO_SHOPPING_LIST_NAME = "setAutoShoppingListName";
 
         public const string FUNC_COUNT_MODELS_BY_MANUFACTURER = "countModelsByManufacturer";
+        public const string FUNC_ADD_ORDER = "addOrder";
+        public const string FUNC_ADD_ORDER_ENTRY = "addOrderEntry";
+        public const string FUNC_GET_AUTO_SHOPPING_LIST_NAME = "getAutoShoppingListName";
 
         private readonly MySqlConnection mySqlConnection;
         private const string connectionString = "server=localhost;user=root;database=warsztat;port=3306;password=password";
@@ -199,7 +210,7 @@ namespace WarsztatSamochodowy.Services
             fillCommandWithData(sqlCommand, valuesToSet, "u");
         }
 
-        public void CallProcedure(string procedureName, List<string> arguments)
+        public void CallProcedure(string procedureName, List<string?> arguments)
         {
             SortedDictionary<string, string?> fields = new();
             int i = 0;
@@ -216,7 +227,7 @@ namespace WarsztatSamochodowy.Services
             sqlCommand.ExecuteNonQuery();
         }
 
-        public object? CallFunction(string procedureName, List<string> arguments)
+        public object? CallFunction(string procedureName, List<string?> arguments)
         {
             SortedDictionary<string, string?> fields = new();
             int i = 0;
@@ -252,5 +263,20 @@ namespace WarsztatSamochodowy.Services
 
             return callStringBuilder.ToString();
         }
+
+        public static void HandleSqlException(MySqlException sqlException, string duplicatedKeyMessage)
+        {
+            if(sqlException.ErrorCode == MySqlErrorCode.DuplicateKeyEntry)
+            {
+                MessageBox.Show(duplicatedKeyMessage);
+                return;
+            }
+            else
+            {
+                MessageBox.Show(sqlException.Message);
+                return;
+            }
+        }
     }
+        
 }

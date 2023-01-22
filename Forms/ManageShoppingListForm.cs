@@ -385,6 +385,7 @@ namespace WarsztatSamochodowy.Forms
             {
                 string message = ex.ErrorCode switch
                 {
+                    (E)1644 => "Brakuje miejsca w magazynie dla przynajmniej jednej z części.",
                     _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
                 };
                 MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);

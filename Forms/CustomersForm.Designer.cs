@@ -117,6 +117,7 @@
             this.btnNewOrder.TabIndex = 4;
             this.btnNewOrder.Text = "Nowe zamówienie...";
             this.btnNewOrder.UseVisualStyleBackColor = true;
+            this.btnNewOrder.Click += new System.EventHandler(this.btnNewOrder_Click);
             // 
             // CustomersForm
             // 

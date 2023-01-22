@@ -69,19 +69,30 @@ namespace WarsztatSamochodowy.Forms
 
         private void ReloadLists()
         {
-            var rows = DatabaseService.Get().Select(DatabaseService.TABLE_SHOPPING_LISTS_WITH_PART_COUNT,
+            var db = DatabaseService.Get();
+            var rows = db.Select(DatabaseService.TABLE_SHOPPING_LISTS_WITH_PART_COUNT,
                 fields: new() { "name", "partsCount", "isFulfilled" });
 
             if (rows == null) return;
 
+            cbAutoList.BeginUpdate();
+            cbAutoList.Items.Clear();
+            cbAutoList.Items.Add("(żadna)");
+
+            lvShoppingLists.BeginUpdate();
             lvShoppingLists.Items.Clear();
             foreach (var row in rows)
             {
                 string?[] fields = row.ToArray();
                 if (fields[2] != "0")
+                {
                     fields[2] = "Zrealizowana";
+                }
                 else
+                {
                     fields[2] = "Oczekująca";
+                    cbAutoList.Items.Add(fields[0]);
+                }
 
                 var lvItem = new ListViewItem(fields)
                 {
@@ -89,6 +100,13 @@ namespace WarsztatSamochodowy.Forms
                 };
                 lvShoppingLists.Items.Add(lvItem);
             }
+            lvShoppingLists.EndUpdate();
+            cbAutoList.EndUpdate();
+
+            var autolist = db.CallFunction(DatabaseService.FUNC_GET_AUTO_SHOPPING_LIST_NAME, new())!.ToString();
+            cbAutoList.SelectedItem = autolist;
+            if(cbAutoList.SelectedIndex < 0) cbAutoList.SelectedIndex = 0;
+
             RefreshButtonsStates();
         }
 
@@ -139,6 +157,24 @@ namespace WarsztatSamochodowy.Forms
                 {
                     _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
                 };
+                MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnSaveAutoList_Click(object sender, EventArgs e)
+        {
+            var autolistName = cbAutoList.SelectedItem.ToString();
+            if (cbAutoList.SelectedIndex <= 0) autolistName = "";
+
+            try
+            {
+                DatabaseService.Get().CallProcedure(
+                    DatabaseService.PROC_SET_AUTO_SHOPPING_LIST_NAME,
+                    new() { autolistName });
+            }
+            catch (MySqlException ex)
+            {
+                string message = "Nie udało się zmienić automatycznej listy zakupów.";
                 MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
