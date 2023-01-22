@@ -251,5 +251,20 @@ namespace WarsztatSamochodowy.Services
 
             return callStringBuilder.ToString();
         }
+
+        public static void HandleSqlException(MySqlException sqlException, string duplicatedKeyMessage)
+        {
+            if(sqlException.ErrorCode == MySqlErrorCode.DuplicateKeyEntry)
+            {
+                MessageBox.Show(duplicatedKeyMessage);
+                return;
+            }
+            else
+            {
+                MessageBox.Show(sqlException.Message);
+                return;
+            }
+        }
     }
+        
 }
