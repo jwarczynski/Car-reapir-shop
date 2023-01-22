@@ -30,8 +30,8 @@
         {
             this.lvCars = new System.Windows.Forms.ListView();
             this.chLicencePlate = new System.Windows.Forms.ColumnHeader();
-            this.chManufacturer = new System.Windows.Forms.ColumnHeader();
             this.chModel = new System.Windows.Forms.ColumnHeader();
+            this.chManufacturer = new System.Windows.Forms.ColumnHeader();
             this.btnAddCar = new System.Windows.Forms.Button();
             this.btnRemoveCar = new System.Windows.Forms.Button();
             this.btnEditCar = new System.Windows.Forms.Button();
@@ -41,12 +41,12 @@
             // 
             this.lvCars.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chLicencePlate,
-            this.chManufacturer,
-            this.chModel});
-            this.lvCars.Location = new System.Drawing.Point(10, 9);
-            this.lvCars.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.chModel,
+            this.chManufacturer});
+            this.lvCars.FullRowSelect = true;
+            this.lvCars.Location = new System.Drawing.Point(11, 12);
             this.lvCars.Name = "lvCars";
-            this.lvCars.Size = new System.Drawing.Size(428, 320);
+            this.lvCars.Size = new System.Drawing.Size(489, 425);
             this.lvCars.TabIndex = 0;
             this.lvCars.UseCompatibleStateImageBehavior = false;
             this.lvCars.View = System.Windows.Forms.View.Details;
@@ -58,22 +58,21 @@
             this.chLicencePlate.Text = "Numer rejestracyjny";
             this.chLicencePlate.Width = 180;
             // 
-            // chManufacturer
-            // 
-            this.chManufacturer.Text = "Producent";
-            this.chManufacturer.Width = 120;
-            // 
             // chModel
             // 
             this.chModel.Text = "Model";
             this.chModel.Width = 120;
             // 
+            // chManufacturer
+            // 
+            this.chManufacturer.Text = "Producent";
+            this.chManufacturer.Width = 120;
+            // 
             // btnAddCar
             // 
-            this.btnAddCar.Location = new System.Drawing.Point(443, 9);
-            this.btnAddCar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAddCar.Location = new System.Drawing.Point(506, 12);
             this.btnAddCar.Name = "btnAddCar";
-            this.btnAddCar.Size = new System.Drawing.Size(82, 22);
+            this.btnAddCar.Size = new System.Drawing.Size(94, 29);
             this.btnAddCar.TabIndex = 1;
             this.btnAddCar.Text = "Dodaj...";
             this.btnAddCar.UseVisualStyleBackColor = true;
@@ -81,10 +80,9 @@
             // 
             // btnRemoveCar
             // 
-            this.btnRemoveCar.Location = new System.Drawing.Point(443, 35);
-            this.btnRemoveCar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnRemoveCar.Location = new System.Drawing.Point(506, 47);
             this.btnRemoveCar.Name = "btnRemoveCar";
-            this.btnRemoveCar.Size = new System.Drawing.Size(82, 22);
+            this.btnRemoveCar.Size = new System.Drawing.Size(94, 29);
             this.btnRemoveCar.TabIndex = 2;
             this.btnRemoveCar.Text = "Usuń";
             this.btnRemoveCar.UseVisualStyleBackColor = true;
@@ -92,10 +90,9 @@
             // 
             // btnEditCar
             // 
-            this.btnEditCar.Location = new System.Drawing.Point(443, 62);
-            this.btnEditCar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnEditCar.Location = new System.Drawing.Point(506, 83);
             this.btnEditCar.Name = "btnEditCar";
-            this.btnEditCar.Size = new System.Drawing.Size(82, 22);
+            this.btnEditCar.Size = new System.Drawing.Size(94, 29);
             this.btnEditCar.TabIndex = 3;
             this.btnEditCar.Text = "Edytuj...";
             this.btnEditCar.UseVisualStyleBackColor = true;
@@ -103,14 +100,13 @@
             // 
             // CarsListForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 338);
+            this.ClientSize = new System.Drawing.Size(609, 451);
             this.Controls.Add(this.btnEditCar);
             this.Controls.Add(this.btnRemoveCar);
             this.Controls.Add(this.btnAddCar);
             this.Controls.Add(this.lvCars);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CarsListForm";
@@ -126,8 +122,8 @@
 
         private ListView lvCars;
         private ColumnHeader chLicencePlate;
-        private ColumnHeader chManufacturer;
         private ColumnHeader chModel;
+        private ColumnHeader chManufacturer;
         private Button btnAddCar;
         private Button btnRemoveCar;
         private Button btnEditCar;

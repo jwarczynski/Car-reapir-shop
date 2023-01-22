@@ -74,6 +74,7 @@
             // 
             // cbManufacturer
             // 
+            this.cbManufacturer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbManufacturer.FormattingEnabled = true;
             this.cbManufacturer.Location = new System.Drawing.Point(161, 39);
             this.cbManufacturer.Name = "cbManufacturer";
@@ -82,6 +83,7 @@
             // 
             // cbModel
             // 
+            this.cbModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbModel.FormattingEnabled = true;
             this.cbModel.Location = new System.Drawing.Point(161, 73);
             this.cbModel.Name = "cbModel";
@@ -115,7 +117,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(405, 161);
-            this.ControlBox = false;
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.cbModel);
@@ -131,6 +132,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Edytuj samochód";
+            this.Load += new System.EventHandler(this.EditCarForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

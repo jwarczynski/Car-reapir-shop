@@ -105,16 +105,14 @@ namespace WarsztatSamochodowy.Forms
             try
             {
                 DatabaseService.Get().delete(DatabaseService.TABLE_CARS,
-                    new() { ["manufacturerName"] = manufacturer,
-                            ["modelName"] = model,
-                            ["licensePlate"] = licensePlate 
-                          });
+                    new() { ["licensePlate"] = licensePlate });
 
                 selectedItem.Remove();
             } catch(MySqlException ex)
             {
                 string message = ex.ErrorCode switch
                 {
+                    E.RowIsReferenced2 => "Nie można usunąć samochodu, bo dotyczą go istniejące zamówienia.",
                     _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
                 };
                 MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
