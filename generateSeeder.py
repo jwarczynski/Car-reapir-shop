@@ -82,8 +82,8 @@ f.write('\n')
 
 f.write('-- Insert shopping lists\n')
 for i in range(3):
-    f.write(f'INSERT INTO `shoppingLists` (`name`, `isFulfilled`, `priority`) VALUES' + 
-        f' ("List {i}", {i == 0}, 0);\n')
+    f.write(f'INSERT INTO `shoppingLists` (`name`, `isFulfilled`) VALUES' + 
+        f' ("List {i}", {i == 0});\n')
 f.write('\n')
 
 f.write('-- Insert parts\n')
@@ -133,6 +133,14 @@ for i in range(10):
     modelIdx = (modelIdx + 1) % len(models[manIdx])
     f.write(f'INSERT INTO `partsToCarModels` (`manufacturerName`, `modelName`, `partCode`) VALUES' +
         f' ("{manufacturers[manIdx]}", "{models[manIdx][modelIdx]}", "{i:0>3}");\n')
+f.write('\n')
+
+f.write('-- Insert service-part relations\n')
+for s in services:
+    for i in range(3):
+        partCode = randint(0, 9)
+        f.write(f'INSERT INTO `serviceParts` (`serviceName`, `partPartCode`, `quantity`) VALUES ' +
+            f'("{s[0]}", "{partCode:0>3}", {randint(1, 5)});\n')
 f.write('\n')
 
 f.write('-- Insert order entries\n')

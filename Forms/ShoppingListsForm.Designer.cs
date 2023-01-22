@@ -116,6 +116,7 @@
             this.btnSaveAutoList.TabIndex = 2;
             this.btnSaveAutoList.Text = "Zapisz";
             this.btnSaveAutoList.UseVisualStyleBackColor = true;
+            this.btnSaveAutoList.Click += new System.EventHandler(this.btnSaveAutoList_Click);
             // 
             // cbAutoList
             // 

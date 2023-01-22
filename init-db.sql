@@ -59,7 +59,7 @@ CREATE TABLE `orders` (
 CREATE TABLE `shoppingLists` (
     `name` varchar(50) NOT NULL PRIMARY KEY,
     `isFulfilled` char(1) NOT NULL,
-    `priority` int(1)
+    `autolist` char(1) DEFAULT "0"
 );
 
 CREATE TABLE `parts` (
@@ -204,6 +204,28 @@ BEGIN
     RETURN entryId;
 END$$
 
+CREATE FUNCTION `getAutoShoppingListName` ()
+RETURNS CHAR(50)
+BEGIN
+    DECLARE listName CHAR(50);
+    SELECT IFNULL(name, "") INTO listName FROM `shoppingLists`
+        WHERE autolist = "1"
+        LIMIT 1;
+    RETURN listName;
+END$$
+
+CREATE PROCEDURE `setAutoShoppingListName` (
+    IN listName CHAR(50)
+)
+BEGIN
+    UPDATE `shoppingLists`
+        SET autolist = "0";
+    UPDATE `shoppingLists`
+        SET autolist = "1"
+        WHERE name = listName
+            AND isFulfilled = "0";
+END$$
+
 CREATE PROCEDURE `addShoppingListEntry` (
     IN listName CHAR(50),
     IN partCode VARCHAR(25),
@@ -214,4 +236,86 @@ BEGIN
         VALUES (listName, partCode, qty)
         ON DUPLICATE KEY UPDATE `quantity` = `quantity` + qty;
 END$$
+
+CREATE TRIGGER `takeFromWarehouse`
+    BEFORE UPDATE ON `orderEntries`
+    FOR EACH ROW
+BEGIN
+    DECLARE missingParts INT;
+    IF OLD.isDone = "0" AND NEW.isDone = "1" THEN
+        SELECT COUNT(*) INTO missingParts FROM serviceParts
+            JOIN parts ON partPartCode = partCode
+            WHERE serviceName = NEW.serviceName
+                AND quantity > currentlyInStock;
+        IF missingParts > 0 THEN
+            SIGNAL SQLSTATE "45000"
+              SET MESSAGE_TEXT = "MISSING_PARTS";
+        ELSE
+            UPDATE parts
+                SET currentlyInStock = currentlyInStock - IFNULL((
+                    SELECT quantity FROM serviceParts
+                        WHERE serviceName = NEW.serviceName
+                            AND partPartCode = partCode
+                ), 0);
+        END IF;
+    END IF;
+END$$
+
+CREATE TRIGGER `appendToAutoShoppingList`
+    AFTER UPDATE ON `parts`
+    FOR EACH ROW
+BEGIN
+    DECLARE entriesOnLists INT;
+
+    IF OLD.currentlyInStock > NEW.currentlyInStock THEN
+        IF NEW.currentlyInStock / NEW.maxInStock < 0.1 THEN
+            SELECT COUNT(*) INTO entriesOnLists FROM shoppingListsParts
+                JOIN shoppingLists ON listName = name
+                WHERE isFulfilled = "0"
+                    AND partCode = NEW.partCode;
+
+            IF entriesOnLists = 0 THEN
+                CALL addShoppingListEntry(
+                    (SELECT getAutoShoppingListName()),
+                    NEW.partCode,
+                    FLOOR(NEW.maxInStock / 2)
+                );
+            END IF;
+        END IF;
+    END IF;
+END$$
+
+CREATE TRIGGER `disableFulfilledAutolist`
+    BEFORE UPDATE ON `shoppingLists`
+    FOR EACH ROW
+BEGIN
+    IF OLD.isFulfilled = "0" AND NEW.isFulfilled <> "0" THEN
+        SET NEW.autolist = "0";
+    END IF;
+END$$
+
+CREATE TRIGGER `addToWarehouse`
+    AFTER UPDATE ON `shoppingLists`
+    FOR EACH ROW
+BEGIN
+    DECLARE overNumberParts INT;
+    IF OLD.isFulfilled = "0" AND NEW.isFulfilled <> "0" THEN
+        SELECT COUNT(*) INTO overNumberParts FROM shoppingListsParts slp
+            JOIN parts p ON slp.partCode = p.partCode
+            WHERE slp.listName = NEW.name
+                AND slp.quantity > (p.maxInStock - p.currentlyInStock);
+        IF overNumberParts > 0 THEN
+            SIGNAL SQLSTATE "45000"
+                SET MESSAGE_TEXT = "TOO_MANY_PARTS";
+        ELSE
+            UPDATE parts p
+                SET p.currentlyInStock = p.currentlyInStock + IFNULL((
+                    SELECT slp.quantity FROM shoppingListsParts slp
+                        WHERE slp.listName = NEW.name
+                            AND slp.partCode = p.partCode
+                ), 0);
+        END IF;
+    END IF;
+END$$
+
 DELIMITER ;

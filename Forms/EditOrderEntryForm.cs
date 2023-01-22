@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using E = MySqlConnector.MySqlErrorCode;
 
 using System;
 using System.Collections.Generic;
@@ -206,7 +207,10 @@ namespace WarsztatSamochodowy.Forms
             }
             catch (MySqlException ex)
             {
-                string message = "Nie udało się oznaczyć pozycji jako wykonanej.";
+                string message = ex.ErrorCode switch {
+                    (E)1644 => "W magazynie brakuje niektórych części potrzebnych do wykonania pozycji.",
+                    _ => "Nie udało się oznaczyć pozycji jako wykonanej."
+                };
                 MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
