@@ -96,6 +96,7 @@ namespace WarsztatSamochodowy.Forms
                 string message = ex.ErrorCode switch
                 {
                     E.DuplicateKeyEntry => "Samochód o podanych właściwościach już istnieje.",
+                    E.NoReferencedRow2 => "Nie istnieje z w bazie model samochodu produkowany przez wybranego producenta",
                     _ => $"{ex.Message} (kod błędu: {ex.ErrorCode})"
                 };
                 MessageBox.Show(message, "Błąd bazy danych", MessageBoxButtons.OK, MessageBoxIcon.Error);
