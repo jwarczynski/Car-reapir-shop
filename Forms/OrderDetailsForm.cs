@@ -380,7 +380,7 @@ namespace WarsztatSamochodowy.Forms
         private void btnNewCar_Click(object sender, EventArgs e)
         {
             var suggestedPlate = cbCar.Text;
-            var editCarForm = new EditCarForm();
+            var editCarForm = new EditCarForm(suggestedPlate, null, null);
             editCarForm.ShowDialog();
             LoadCars();
         }
