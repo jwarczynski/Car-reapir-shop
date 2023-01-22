@@ -214,4 +214,28 @@ BEGIN
         VALUES (listName, partCode, qty)
         ON DUPLICATE KEY UPDATE `quantity` = `quantity` + qty;
 END$$
+
+CREATE TRIGGER `takeFromWarehouse`
+    BEFORE UPDATE ON `orderEntries`
+    FOR EACH ROW
+BEGIN
+    DECLARE missingParts INT;
+    IF OLD.isDone = "0" AND NEW.isDone = "1" THEN
+        SELECT COUNT(*) INTO missingParts FROM serviceParts
+            JOIN parts ON partPartCode = partCode
+            WHERE serviceName = NEW.serviceName
+                AND quantity > currentlyInStock;
+        IF missingParts > 0 THEN
+            SIGNAL SQLSTATE "45000"
+              SET MESSAGE_TEXT = "MISSING_PARTS";
+        ELSE
+            UPDATE parts
+                SET currentlyInStock = currentlyInStock - IFNULL((
+                    SELECT quantity FROM serviceParts
+                        WHERE serviceName = NEW.serviceName
+                            AND partPartCode = partCode
+                ), 0);
+        END IF;
+    END IF;
+END$$
 DELIMITER ;

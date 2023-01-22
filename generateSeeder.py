@@ -135,6 +135,14 @@ for i in range(10):
         f' ("{manufacturers[manIdx]}", "{models[manIdx][modelIdx]}", "{i:0>3}");\n')
 f.write('\n')
 
+f.write('-- Insert service-part relations\n')
+for s in services:
+    for i in range(3):
+        partCode = randint(0, 9)
+        f.write(f'INSERT INTO `serviceParts` (`serviceName`, `partPartCode`, `quantity`) VALUES ' +
+            f'("{s[0]}", "{partCode:0>3}", {randint(1, 5)});\n')
+f.write('\n')
+
 f.write('-- Insert order entries\n')
 for o in orders:
     for i in range(randint(2, 4)):
