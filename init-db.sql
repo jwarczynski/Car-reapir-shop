@@ -222,7 +222,8 @@ BEGIN
         SET autolist = "0";
     UPDATE `shoppingLists`
         SET autolist = "1"
-        WHERE name = listName;
+        WHERE name = listName
+            AND isFulfilled = "0";
 END$$
 
 CREATE PROCEDURE `addShoppingListEntry` (
